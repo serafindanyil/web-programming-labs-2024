@@ -1,0 +1,76 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+*:link,
+*:visited {
+	text-decoration: none;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-family: "Roboto", sans-serif;
+}
+
+.container {
+	width: 120rem;
+	margin: 0 auto;
+}
+
+/* --- El buttons --- */
+.btn {
+	font-weight: 500 !important;
+}
+
+.btn--learn-now {
+	color: #fff !important;
+	background-color: #111b47;
+	border-radius: 2px;
+}
+
+.btn--buy-now {
+	color: #111b47 !important;
+	background-color: #ffd166;
+	border-radius: 2px;
+}
+
+/* --- Nav --- */
+
+.header {
+}
+
+.main-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	height: 6rem;
+}
+
+.logo-link {
+	color: #37447e;
+	font-size: 2.6rem;
+	font-weight: 900;
+}
+
+.main-nav-list {
+	display: flex;
+	gap: 2.6rem;
+
+	list-style: none;
+}
+
+.main-nav-link {
+	display: inline-block;
+	line-height: 18px;
+
+	color: #505f98;
+	font-size: 1.4rem;
+	font-weight: 400;
+	padding: 0.4rem 2.1rem;
+}
