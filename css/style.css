@@ -11,6 +11,7 @@
 
 html {
 	font-size: 62.5%;
+	/* overflow-x: hidden; */
 }
 
 body {
@@ -21,28 +22,108 @@ body {
 	width: 120rem;
 	margin: 0 auto;
 }
+/* --- Grids --- */
 
-/* --- El buttons --- */
-.btn {
-	font-weight: 500 !important;
+.grid {
+	display: grid;
 }
 
-.btn--learn-now {
+.grid--2-col {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-col {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-gap--big {
+	column-gap: 9.5rem;
+}
+
+.grid-gap--small {
+	column-gap: 3rem;
+}
+
+/* --- Header style --- */
+
+.heading-primary {
+	color: #091133;
+	font-size: 3.6rem;
+	font-weight: 500;
+	line-height: 48px; /* 133.333% */
+	margin-bottom: 2.3rem;
+}
+
+.heading-secondary {
+	color: #091133;
+	font-size: 2.2rem;
+	font-weight: 500;
+	line-height: 32px; /* 145.455% */
+	margin-bottom: 0.6rem;
+}
+
+.heading-tertiary {
+	color: #091133;
+	font-size: 1.6rem;
+	font-weight: 500;
+	line-height: 26px; /* 162.5% */
+	margin-bottom: 0.6rem;
+}
+
+.paragraph {
+	color: #6f7cb2;
+	font-size: 1.6rem;
+	font-weight: 400;
+	line-height: 26px;
+	margin-bottom: 4.5rem;
+}
+
+/* --- Margins -- */
+
+.margin-bottom--small {
+	margin-bottom: 3rem;
+}
+
+.margin-bottom--big {
+	margin-bottom: 8.8rem;
+}
+
+/* --- El buttons --- */
+
+.btn {
+	font-weight: 500 !important;
+
+	display: inline-block;
+	cursor: pointer;
+
+	border: none;
+}
+
+.btn--blue {
 	color: #fff !important;
 	background-color: #111b47;
 	border-radius: 2px;
 }
 
-.btn--buy-now {
+.btn--yellow {
 	color: #111b47 !important;
 	background-color: #ffd166;
 	border-radius: 2px;
 }
 
-/* --- Nav --- */
-
-.header {
+.btn--purchase {
+	padding: 0.4rem 5.6rem;
 }
+
+.btn--iot {
+	padding: 0.4rem 2.6rem;
+}
+
+.btn:hover {
+	filter: brightness(0.9);
+}
+
+/* --- Nav --- */
 
 .main-nav {
 	display: flex;
@@ -73,4 +154,96 @@ body {
 	font-size: 1.4rem;
 	font-weight: 400;
 	padding: 0.4rem 2.1rem;
+}
+
+/* --- Section Hero --- */
+
+.hero-section {
+	padding: 12rem 0;
+	overflow: hidden;
+}
+
+.icon-features {
+	margin-bottom: 1.4rem;
+}
+
+.features-text {
+	color: #5d6970;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px; /* 150% */
+}
+
+.image-container {
+	position: relative;
+}
+
+.hero-section-image {
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+
+/* --- Section main features --- */
+
+.main-features-section {
+	padding: 12rem 0;
+}
+
+.main-features {
+	align-items: center;
+}
+
+/* --- Section pricing --- */
+
+.pricing-section {
+	padding: 5.9rem 0 21.3rem 0;
+}
+
+.price {
+	color: #37447e;
+}
+
+/* --- Section footer --- */
+.footer-section {
+	padding: 3.7rem 0 3rem 0;
+	background-color: #e7ecff;
+}
+
+.footer {
+	text-align: center;
+}
+
+.year-and-logo-container {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 6rem;
+	border-bottom: 2px solid #cdd1d4;
+}
+
+/* btn тут селектор*/
+
+.copyright {
+	color: #939ea4;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.footer-elements {
+	display: flex;
+	justify-content: center;
+	gap: 6rem;
+}
+
+.footer-nav-link {
+	color: #929ecc;
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 24px; /* 171.429% */
+}
+
+.social-link {
+	display: flex;
+	justify-content: center;
+	gap: 3rem;
 }
