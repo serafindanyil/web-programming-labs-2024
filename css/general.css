@@ -19,7 +19,7 @@ body {
 }
 
 .container {
-	width: 120rem;
+	max-width: 120rem;
 	margin: 0 auto;
 }
 /* --- Grids --- */
@@ -88,6 +88,10 @@ body {
 	margin-bottom: 8.8rem;
 }
 
+.margin-bottom--the-biggest {
+	margin-bottom: 24rem;
+}
+
 /* --- El buttons --- */
 
 .btn {
@@ -122,4 +126,28 @@ body {
 
 .btn:hover {
 	filter: brightness(0.9);
+}
+
+.icon-mobile-nav {
+	height: 3.2rem;
+	width: 3.2rem;
+
+	color: #000;
+}
+
+.btn-mobile-nav {
+	display: block;
+	border: none;
+
+	background-color: transparent;
+	z-index: 1000;
+}
+
+/* іконка закриття бургер меню по замовчюванню не видна*/
+.icon-mobile-nav[name="close-outline"] {
+	display: none;
+}
+
+.btn-mobile-nav {
+	display: none;
 }

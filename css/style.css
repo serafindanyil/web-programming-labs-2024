@@ -5,7 +5,7 @@
 	justify-content: space-between;
 	align-items: center;
 
-	height: 6rem;
+	height: 9rem;
 }
 
 .logo-link {
@@ -34,7 +34,6 @@
 /* --- Section Hero --- */
 
 .hero-section {
-	padding: 12rem 0;
 	overflow: hidden;
 }
 
@@ -59,10 +58,13 @@
 	position: absolute;
 }
 
+.hero .left-text {
+	padding-bottom: 14rem;
+}
+
 /* --- Section main features --- */
 
 .main-features-section {
-	padding: 12rem 0;
 }
 
 .main-features {
@@ -71,8 +73,8 @@
 
 /* --- Section pricing --- */
 
-.pricing-section {
-	padding: 5.9rem 0 21.3rem 0;
+.pricing-plan-container {
+	gap: 2.4rem;
 }
 
 .price {

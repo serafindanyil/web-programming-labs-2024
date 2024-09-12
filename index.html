@@ -13,9 +13,10 @@
 		<link rel="stylesheet" href="css/general.css" />
 		<link rel="stylesheet" href="css/style.css" />
 		<link rel="stylesheet" href="css/queries.css" />
+		<script defer src="js/script.js"></script>
 	</head>
 	<body>
-		<header class="header">
+		<header class="header margin-bottom--big">
 			<div class="container">
 				<nav class="main-nav">
 					<a class="logo-link" href="#">Landie</a>
@@ -30,11 +31,21 @@
 							<a class="main-nav-link btn btn--yellow" href="#">Buy Now</a>
 						</li>
 					</ul>
+					<button class="btn-mobile-nav">
+						<img
+							class="icon-mobile-nav"
+							src="img/menu-outline.svg"
+							name="menu-outline" />
+						<img
+							class="icon-mobile-nav"
+							src="img/close-outline.svg"
+							name="close-outline" />
+					</button>
 				</nav>
 			</div>
 		</header>
 
-		<section class="hero-section">
+		<section class="hero-section margin-bottom--big">
 			<div class="hero container grid grid--2-col grid-gap--big">
 				<div class="left-text">
 					<h1 class="heading-primary">
@@ -88,7 +99,7 @@
 			</div>
 		</section>
 
-		<section class="main-features-section">
+		<section class="main-features-section margin-bottom--the-biggest">
 			<div class="main-features container grid grid--2-col grid-gap--big">
 				<div class="left-text">
 					<h1 class="heading-primary">Light, Fast & Powerful</h1>
@@ -128,18 +139,23 @@
 						</div>
 					</div>
 				</div>
-				<img src="img/woman-near-phone.svg" alt="The woman near the phone" />
+				<img
+					class="feature-woman-image"
+					src="img/woman-near-phone.svg"
+					alt="The woman near the phone" />
 			</div>
 		</section>
 
-		<section class="pricing-section">
+		<section class="pricing-section margin-bottom--the-biggest">
 			<div class="container">
-				<h1 class="heading-primary">A Price To Suit Everyone</h1>
-				<p class="paragraph margin-bottom--big">
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-					commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus
-					et magnis dis parturient montes, nascetur ridiculus
-				</p>
+				<div class="text-container">
+					<h1 class="heading-primary">A Price To Suit Everyone</h1>
+					<p class="paragraph">
+						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+						commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+						penatibus et magnis dis parturient montes, nascetur ridiculus
+					</p>
+				</div>
 				<div class="grid grid--3-col grid-gap--small">
 					<div class="pricing-plan-container">
 						<h1 class="heading-primary price">FREE</h1>
