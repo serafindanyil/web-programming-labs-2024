@@ -1,0 +1,125 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+*:link,
+*:visited {
+	text-decoration: none;
+}
+
+html {
+	font-size: 62.5%;
+	/* overflow-x: hidden; */
+}
+
+body {
+	font-family: "Roboto", sans-serif;
+}
+
+.container {
+	width: 120rem;
+	margin: 0 auto;
+}
+/* --- Grids --- */
+
+.grid {
+	display: grid;
+}
+
+.grid--2-col {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-col {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-gap--big {
+	column-gap: 9.5rem;
+}
+
+.grid-gap--small {
+	column-gap: 3rem;
+}
+
+/* --- Header style --- */
+
+.heading-primary {
+	color: #091133;
+	font-size: 3.6rem;
+	font-weight: 500;
+	line-height: 48px; /* 133.333% */
+	margin-bottom: 2.3rem;
+}
+
+.heading-secondary {
+	color: #091133;
+	font-size: 2.2rem;
+	font-weight: 500;
+	line-height: 32px; /* 145.455% */
+	margin-bottom: 0.6rem;
+}
+
+.heading-tertiary {
+	color: #091133;
+	font-size: 1.6rem;
+	font-weight: 500;
+	line-height: 26px; /* 162.5% */
+	margin-bottom: 0.6rem;
+}
+
+.paragraph {
+	color: #6f7cb2;
+	font-size: 1.6rem;
+	font-weight: 400;
+	line-height: 26px;
+	margin-bottom: 4.5rem;
+}
+
+/* --- Margins -- */
+
+.margin-bottom--small {
+	margin-bottom: 3rem;
+}
+
+.margin-bottom--big {
+	margin-bottom: 8.8rem;
+}
+
+/* --- El buttons --- */
+
+.btn {
+	font-size: 1.4rem;
+	font-weight: 500 !important;
+
+	display: inline-block;
+	cursor: pointer;
+
+	border: none;
+}
+
+.btn--blue {
+	color: #fff !important;
+	background-color: #111b47;
+	border-radius: 2px;
+}
+
+.btn--yellow {
+	color: #111b47 !important;
+	background-color: #ffd166;
+	border-radius: 2px;
+}
+
+.btn--purchase {
+	padding: 0.4rem 5.6rem;
+}
+
+.btn--iot {
+	padding: 0.4rem 2.6rem;
+}
+
+.btn:hover {
+	filter: brightness(0.9);
+}

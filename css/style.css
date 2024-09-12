@@ -1,0 +1,122 @@
+/* --- Nav --- */
+
+.main-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	height: 6rem;
+}
+
+.logo-link {
+	color: #37447e;
+	font-size: 2.6rem;
+	font-weight: 900;
+}
+
+.main-nav-list {
+	display: flex;
+	gap: 2.6rem;
+
+	list-style: none;
+}
+
+.main-nav-link {
+	display: inline-block;
+	line-height: 18px;
+
+	color: #505f98;
+	font-size: 1.4rem;
+	font-weight: 400;
+	padding: 0.4rem 2.1rem;
+}
+
+/* --- Section Hero --- */
+
+.hero-section {
+	padding: 12rem 0;
+	overflow: hidden;
+}
+
+.icon-features {
+	margin-bottom: 1.4rem;
+}
+
+.features-text {
+	color: #5d6970;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px; /* 150% */
+}
+
+.image-container {
+	position: relative;
+}
+
+.hero-section-image {
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+
+/* --- Section main features --- */
+
+.main-features-section {
+	padding: 12rem 0;
+}
+
+.main-features {
+	align-items: center;
+}
+
+/* --- Section pricing --- */
+
+.pricing-section {
+	padding: 5.9rem 0 21.3rem 0;
+}
+
+.price {
+	color: #37447e;
+}
+
+/* --- Section footer --- */
+.footer-section {
+	padding: 3.7rem 0 3rem 0;
+	background-color: #e7ecff;
+}
+
+.footer {
+	text-align: center;
+}
+
+.year-and-logo-container {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 6rem;
+	border-bottom: 2px solid #cdd1d4;
+}
+
+.copyright {
+	color: #939ea4;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.footer-elements {
+	display: flex;
+	justify-content: center;
+	gap: 6rem;
+}
+
+.footer-nav-link {
+	color: #929ecc;
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 24px; /* 171.429% */
+}
+
+.social-link {
+	display: flex;
+	justify-content: center;
+	gap: 3rem;
+}

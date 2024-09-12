@@ -1,0 +1,40 @@
+/* 1rem = 1em = 16px */
+
+/* Media tablets*/
+/* 1200px */
+@media (max-width: 75em) {
+	html {
+		/* 9px / 16px = 56.2% */
+		font-size: 56.2%;
+	}
+
+	.container {
+		padding: 0 3.2rem;
+	}
+
+	.hero {
+		padding-right: 0;
+	}
+
+	.hero-section-image {
+		display: none;
+	}
+
+	.footer-section {
+		max-width: 120rem;
+	}
+
+	.grid--2-col,
+	.grid--3-col {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Media phones */
+/* 320px */
+@media (max-width: 20em) {
+	html {
+		/* 8px / 16px = 50% */
+		font-size: 50%;
+	}
+}
