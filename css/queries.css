@@ -92,7 +92,6 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 100%;
 		height: 100vh;
 		transform: translateX(100%);
 
@@ -105,7 +104,7 @@
 		/* hide nav */
 		/* Allows no transition at all */
 		/* display: none; */
-		transition: all 0.5s ease-in;
+		transition: all 0.3s ease-in;
 		opacity: 0;
 
 		pointer-events: none;
@@ -120,6 +119,8 @@
 		visibility: visible;
 		transform: translateX(0);
 		position: fixed;
+		/* при відкритті фікситься ширина бургер меню */
+		width: 100%;
 	}
 
 	.nav-open .icon-mobile-nav[name="close-outline"] {
@@ -144,6 +145,10 @@
 
 	.btn-mobile-nav {
 		display: block;
+	}
+
+	.feature-woman-image {
+		width: 100%;
 	}
 }
 

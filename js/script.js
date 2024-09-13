@@ -4,6 +4,12 @@ const mainNavEl = document.querySelector(".main-nav");
 
 buttonNavEl.addEventListener("click", function () {
 	mainNavEl.classList.toggle("nav-open");
+
+	if (mainNavEl.classList.contains("nav-open")) {
+		document.body.style.overflow = "hidden"; // Вимкнути скролл
+	} else {
+		document.body.style.overflow = "visible"; // Увімкнути скролл
+	}
 });
 
 // Deleting class nav open after pressing some sticky button
