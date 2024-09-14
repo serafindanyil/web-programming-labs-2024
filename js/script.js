@@ -5,14 +5,17 @@ const mainNavEl = document.querySelector(".main-nav");
 buttonNavEl.addEventListener("click", function () {
 	mainNavEl.classList.toggle("nav-open");
 
+	// document.body.classList.toggle("no-scroll");
+
 	if (mainNavEl.classList.contains("nav-open")) {
-		document.body.style.overflow = "hidden"; // Вимкнути скролл
+		document.body.classList.add("no-scroll");
 	} else {
-		document.body.style.overflow = "visible"; // Увімкнути скролл
+		document.body.classList.remove("no-scroll");
 	}
 });
 
 // Deleting class nav open after pressing some sticky button
 buttonSticky.addEventListener("click", function () {
 	mainNavEl.classList.remove("nav-open");
+	document.body.classList.remove("no-scroll");
 });

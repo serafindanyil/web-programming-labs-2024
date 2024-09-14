@@ -89,10 +89,14 @@
 	.main-nav-list {
 		background-color: rgba(255, 255, 255, 0.5);
 		backdrop-filter: blur(10px);
-		position: absolute;
+
+		/* коли є фіксована висота, вона не впливає на розміри view port */
+		position: fixed;
+		right: 0;
 		top: 0;
-		left: 0;
-		height: 100vh;
+		width: 100%;
+		height: 100%; /* Висота на всю сторінку */
+		overflow-y: auto;
 		transform: translateX(100%);
 
 		display: flex;
@@ -119,8 +123,6 @@
 		visibility: visible;
 		transform: translateX(0);
 		position: fixed;
-		/* при відкритті фікситься ширина бургер меню */
-		width: 100%;
 	}
 
 	.nav-open .icon-mobile-nav[name="close-outline"] {

@@ -11,6 +11,9 @@
 
 html {
 	font-size: 62.5%;
+
+	/* Анімація для скроллу */
+	scroll-behavior: smooth;
 }
 
 body {
@@ -149,4 +152,8 @@ body {
 
 .btn-mobile-nav {
 	display: none;
+}
+
+.no-scroll {
+	overflow: hidden;
 }
