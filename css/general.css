@@ -126,10 +126,6 @@ body {
 	padding: 0.4rem 2.6rem;
 }
 
-.btn:hover {
-	filter: brightness(0.9);
-}
-
 .icon-mobile-nav {
 	height: 3.2rem;
 	width: 3.2rem;
