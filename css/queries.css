@@ -135,7 +135,7 @@
 
 	.main-nav-link:link,
 	.main-nav-link:visited {
-		color: #505f98 !important;
+		color: rgb(55, 68, 126) !important;
 		font-weight: 500 !important;
 		font-size: 3rem;
 	}
