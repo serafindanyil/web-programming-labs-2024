@@ -1,0 +1,113 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+	font-family: "Montserrat", sans-serif;
+}
+
+body {
+	background-image: linear-gradient(
+		to right bottom,
+		#ff0cad,
+		#ff417a,
+		#ff8748,
+		#ffc71e,
+		#f9ff3e
+	);
+}
+
+.container {
+	display: flex;
+	gap: 4.8rem;
+
+	height: 100vh;
+
+	margin: 0 auto;
+	padding: 4.8rem 0;
+}
+
+.container--one-obj {
+	align-items: center;
+	justify-content: center;
+
+	max-width: 60rem;
+}
+
+.container--many-obj {
+	justify-content: center;
+	flex-wrap: wrap;
+
+	max-width: 90vw;
+}
+
+.card {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	max-height: 50%;
+
+	flex-grow: 1;
+
+	background-color: rgb(249, 249, 249);
+
+	border-radius: 15px;
+	box-shadow: 2px 2px 100px rgba(0, 0, 0, 0.2);
+
+	padding: 2.4rem;
+	text-align: center;
+}
+
+.card_wrapper {
+	width: 100%;
+}
+
+.margin--sm {
+	margin-bottom: 1.6rem;
+}
+
+.margin--md {
+	margin-bottom: 3.2rem;
+}
+
+.primary-text {
+	font-size: 2.4rem;
+	color: #1a1a1a;
+}
+
+.secondary-text {
+	font-size: 1.6rem;
+	font-weight: 300;
+	color: #525252;
+}
+
+.paragraph {
+}
+
+.input-field {
+	width: 100%;
+	height: 4.8rem;
+
+	font-family: "Montserrat";
+	font-size: 1.6rem;
+	padding: 0 1.6rem;
+
+	border: 1px solid #cecece;
+	border-radius: 10px;
+}
+
+.btn--create {
+	width: 100%;
+	height: 4.8rem;
+
+	cursor: pointer;
+
+	color: #fff;
+	background-color: #3a78ce;
+	border: none;
+	border-radius: 10px;
+}

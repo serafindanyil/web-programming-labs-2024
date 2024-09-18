@@ -4,16 +4,27 @@
 // - кількість виданих кредитів
 
 class User {
+	static userCount = 0;
+
 	constructor(firstName, lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+
+		User.userCount++;
 	}
+
 	get data() {
 		return `${this.firstName} ${this.lastName}`;
+	}
+
+	get userCount() {
+		return User.userCount;
 	}
 }
 
 class BankOperation extends User {
+	static creditCount = 0;
+
 	constructor(firstName, lastName) {
 		super(firstName, lastName); // Передаємо ім'я та прізвище батьківському класу
 		this._creditLimit = 1000;
@@ -49,10 +60,12 @@ class BankOperation extends User {
 		} else {
 			return console.log("Перевищено кредитний ліміт");
 		}
+
+		BankOperation.creditCount++;
 	}
 
 	addToCredit(count) {
-		if (count > 0 && this._balance >= count) {
+		if (count > 0 && this._balance >= count && this._credit >= count) {
 			this._balance -= count;
 			this._credit -= count;
 		} else {
