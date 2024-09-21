@@ -13,19 +13,62 @@
 		<script src="js/script.js" defer></script>
 	</head>
 	<body>
-		<div class="container container--many-obj">
-			<div class="card">
+		<div class="container container--one-obj">
+			<div class="card money-counter">
 				<div class="card_wrapper">
-					<h1 class="primary-text margin--md">Створити профіль</h1>
-					<input class="input-field margin--sm" type="text" />
-					<button class="btn--create">Створити</button>
+					<p class="count-money margin--md" id="countMoney">$0</p>
+				</div>
+			</div>
+			<div class="card user-profile">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--sm" id="nameOfUser">
+						Створіть користувача
+					</h1>
+					<p class="paragraph margin--sm">
+						Кредитний ліміт:
+						<span class="counter" id="creditLimitValue"> $0</span>
+					</p>
+					<p class="paragraph margin--sm">
+						Доступні кошти:
+						<span class="counter" id="accessCreditValue"> $0</span>
+					</p>
+					<p class="paragraph margin--big">
+						Сума, яку потрібно погасити:
+						<span class="counter" id="countUserPayToCredit"> $0</span>
+					</p>
+					<select class="select-field" name="" id="selectUser"></select>
 				</div>
 			</div>
 			<div class="card">
 				<div class="card_wrapper">
-					<h1 class="primary-text margin--md">Взяти кредит</h1>
-					<input class="input-field margin--sm" type="text" />
-					<button class="btn--create">Create profile</button>
+					<h1 class="primary-text margin--sm">Взяти кредит</h1>
+					<p class="paragraph margin--md">
+						Користувачі, які взяли кредит:
+						<span class="counter" id="countUserTakeCredit"> 0</span>
+					</p>
+					<input class="input-field margin--sm" id="creditValue" type="text" />
+					<button class="btn" id="takeCredit">Взяти кредит</button>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--md">Погасити кредит</h1>
+					<input
+						class="input-field margin--md"
+						id="payToCreditValue"
+						type="text" />
+					<button class="btn" id="payToCredit">Взяти кредит</button>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--sm">Створити профіль</h1>
+					<p class="paragraph margin--md">
+						Кількість профілів:
+						<span class="counter" id="countUsers"> 0</span>
+					</p>
+					<input class="input-field margin--sm" id="userName" type="text" />
+					<button class="btn" id="createUser">Створити</button>
 				</div>
 			</div>
 		</div>

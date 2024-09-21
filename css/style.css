@@ -1,3 +1,4 @@
+/* --- Hero Section --- */
 * {
 	margin: 0;
 	padding: 0;
@@ -20,12 +21,24 @@ body {
 	);
 }
 
+/* Урааа Новий вар */
+@property --button-color {
+	syntax: "<color>";
+	inherits: false;
+	initial-value: #6c48c5;
+}
+
+@property --button-color-hover {
+	syntax: "<color>";
+	inherits: false;
+	initial-value: #4b328b;
+}
+
+/* --- Container --- */
 .container {
 	display: flex;
-	gap: 4.8rem;
-
+	gap: 3.2rem;
 	height: 100vh;
-
 	margin: 0 auto;
 	padding: 4.8rem 0;
 }
@@ -33,32 +46,49 @@ body {
 .container--one-obj {
 	align-items: center;
 	justify-content: center;
-
 	max-width: 60rem;
+}
+
+/* Якщо є container--one-obj тоді стукає до карточок всіх які не є останньою дитиною  */
+.container--one-obj .card:not(:last-child) {
+	display: none;
 }
 
 .container--many-obj {
 	justify-content: center;
 	flex-wrap: wrap;
-
 	max-width: 90vw;
+
+	transition: all 0.3s;
 }
 
+/* --- Card --- */
 .card {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
 	max-height: 50%;
-
 	flex-grow: 1;
-
 	background-color: rgb(249, 249, 249);
-
 	border-radius: 15px;
 	box-shadow: 2px 2px 100px rgba(0, 0, 0, 0.2);
+	padding: 3.6rem;
+	text-align: left;
 
-	padding: 2.4rem;
+	min-width: 41rem;
+}
+
+.user-profile {
+	padding: 5.6rem 3.6rem;
+	min-width: 60rem;
+}
+
+.user-profile h1 {
+	font-size: 5.6rem;
+}
+
+.money-counter {
+	min-width: 40rem;
 	text-align: center;
 }
 
@@ -66,48 +96,75 @@ body {
 	width: 100%;
 }
 
-.margin--sm {
-	margin-bottom: 1.6rem;
-}
-
-.margin--md {
-	margin-bottom: 3.2rem;
-}
-
+/* --- Typography --- */
 .primary-text {
-	font-size: 2.4rem;
+	font-size: 3.2rem;
+	font-weight: 600;
 	color: #1a1a1a;
 }
 
 .secondary-text {
-	font-size: 1.6rem;
+	font-size: 2.4rem;
 	font-weight: 300;
 	color: #525252;
 }
 
 .paragraph {
+	font-size: 1.6rem;
+	font-weight: 300;
+	color: #525252;
 }
 
-.input-field {
+.counter {
+	font-size: 2.4rem;
+	font-weight: 300;
+	color: #4f4f4f;
+}
+
+/* --- Form Fields --- */
+.input-field,
+.select-field {
 	width: 100%;
 	height: 4.8rem;
-
 	font-family: "Montserrat";
 	font-size: 1.6rem;
 	padding: 0 1.6rem;
-
+	background-color: transparent;
 	border: 1px solid #cecece;
 	border-radius: 10px;
 }
 
-.btn--create {
+.btn {
 	width: 100%;
 	height: 4.8rem;
-
 	cursor: pointer;
-
 	color: #fff;
-	background-color: #3a78ce;
+	background-color: var(--button-color);
 	border: none;
 	border-radius: 10px;
+	transition: 0.3s;
+}
+
+.btn:hover {
+	background-color: var(--button-color-hover);
+}
+
+/* --- Count Money --- */
+.count-money {
+	font-size: 7.2rem;
+	font-weight: 500;
+	color: #1a1a1a;
+}
+
+/* --- Margin and Flex --- */
+.margin--sm {
+	margin-bottom: 1.2rem;
+}
+
+.margin--md {
+	margin-bottom: 2.4rem;
+}
+
+.margin--big {
+	margin-bottom: 4.8rem;
 }
