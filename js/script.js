@@ -101,9 +101,10 @@ class UserManager {
 			UserManager.userObject.push(user);
 			UserManager.userObjectNames.push(name);
 
-			return user; // Повертає створеного користувача
+			return name; // Повертає створеного користувача
 		} else {
 			console.log("Користувач вже є!");
+			return false;
 		}
 	}
 
@@ -116,9 +117,26 @@ class UserManager {
 	listUsers() {
 		return UserManager.userObjectNames;
 	}
+
+	sortedListUsers() {
+		return UserManager.userObjectNames.sort();
+	}
 }
 
 const newUser = new UserManager();
+
+function updateListUsers() {
+	const listUsers = document.getElementById("listOfUsers");
+	const sortedArray = newUser.sortedListUsers();
+
+	listUsers.innerHTML = "";
+
+	sortedArray.forEach((element) => {
+		const listItem = document.createElement("li");
+		listItem.textContent = element;
+		listUsers.appendChild(listItem);
+	});
+}
 
 // Функція для загального обновлення даних, вона має таку конструкцію через те що,
 // коли у нас display ноне все крім останнього елемента, при створенні юзерів викликається фунція обновлення даних і створюється ексепшииин
@@ -160,6 +178,8 @@ function updateData() {
 		// Оновлюємо ім`я юзера
 		const nameOfUser = document.getElementById("nameOfUser");
 		nameOfUser.textContent = newUser.getUserByName(userIsSelected).name;
+
+		updateListUsers();
 	}
 }
 
@@ -180,7 +200,7 @@ document.getElementById("createUser").addEventListener("click", () => {
 	if (name.trim() === "") {
 		console.log("Значення не має бути пустим");
 	} else {
-		newUser.addUser(name);
+		const userIsCreated = newUser.addUser(name);
 		// очищення інпуту
 		document.getElementById("userName").value = "";
 		// Додавання нового юзера до селекта
@@ -189,7 +209,10 @@ document.getElementById("createUser").addEventListener("click", () => {
 		// Оновлення лічильника
 		// changeValue.textContent = newUser.userCount();
 		//Додавання нового юзера до селекта
-		addToSelectUser.add(newOption);
+		if (userIsCreated) {
+			addToSelectUser.add(newOption);
+		}
+
 		// Оновлення лічильника функція
 
 		if (newUser.userCount() >= 1) {

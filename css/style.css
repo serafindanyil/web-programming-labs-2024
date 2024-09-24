@@ -21,7 +21,6 @@ body {
 	);
 }
 
-/* Урааа Новий вар */
 @property --button-color {
 	syntax: "<color>";
 	inherits: false;
@@ -57,7 +56,7 @@ body {
 .container--many-obj {
 	justify-content: center;
 	flex-wrap: wrap;
-	max-width: 90vw;
+	max-width: 95vw;
 
 	transition: all 0.3s;
 }
@@ -119,6 +118,13 @@ body {
 	font-size: 2.4rem;
 	font-weight: 300;
 	color: #4f4f4f;
+}
+
+.profile-list {
+	font-size: 1.8rem;
+	font-weight: 400;
+	column-count: 2;
+	list-style-type: none;
 }
 
 /* --- Form Fields --- */
