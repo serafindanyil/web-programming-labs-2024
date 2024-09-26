@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Created by Serafin Danyil</title>
+		<link rel="stylesheet" href="css/general.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/queries.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet" />
+		<script src="js/script.js" defer></script>
+		<script
+			type="module"
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+		<script
+			nomodule
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	</head>
+	<body>
+		<footer class="section-footer margin-bottom-big">
+			<div class="container footer">
+				<div class="part part-left">
+					<span class="logo">Banks</span>
+					<a href="#" class="footer-link" id="toMyBanks">My banks</a>
+					<a href="#" class="footer-link" id="toCreateBank">Create bank</a>
+				</div>
+				<div class="part part-right">
+					<input
+						type="text"
+						class="input input--search"
+						placeholder="Type something..." />
+					<button class="btn btn--search">Search</button>
+					<button class="btn btn--clear">Clear</button>
+				</div>
+			</div>
+		</footer>
+		<section class="section-my-banks">
+			<div class="container grid grid--my-banks">
+				<div class="sort-paner">
+					<h2 class="secondary-heading margin-bottom-md">Manage banks</h2>
+					<p class="paragraph margin-bottom-sm">Sorting by:</p>
+					<select name="" id="" class="select select-sorting">
+						<option value="">Without sorting</option>
+					</select>
+				</div>
+				<div class="main-environment grid grid--3-col">
+					<div class="card card--bank">
+						<h3 class="tertiary-heading margin-bottom-sm">Name</h3>
+						<p class="counter margin-bottom-sm">Clients count: 0</p>
+						<p class="counter margin-bottom-md">Credits taken count: 0</p>
+						<p class="paragraph margin-bottom-sm">Some text</p>
+						<p class="card_last-update margin-bottom-md">
+							Last update - mins ago
+						</p>
+						<div class="element-container">
+							<button class="btn btn--edit">Edit</button>
+							<button class="btn btn--remove">Remove</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="section-create-bank">
+			<div class="container--create-bank">
+				<h1 class="primary-heading margin-bottom-big">Create bank</h1>
+				<form id="formCreateBank">
+					<label for="inputTitle" class="label-input">Title</label>
+					<input
+						type="text"
+						class="input input--title margin-bottom-big"
+						id="inputTitle"
+						placeholder="Text..."
+						required />
+					<label for="inputDescription" class="label-input">Description</label>
+					<textarea
+						name=""
+						id="inputDescription"
+						class="input input--description margin-bottom-big"
+						required></textarea>
+					<label for="inputCountClients" class="label-input"
+						>Count clients</label
+					>
+					<input
+						type="text"
+						class="input input--count-clients margin-bottom-big"
+						id="inputCountClients"
+						placeholder=""
+						required />
+					<label for="inputCreditTakenCount" class="label-input">
+						Credit taken count
+					</label>
+					<input
+						type="text"
+						class="input input--count-credit-taken margin-bottom-big"
+						id="inputCreditTakenCount"
+						placeholder=""
+						required />
+					<button class="btn btn--create">Create new bank</button>
+				</form>
+			</div>
+		</section>
+	</body>
+</html>
