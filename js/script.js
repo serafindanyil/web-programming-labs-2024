@@ -66,6 +66,16 @@ function switchPage(page) {
 	}
 }
 
+function isValidate(element, type = null) {
+	// Для типів які не є числом, тобто для стрігнів
+	if (isNaN(type) && element.trim() !== "") {
+		return true;
+	} else if (element.trim() !== "") {
+		return true;
+	}
+	return false;
+}
+
 // по дефолту сторінка мої банки
 switchPage("toMyBanks");
 
@@ -78,10 +88,12 @@ CreateBankEl.addEventListener("click", function () {
 });
 
 createBankForm.addEventListener("submit", function (event) {
-	// const inputTitleEl = document.getElementById("inputTitle");
-	// const inputDescriptionEl = document.getElementById("inputDescription");
-	// const inputCountClientsEl = document.getElementById("inputCountClients");
-	// const inputCreditTakenCountEl = document.getElementById(
-	// 	"inputCreditTakenCount"
-	// );
+	const validatedInputs = [];
+
+	validatedInputs.push(isValidate(inputTitleEl.value, NaN));
+	validatedInputs.push(isValidate(inputDescriptionEl.value, NaN));
+	validatedInputs.push(isValidate(inputCountClientsEl.value));
+	validatedInputs.push(isValidate(inputCreditTakenCountEl.value));
+
+	console.log(validatedInputs);
 });
