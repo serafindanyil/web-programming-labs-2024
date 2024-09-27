@@ -132,6 +132,7 @@ function useSorting(sortingType) {
 		});
 	} else {
 		removeCards();
+		const clientCountValue = [];
 
 		allCardNames.forEach((value) => {
 			const currentObject = BankManager.getBankByName(value);
@@ -141,19 +142,22 @@ function useSorting(sortingType) {
 				currentObject.clientCount,
 				currentObject.creditTakenCount
 			);
+			clientCountValue.push(currentObject.clientCount);
 		});
+		reduceValues(clientCountValue);
 	}
 }
 
 function useFind(findingValue) {
 	const allCardNames = Object.keys(BankManager.bankObject);
 
-	const findedNames = allCardNames.filter(
-		(name) => name.charAt(0).toLowerCase() === findingValue.toLowerCase()
+	const findedNames = allCardNames.filter((name) =>
+		name.toLowerCase().includes(findingValue.toLowerCase())
 	);
 
 	removeCards();
 
+	const clientCountValue = [];
 	findedNames.forEach((value) => {
 		const currentObject = BankManager.getBankByName(value);
 		createCard(
@@ -162,7 +166,10 @@ function useFind(findingValue) {
 			currentObject.clientCount,
 			currentObject.creditTakenCount
 		);
+		clientCountValue.push(currentObject.clientCount);
 	});
+
+	reduceValues(clientCountValue);
 
 	if (findedNames.length == 0) {
 		alert("За таким запитом нікого не знайдено");
@@ -277,3 +284,14 @@ buttonClearEl.addEventListener("click", () => {
 	useSorting(selectedSorting());
 	inputSearchEl.value = "";
 });
+
+function reduceValues(countArray) {
+	const initialValue = 0;
+	const sumWithInitial = countArray.reduce(
+		(accumulator, currentValue) => accumulator + currentValue,
+		initialValue
+	);
+
+	const totalValueEl = document.getElementById("totalValue");
+	totalValueEl.textContent = `Total value: ${sumWithInitial}`;
+}
