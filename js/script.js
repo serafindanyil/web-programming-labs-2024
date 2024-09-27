@@ -5,6 +5,8 @@
 
 const MyBanksEl = document.getElementById("toMyBanks");
 const CreateBankEl = document.getElementById("toCreateBank");
+const EditBankEl = document.querySelectorAll(".toEditBank");
+// querySelectorAll для прослуховування всіх елементів які мають такий клас
 const createBankForm = document.getElementById("formCreateBank");
 
 const inputTitleEl = document.getElementById("inputTitle");
@@ -26,10 +28,6 @@ class Bank {
 		this.description = description;
 		this.clientCount = clientCount;
 		this.creditTakenCount = creditTakenCount;
-	}
-
-	data() {
-		return this.name, this.description, this.clientCount, this.creditTakenCount;
 	}
 }
 
@@ -67,20 +65,30 @@ class BankManager {
 
 function switchPage(page) {
 	const sectionCreateBank = document.querySelector(".section-create-bank");
+	const sectionEditBank = document.querySelector(".section-edit-bank");
 	const sectionMyBanks = document.querySelector(".section-my-banks");
 
 	if (page == "toCreateBank") {
 		sectionCreateBank.classList.add("open");
 		sectionMyBanks.classList.remove("open");
+		sectionEditBank.classList.remove("open");
 
 		CreateBankEl.classList.add("selected-page");
 		MyBanksEl.classList.remove("selected-page");
 	} else if (page == "toMyBanks") {
 		sectionMyBanks.classList.add("open");
 		sectionCreateBank.classList.remove("open");
+		sectionEditBank.classList.remove("open");
 
 		MyBanksEl.classList.add("selected-page");
 		CreateBankEl.classList.remove("selected-page");
+	} else if (page == "toEditBank") {
+		sectionEditBank.classList.add("open");
+		sectionCreateBank.classList.remove("open");
+		sectionMyBanks.classList.remove("open");
+
+		CreateBankEl.classList.add("selected-page");
+		MyBanksEl.classList.remove("selected-page");
 	}
 }
 
@@ -109,6 +117,21 @@ MyBanksEl.addEventListener("click", function () {
 CreateBankEl.addEventListener("click", function () {
 	switchPage("toCreateBank");
 });
+
+// if (BankManager.bankObject.length >= 1) {
+// 	EditBankEl.addEventListener("click", function () {
+// 		switchPage("toEditBank");
+// 	});
+// }
+// document.addEventListener("DOMContentLoaded", () => {
+// 	if (EditBankEl && BankManager.bankObject.length >= 1) {
+// 		EditBankEl.addEventListener("click", function () {
+// 			switchPage("toEditBank");
+// 		});
+// 	} else if (!EditBankEl) {
+// 		console.error("Element EditBankEl not found");
+// 	}
+// }); FIXME: КНОПКА НЕ РОБИТЬ ТА ШО ЕДІТ, САМ ПЕРЕХІД ПРАЦЮЄ, АЛЕ ЧОМУСЬ НЕ ВІДСЛІДКОВУЄТЬСЯ ДІЯ ПО QUERYSELECTORALL
 
 function selectedSorting() {
 	const selectedValue = selectSortEl.value;
@@ -206,7 +229,8 @@ function createCard(name, customText, clientsCount, creditsCount) {
 	elementContainer.classList.add("element-container");
 
 	const editButton = document.createElement("button");
-	editButton.classList.add("btn", "btn--edit");
+	editButton.classList.add("btn", "btn--edit", "toEditBank");
+
 	editButton.textContent = "Edit";
 
 	const removeButton = document.createElement("button");

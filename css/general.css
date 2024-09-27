@@ -1,5 +1,6 @@
 .section-my-banks,
-.section-create-bank {
+.section-create-bank,
+.section-edit-bank {
 	display: none;
 }
 
