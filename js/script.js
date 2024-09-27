@@ -170,6 +170,7 @@ function useFind(findingValue) {
 	});
 
 	reduceValues(clientCountValue);
+	xf;
 
 	if (findedNames.length == 0) {
 		alert("За таким запитом нікого не знайдено");
@@ -293,5 +294,5 @@ function reduceValues(countArray) {
 	);
 
 	const totalValueEl = document.getElementById("totalValue");
-	totalValueEl.textContent = `Total value: ${sumWithInitial}`;
+	totalValueEl.textContent = sumWithInitial;
 }
