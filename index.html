@@ -32,9 +32,10 @@
 					<input
 						type="text"
 						class="input input--search"
+						id="inputSearch"
 						placeholder="Type something..." />
-					<button class="btn btn--search">Search</button>
-					<button class="btn btn--clear">Clear</button>
+					<button class="btn btn--search" id="buttonSeacrh">Search</button>
+					<button class="btn btn--clear" id="buttonClear">Clear</button>
 				</div>
 			</div>
 		</footer>
@@ -43,25 +44,12 @@
 				<div class="sort-paner">
 					<h2 class="secondary-heading margin-bottom-md">Manage banks</h2>
 					<p class="paragraph margin-bottom-sm">Sorting by:</p>
-					<select name="" id="" class="select select-sorting">
+					<select name="" id="selectSort" class="select select-sorting">
 						<option value="">Without sorting</option>
+						<option value="alphabet">Alphabet name</option>
 					</select>
 				</div>
-				<div class="main-environment grid grid--3-col">
-					<div class="card card--bank">
-						<h3 class="tertiary-heading margin-bottom-sm">Name</h3>
-						<p class="counter margin-bottom-sm">Clients count: 0</p>
-						<p class="counter margin-bottom-md">Credits taken count: 0</p>
-						<p class="paragraph margin-bottom-sm">Some text</p>
-						<p class="card_last-update margin-bottom-md">
-							Last update - mins ago
-						</p>
-						<div class="element-container">
-							<button class="btn btn--edit">Edit</button>
-							<button class="btn btn--remove">Remove</button>
-						</div>
-					</div>
-				</div>
+				<div class="main-environment grid grid--3-col"></div>
 			</div>
 		</section>
 		<section class="section-create-bank">
@@ -85,20 +73,18 @@
 						>Count clients</label
 					>
 					<input
-						type="text"
+						type="number"
 						class="input input--count-clients margin-bottom-big"
 						id="inputCountClients"
-						placeholder=""
-						required />
+						placeholder="" />
 					<label for="inputCreditTakenCount" class="label-input">
 						Credit taken count
 					</label>
 					<input
-						type="text"
+						type="number"
 						class="input input--count-credit-taken margin-bottom-big"
 						id="inputCreditTakenCount"
-						placeholder=""
-						required />
+						placeholder="" />
 					<button class="btn btn--create">Create new bank</button>
 				</form>
 			</div>

@@ -6,3 +6,7 @@
 .open {
 	display: block;
 }
+
+.selected-page {
+	color: var(--black) !important;
+}

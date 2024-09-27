@@ -14,28 +14,40 @@ const inputCreditTakenCountEl = document.getElementById(
 	"inputCreditTakenCount"
 );
 
+const inputSearchEl = document.getElementById("inputSearch");
+const buttonSeacrhEl = document.getElementById("buttonSeacrh");
+const buttonClearEl = document.getElementById("buttonClear");
+
+const selectSortEl = document.getElementById("selectSort");
+
 class Bank {
-	constructor(name) {
+	constructor(name, description, clientCount, creditTakenCount) {
 		this.name = name;
-		this.clientCount = 0;
-		this.givenCreditCount = 0;
+		this.description = description;
+		this.clientCount = clientCount;
+		this.creditTakenCount = creditTakenCount;
 	}
 
-	get data() {
-		return this.name;
+	data() {
+		return this.name, this.description, this.clientCount, this.creditTakenCount;
 	}
 }
 
 class BankManager {
 	static bankObject = new Object();
 
-	static addBank(name) {
+	static addBank(name, description, countClients = 0, creditTakenCount = 0) {
 		const isBankCreated = Object.keys(BankManager.bankObject).find(
 			(bankName) => bankName === name
 		);
 
 		if (!isBankCreated) {
-			const newBankObject = new Bank(name);
+			const newBankObject = new Bank(
+				name,
+				description,
+				countClients,
+				creditTakenCount
+			);
 			BankManager.bankObject[name] = newBankObject;
 			return newBankObject;
 		} else {
@@ -60,20 +72,31 @@ function switchPage(page) {
 	if (page == "toCreateBank") {
 		sectionCreateBank.classList.add("open");
 		sectionMyBanks.classList.remove("open");
+
+		CreateBankEl.classList.add("selected-page");
+		MyBanksEl.classList.remove("selected-page");
 	} else if (page == "toMyBanks") {
 		sectionMyBanks.classList.add("open");
 		sectionCreateBank.classList.remove("open");
+
+		MyBanksEl.classList.add("selected-page");
+		CreateBankEl.classList.remove("selected-page");
 	}
 }
 
-function isValidate(element, type = null) {
-	// Для типів які не є числом, тобто для стрігнів
-	if (isNaN(type) && element.trim() !== "") {
-		return true;
-	} else if (element.trim() !== "") {
-		return true;
+function isValidate(element, type = 0) {
+	if (isNaN(element) && element.trim() !== "") {
+		return element;
 	}
-	return false;
+	return null;
+}
+
+function isValidateInteger(element) {
+	if (isNaN(parseInt(element))) {
+		return 0;
+	} else {
+		return parseInt(element);
+	}
 }
 
 // по дефолту сторінка мої банки
@@ -87,13 +110,170 @@ CreateBankEl.addEventListener("click", function () {
 	switchPage("toCreateBank");
 });
 
+function selectedSorting() {
+	const selectedValue = selectSortEl.value;
+	return selectedValue;
+}
+
+function useSorting(sortingType) {
+	const allCardNames = Object.keys(BankManager.bankObject);
+	if (sortingType == "alphabet") {
+		removeCards();
+
+		const sortArrayByName = allCardNames.sort();
+		sortArrayByName.forEach((value) => {
+			const currentObject = BankManager.getBankByName(value);
+			createCard(
+				currentObject.name,
+				currentObject.description,
+				currentObject.clientCount,
+				currentObject.creditTakenCount
+			);
+		});
+	} else {
+		removeCards();
+
+		allCardNames.forEach((value) => {
+			const currentObject = BankManager.getBankByName(value);
+			createCard(
+				currentObject.name,
+				currentObject.description,
+				currentObject.clientCount,
+				currentObject.creditTakenCount
+			);
+		});
+	}
+}
+
+function useFind(findingValue) {
+	const allCardNames = Object.keys(BankManager.bankObject);
+
+	const findedNames = allCardNames.filter(
+		(name) => name.charAt(0).toLowerCase() === findingValue.toLowerCase()
+	);
+
+	removeCards();
+
+	findedNames.forEach((value) => {
+		const currentObject = BankManager.getBankByName(value);
+		createCard(
+			currentObject.name,
+			currentObject.description,
+			currentObject.clientCount,
+			currentObject.creditTakenCount
+		);
+	});
+
+	if (findedNames.length == 0) {
+		alert("За таким запитом нікого не знайдено");
+	}
+}
+
+function createCard(name, customText, clientsCount, creditsCount) {
+	// Створюємо елементи
+	const card = document.createElement("div");
+	card.classList.add("card", "card--bank");
+
+	const heading = document.createElement("h3");
+	heading.classList.add("tertiary-heading", "margin-bottom-sm");
+	heading.textContent = name;
+
+	const clientsCounter = document.createElement("p");
+	clientsCounter.classList.add("counter", "margin-bottom-sm");
+	clientsCounter.textContent = `Clients count: ${clientsCount}`;
+
+	const creditsCounter = document.createElement("p");
+	creditsCounter.classList.add("counter", "margin-bottom-md");
+	creditsCounter.textContent = `Credits taken count: ${creditsCount}`;
+
+	const paragraph = document.createElement("p");
+	paragraph.classList.add("paragraph", "margin-bottom-sm");
+	paragraph.textContent = customText;
+
+	const lastUpdateParagraph = document.createElement("p");
+	lastUpdateParagraph.classList.add("card_last-update", "margin-bottom-md");
+	lastUpdateParagraph.textContent = `Last update - mins ago`;
+
+	const elementContainer = document.createElement("div");
+	elementContainer.classList.add("element-container");
+
+	const editButton = document.createElement("button");
+	editButton.classList.add("btn", "btn--edit");
+	editButton.textContent = "Edit";
+
+	const removeButton = document.createElement("button");
+	removeButton.classList.add("btn", "btn--remove");
+	removeButton.textContent = "Remove";
+
+	elementContainer.appendChild(editButton);
+	elementContainer.appendChild(removeButton);
+
+	card.appendChild(heading);
+	card.appendChild(clientsCounter);
+	card.appendChild(creditsCounter);
+	card.appendChild(paragraph); // Додаємо customText
+	card.appendChild(lastUpdateParagraph);
+	card.appendChild(elementContainer);
+
+	const path = document.querySelector(".main-environment");
+	path.appendChild(card);
+}
+
+function removeCards() {
+	const path = document.querySelector(".main-environment");
+	path.innerHTML = null;
+}
+
+// function deleteObjectAndCard(objectName) {}
+
 createBankForm.addEventListener("submit", function (event) {
-	const validatedInputs = [];
+	const validatedInputTitle = isValidate(inputTitleEl.value);
+	const validatedinputDescription = isValidate(inputDescriptionEl.value);
+	const parseInputCountClients = isValidateInteger(inputCountClientsEl.value);
+	const parseInputCreditTakenCount = isValidateInteger(
+		inputCreditTakenCountEl.value
+	);
 
-	validatedInputs.push(isValidate(inputTitleEl.value, NaN));
-	validatedInputs.push(isValidate(inputDescriptionEl.value, NaN));
-	validatedInputs.push(isValidate(inputCountClientsEl.value));
-	validatedInputs.push(isValidate(inputCreditTakenCountEl.value));
+	if (validatedInputTitle && validatedinputDescription) {
+		BankManager.addBank(
+			validatedInputTitle,
+			validatedinputDescription,
+			parseInputCountClients,
+			parseInputCreditTakenCount
+		);
 
-	console.log(validatedInputs);
+		createCard(
+			validatedInputTitle,
+			parseInputCountClients,
+			parseInputCreditTakenCount,
+			validatedinputDescription
+		);
+
+		inputTitleEl.value = "";
+		inputDescriptionEl.value = "";
+		inputCountClientsEl.value = "";
+		inputCreditTakenCountEl.value = "";
+
+		switchPage("toMyBanks");
+		useSorting(selectedSorting());
+	}
+});
+
+selectSortEl.addEventListener("change", function () {
+	useSorting(selectedSorting());
+});
+
+// const inputSearchEl = document.getElementById("inputSearch");
+// const buttonSeacrhEl = document.getElementById("buttonSeacrh");
+// const buttonClearEl = document.getElementById("buttonClear");
+
+buttonSeacrhEl.addEventListener("click", () => {
+	const validatedValue = isValidate(inputSearchEl.value);
+	useFind(validatedValue);
+	inputSearchEl.value = "";
+});
+
+buttonClearEl.addEventListener("click", () => {
+	useSorting(selectedSorting());
+	inputSearchEl.value = "";
 });

@@ -54,7 +54,7 @@ html {
 @property --light-blue {
 	syntax: "<color>";
 	inherits: false;
-	initial-value: rgb(161, 169, 186);
+	initial-value: rgb(175, 177, 181);
 }
 
 @property --black {
@@ -265,7 +265,7 @@ html {
 	font-size: 1.6rem;
 	padding: 1.6rem;
 	font-weight: 400;
-	color: var(--black);
+	color: var(--light-blue);
 }
 
 .section-footer {
