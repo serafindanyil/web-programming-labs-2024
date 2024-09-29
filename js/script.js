@@ -8,12 +8,22 @@ const CreateBankEl = document.getElementById("toCreateBank");
 const EditBankEl = document.querySelectorAll(".toEditBank");
 // querySelectorAll для прослуховування всіх елементів які мають такий клас
 const createBankForm = document.getElementById("formCreateBank");
+const EditBankForm = document.getElementById("formEditBank");
 
 const inputTitleEl = document.getElementById("inputTitle");
 const inputDescriptionEl = document.getElementById("inputDescription");
 const inputCountClientsEl = document.getElementById("inputCountClients");
 const inputCreditTakenCountEl = document.getElementById(
 	"inputCreditTakenCount"
+);
+
+const inputEditTitleEl = document.getElementById("inputEditTitle");
+const inputEditDescriptionEl = document.getElementById("inputEditDescription");
+const inputEditCountClientsEl = document.getElementById(
+	"inputEditCountClients"
+);
+const inputEditCreditTakenCountEl = document.getElementById(
+	"inputEditCreditTakenCount"
 );
 
 const inputSearchEl = document.getElementById("inputSearch");
@@ -28,6 +38,26 @@ class Bank {
 		this.description = description;
 		this.clientCount = clientCount;
 		this.creditTakenCount = creditTakenCount;
+	}
+
+	data() {
+		return [
+			this.name,
+			this.description,
+			this.clientCount,
+			this.creditTakenCount,
+		];
+	}
+
+	editBankInformation(newN, newD, newCC, newCTC) {
+		this.name = newN === null ? this.name : newN;
+		this.description = newD === null ? this.description : newD;
+		this.clientCount = newCC === null ? this.clientCount : newCC;
+		this.creditTakenCount = newCTC === null ? this.creditTakenCount : newCTC;
+	}
+
+	deleteObject() {
+		delete this;
 	}
 }
 
@@ -49,13 +79,37 @@ class BankManager {
 			BankManager.bankObject[name] = newBankObject;
 			return newBankObject;
 		} else {
-			alert.log("Користувач вже є!");
-			return null;
+			alert("З таким іменем банк вже є!");
+			// return null;
 		}
 	}
 
 	static getBankByName(name) {
 		return BankManager.bankObject[name];
+	}
+
+	static editBankByName(currentName, newN, newD, newCC, newCTC) {
+		const isBankExsist = Object.keys(BankManager.bankObject).find(
+			(bankName) => bankName === currentName
+		);
+
+		if (!isBankExsist) {
+			BankManager.bankObject[currentName].editBankInformation(
+				newN,
+				newD,
+				newCC,
+				newCTC
+			);
+			BankManager.bankObject[newN] = BankManager.bankObject[currentName];
+			delete BankManager.bankObject[currentName];
+		} else {
+			alert("З таким іменем банк вже є! Використайте інше ім`я");
+		}
+	}
+
+	static deleteCardByName(currentName) {
+		BankManager.bankObject[currentName].deleteObject();
+		delete BankManager.bankObject[currentName];
 	}
 
 	static listBanks() {
@@ -92,7 +146,20 @@ function switchPage(page) {
 	}
 }
 
-function isValidate(element, type = 0) {
+let currentEditObjectName;
+function updateInfoOnEditPage(objectNameWillEdit) {
+	const [name, description, clientCount, ...creditTakenCount] =
+		BankManager.getBankByName(objectNameWillEdit).data();
+
+	inputEditTitleEl.placeholder = name;
+	inputEditDescriptionEl.placeholder = description;
+	inputEditCountClientsEl.placeholder = clientCount;
+	inputEditCreditTakenCountEl.placeholder = creditTakenCount;
+
+	currentEditObjectName = objectNameWillEdit;
+}
+
+function isValidate(element) {
 	if (isNaN(element) && element.trim() !== "") {
 		return element;
 	}
@@ -101,7 +168,7 @@ function isValidate(element, type = 0) {
 
 function isValidateInteger(element) {
 	if (isNaN(parseInt(element))) {
-		return 0;
+		return null;
 	} else {
 		return parseInt(element);
 	}
@@ -118,20 +185,36 @@ CreateBankEl.addEventListener("click", function () {
 	switchPage("toCreateBank");
 });
 
-// if (BankManager.bankObject.length >= 1) {
-// 	EditBankEl.addEventListener("click", function () {
-// 		switchPage("toEditBank");
-// 	});
-// }
-// document.addEventListener("DOMContentLoaded", () => {
-// 	if (EditBankEl && BankManager.bankObject.length >= 1) {
-// 		EditBankEl.addEventListener("click", function () {
-// 			switchPage("toEditBank");
-// 		});
-// 	} else if (!EditBankEl) {
-// 		console.error("Element EditBankEl not found");
-// 	}
-// }); FIXME: КНОПКА НЕ РОБИТЬ ТА ШО ЕДІТ, САМ ПЕРЕХІД ПРАЦЮЄ, АЛЕ ЧОМУСЬ НЕ ВІДСЛІДКОВУЄТЬСЯ ДІЯ ПО QUERYSELECTORALL
+// кнопка Edit
+document.addEventListener("click", function (event) {
+	if (event.target.classList.contains("toEditBank")) {
+		const outerContainer = event.target.closest(".card--bank");
+
+		if (outerContainer) {
+			const h3El = outerContainer.querySelector("h3");
+			if (h3El) {
+				updateInfoOnEditPage(h3El.textContent);
+			}
+		}
+		switchPage("toEditBank");
+	}
+});
+
+// кнопка Remove
+document.addEventListener("click", function (event) {
+	if (event.target.classList.contains("removeButton")) {
+		const outerContainer = event.target.closest(".card--bank");
+
+		if (outerContainer) {
+			const h3El = outerContainer.querySelector("h3");
+			if (h3El) {
+				deleteCurrrentCard(h3El.textContent);
+			}
+		}
+	}
+});
+
+// FIXME: КНОПКА НЕ РОБИТЬ ТА ШО ЕДІТ, САМ ПЕРЕХІД ПРАЦЮЄ, АЛЕ ЧОМУСЬ НЕ ВІДСЛІДКОВУЄТЬСЯ ДІЯ ПО QUERYSELECTORALL
 
 function selectedSorting() {
 	const selectedValue = selectSortEl.value;
@@ -193,7 +276,6 @@ function useFind(findingValue) {
 	});
 
 	reduceValues(clientCountValue);
-	xf;
 
 	if (findedNames.length == 0) {
 		alert("За таким запитом нікого не знайдено");
@@ -234,7 +316,7 @@ function createCard(name, customText, clientsCount, creditsCount) {
 	editButton.textContent = "Edit";
 
 	const removeButton = document.createElement("button");
-	removeButton.classList.add("btn", "btn--remove");
+	removeButton.classList.add("btn", "btn--remove", "removeButton");
 	removeButton.textContent = "Remove";
 
 	elementContainer.appendChild(editButton);
@@ -251,6 +333,24 @@ function createCard(name, customText, clientsCount, creditsCount) {
 	path.appendChild(card);
 }
 
+function editCard(name, description, clientCount, creditTakenCount) {
+	BankManager.editBankByName(
+		currentEditObjectName,
+		name,
+		description,
+		clientCount,
+		creditTakenCount
+	);
+
+	currentEditObjectName = null;
+}
+
+function deleteCurrrentCard(currentCard) {
+	BankManager.deleteCardByName(currentCard);
+	// Оновлення даних на сторінці включаючи метод сортування
+	useSorting(selectedSorting());
+}
+
 function removeCards() {
 	const path = document.querySelector(".main-environment");
 	path.innerHTML = null;
@@ -261,10 +361,14 @@ function removeCards() {
 createBankForm.addEventListener("submit", function (event) {
 	const validatedInputTitle = isValidate(inputTitleEl.value);
 	const validatedinputDescription = isValidate(inputDescriptionEl.value);
-	const parseInputCountClients = isValidateInteger(inputCountClientsEl.value);
-	const parseInputCreditTakenCount = isValidateInteger(
-		inputCreditTakenCountEl.value
-	);
+	const parseInputCountClients =
+		isValidateInteger(inputCountClientsEl.value) === null
+			? 0
+			: isValidateInteger(inputCountClientsEl.value);
+	const parseInputCreditTakenCount =
+		isValidateInteger(inputCreditTakenCountEl.value) === null
+			? 0
+			: isValidateInteger(inputCreditTakenCountEl.value);
 
 	if (validatedInputTitle && validatedinputDescription) {
 		BankManager.addBank(
@@ -291,13 +395,35 @@ createBankForm.addEventListener("submit", function (event) {
 	}
 });
 
-selectSortEl.addEventListener("change", function () {
+EditBankForm.addEventListener("submit", function (event) {
+	const validatedInputTitle = isValidate(inputEditTitleEl.value);
+	const validatedinputDescription = isValidate(inputEditDescriptionEl.value);
+	const parseInputCountClients = isValidateInteger(
+		inputEditCountClientsEl.value
+	);
+	const parseInputCreditTakenCount = isValidateInteger(
+		inputEditCreditTakenCountEl.value
+	);
+
+	editCard(
+		validatedInputTitle,
+		validatedinputDescription,
+		parseInputCountClients,
+		parseInputCreditTakenCount
+	);
+
+	inputEditTitleEl.value = "";
+	inputEditDescriptionEl.value = "";
+	inputEditCountClientsEl.value = "";
+	inputEditCreditTakenCountEl.value = "";
+
+	switchPage("toMyBanks");
 	useSorting(selectedSorting());
 });
 
-// const inputSearchEl = document.getElementById("inputSearch");
-// const buttonSeacrhEl = document.getElementById("buttonSeacrh");
-// const buttonClearEl = document.getElementById("buttonClear");
+selectSortEl.addEventListener("change", function () {
+	useSorting(selectedSorting());
+});
 
 buttonSeacrhEl.addEventListener("click", () => {
 	const validatedValue = isValidate(inputSearchEl.value);
