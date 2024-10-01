@@ -11,3 +11,38 @@
 .selected-page {
 	color: var(--black) !important;
 }
+
+.modal-window {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	position: absolute;
+	bottom: 1.6rem;
+
+	width: 30vw;
+	padding: 0.8rem 1.6rem;
+	border: 1px solid var(--red);
+	color: var(--red);
+	background-color: var(--red--light);
+	border-radius: 5px;
+}
+
+.icon--close {
+	display: block;
+	color: var(--red) !important;
+	padding: 0.4rem;
+	height: 2.4rem;
+	width: 2.4rem;
+}
+
+.btn--close {
+	cursor: pointer;
+	border-radius: 50%;
+
+	transition: 0.3s;
+}
+
+.btn--close:hover {
+	background-color: var(--red--hover);
+}

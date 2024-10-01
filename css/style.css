@@ -27,6 +27,18 @@ html {
 	initial-value: rgb(202, 81, 69);
 }
 
+@property --red--hover {
+	syntax: "<color>";
+	inherits: false;
+	initial-value: rgb(251, 152, 143);
+}
+
+@property --red--light {
+	syntax: "<color>";
+	inherits: false;
+	initial-value: rgb(253, 163, 155);
+}
+
 @property --blue {
 	syntax: "<color>";
 	inherits: false;

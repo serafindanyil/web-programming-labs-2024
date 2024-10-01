@@ -9,6 +9,12 @@
 		<link rel="stylesheet" href="css/queries.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<script
+			type="module"
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+		<script
+			nomodule
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 		<link
 			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
 			rel="stylesheet" />
@@ -21,6 +27,12 @@
 			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	</head>
 	<body>
+		<!-- <div class="modal-window">
+			<p class="paragraph">description</p>
+			<button class="btn--close">
+				<ion-icon name="close-outline" class="icon icon--close"></ion-icon>
+			</button>
+		</div> -->
 		<footer class="section-footer margin-bottom-big">
 			<div class="container footer">
 				<div class="part part-left">
@@ -51,9 +63,13 @@
 						<option value="">Without sorting</option>
 						<option value="alphabet">Alphabet name</option>
 					</select>
-					<div class="container-space-btw">
+					<div class="container-space-btw margin-bottom-sm">
 						<h2 class="secondary-heading">Clients count:</h2>
-						<p class="counter-text" id="totalValue">0</p>
+						<p class="counter-text" id="clientTotalValue">0</p>
+					</div>
+					<div class="container-space-btw">
+						<h2 class="secondary-heading">Credit taken count:</h2>
+						<p class="counter-text" id="creditTotalValue">0</p>
 					</div>
 				</div>
 				<div class="main-environment grid grid--3-col"></div>

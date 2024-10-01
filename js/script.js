@@ -32,6 +32,9 @@ const buttonClearEl = document.getElementById("buttonClear");
 
 const selectSortEl = document.getElementById("selectSort");
 
+const clientTotalValueEl = document.getElementById("clientTotalValue");
+const creditTotalValueEl = document.getElementById("creditTotalValue");
+
 class Bank {
 	constructor(name, description, clientCount, creditTakenCount) {
 		this.name = name;
@@ -90,7 +93,7 @@ class BankManager {
 
 	static editBankByName(currentName, newN, newD, newCC, newCTC) {
 		const isBankExsist = Object.keys(BankManager.bankObject).find(
-			(bankName) => bankName === currentName
+			(bankName) => bankName === newN
 		);
 
 		if (!isBankExsist) {
@@ -223,6 +226,8 @@ function selectedSorting() {
 
 function useSorting(sortingType) {
 	const allCardNames = Object.keys(BankManager.bankObject);
+	const clientCountValue = [];
+	const creditCountValue = [];
 	if (sortingType == "alphabet") {
 		removeCards();
 
@@ -235,10 +240,11 @@ function useSorting(sortingType) {
 				currentObject.clientCount,
 				currentObject.creditTakenCount
 			);
+			clientCountValue.push(currentObject.clientCount);
+			creditCountValue.push(currentObject.creditTakenCount);
 		});
 	} else {
 		removeCards();
-		const clientCountValue = [];
 
 		allCardNames.forEach((value) => {
 			const currentObject = BankManager.getBankByName(value);
@@ -249,9 +255,22 @@ function useSorting(sortingType) {
 				currentObject.creditTakenCount
 			);
 			clientCountValue.push(currentObject.clientCount);
+			creditCountValue.push(currentObject.creditTakenCount);
 		});
-		reduceValues(clientCountValue);
 	}
+	// clientTotalValueEl.textContent = reduceValues(clientCountValue);
+	// creditTotalValueEl.textContent = reduceValues(creditCountValue);
+	// const clientReduce = reduceValues(clientCountValue);
+	// const creditReduce = reduceValues(creditCountValue);
+
+	// updateCounter(clientTotalValueEl, clientReduce);
+	// updateCounter(creditTotalValueEl, creditReduce);
+
+	// clientCountValue = null;
+	// creditCountValue = null;
+
+	clientTotalValueEl.textContent = reduceValues(clientCountValue);
+	creditTotalValueEl.textContent = reduceValues(creditCountValue);
 }
 
 function useFind(findingValue) {
@@ -264,6 +283,7 @@ function useFind(findingValue) {
 	removeCards();
 
 	const clientCountValue = [];
+	const creditCountValue = [];
 	findedNames.forEach((value) => {
 		const currentObject = BankManager.getBankByName(value);
 		createCard(
@@ -273,9 +293,11 @@ function useFind(findingValue) {
 			currentObject.creditTakenCount
 		);
 		clientCountValue.push(currentObject.clientCount);
+		creditCountValue.push(currentObject.creditTakenCount);
 	});
 
-	reduceValues(clientCountValue);
+	clientTotalValueEl.textContent = reduceValues(clientCountValue);
+	creditTotalValueEl.textContent = reduceValues(creditCountValue);
 
 	if (findedNames.length == 0) {
 		alert("За таким запитом нікого не знайдено");
@@ -431,6 +453,17 @@ buttonSeacrhEl.addEventListener("click", () => {
 	inputSearchEl.value = "";
 });
 
+// Відстежуємо натискання клавіш на input
+inputSearchEl.addEventListener("keydown", function (event) {
+	// Перевіряємо, чи натиснута клавіша Enter (код 13 або 'Enter')
+	if (event.key === "Enter") {
+		// Спрацьовує кнопка
+		const validatedValue = isValidate(inputSearchEl.value);
+		useFind(validatedValue);
+		inputSearchEl.value = "";
+	}
+});
+
 buttonClearEl.addEventListener("click", () => {
 	useSorting(selectedSorting());
 	inputSearchEl.value = "";
@@ -442,7 +475,5 @@ function reduceValues(countArray) {
 		(accumulator, currentValue) => accumulator + currentValue,
 		initialValue
 	);
-
-	const totalValueEl = document.getElementById("totalValue");
-	totalValueEl.textContent = sumWithInitial;
+	return sumWithInitial;
 }
