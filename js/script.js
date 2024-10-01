@@ -277,7 +277,7 @@ function useFind(findingValue) {
 	const allCardNames = Object.keys(BankManager.bankObject);
 
 	const findedNames = allCardNames.filter((name) =>
-		name.toLowerCase().includes(findingValue.toLowerCase())
+		name.toLowerCase().includes(findingValue.trim().toLowerCase())
 	);
 
 	removeCards();
@@ -450,7 +450,7 @@ selectSortEl.addEventListener("change", function () {
 buttonSeacrhEl.addEventListener("click", () => {
 	const validatedValue = isValidate(inputSearchEl.value);
 	useFind(validatedValue);
-	inputSearchEl.value = "";
+	// inputSearchEl.value = "";
 });
 
 // Відстежуємо натискання клавіш на input
@@ -460,7 +460,7 @@ inputSearchEl.addEventListener("keydown", function (event) {
 		// Спрацьовує кнопка
 		const validatedValue = isValidate(inputSearchEl.value);
 		useFind(validatedValue);
-		inputSearchEl.value = "";
+		// inputSearchEl.value = "";
 	}
 });
 
@@ -477,3 +477,8 @@ function reduceValues(countArray) {
 	);
 	return sumWithInitial;
 }
+BankManager.addBank("monoBank", "test", 90, 90);
+BankManager.addBank("oschadBank", "test", 990, 82);
+BankManager.addBank("privateBank", "test", 3223, 12);
+BankManager.addBank("aBank", "test", 20, 0);
+useSorting(selectedSorting());
