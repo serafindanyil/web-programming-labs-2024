@@ -172,8 +172,10 @@ function isValidate(element) {
 function isValidateInteger(element) {
 	if (isNaN(parseInt(element))) {
 		return null;
-	} else {
+	} else if (element >= 0) {
 		return parseInt(element);
+	} else {
+		alert("Значення має бути більше нуля!!");
 	}
 }
 
@@ -482,3 +484,18 @@ BankManager.addBank("oschadBank", "test", 990, 82);
 BankManager.addBank("privateBank", "test", 3223, 12);
 BankManager.addBank("aBank", "test", 20, 0);
 useSorting(selectedSorting());
+
+// function myClousure() {
+// 	let counter = 0;
+// 	return function inner() {
+// 		counter++;
+// 		console.log(counter);
+// 	};
+// }
+
+// const myCounter = myClousure();
+// myCounter();
+// myCounter();
+// myCounter();
+// myCounter();
+// myCounter();
