@@ -35,91 +35,6 @@ const selectSortEl = document.getElementById("selectSort");
 const clientTotalValueEl = document.getElementById("clientTotalValue");
 const creditTotalValueEl = document.getElementById("creditTotalValue");
 
-// class Bank {
-// 	constructor(name, description, clientCount, creditTakenCount) {
-// 		this.name = name;
-// 		this.description = description;
-// 		this.clientCount = clientCount;
-// 		this.creditTakenCount = creditTakenCount;
-// 	}
-
-// 	data() {
-// 		return [
-// 			this.name,
-// 			this.description,
-// 			this.clientCount,
-// 			this.creditTakenCount,
-// 		];
-// 	}
-
-// 	editBankInformation(newN, newD, newCC, newCTC) {
-// 		this.name = newN === null ? this.name : newN;
-// 		this.description = newD === null ? this.description : newD;
-// 		this.clientCount = newCC === null ? this.clientCount : newCC;
-// 		this.creditTakenCount = newCTC === null ? this.creditTakenCount : newCTC;
-// 	}
-
-// 	deleteObject() {
-// 		delete this;
-// 	}
-// }
-
-// class BankManager {
-// 	static bankObject = new Object();
-
-// 	static addBank(name, description, countClients = 0, creditTakenCount = 0) {
-// 		const isBankCreated = Object.keys(BankManager.bankObject).find(
-// 			(bankName) => bankName === name
-// 		);
-
-// 		if (!isBankCreated) {
-// 			const newBankObject = new Bank(
-// 				name,
-// 				description,
-// 				countClients,
-// 				creditTakenCount
-// 			);
-// 			BankManager.bankObject[name] = newBankObject;
-// 			return newBankObject;
-// 		} else {
-// 			alert("З таким іменем банк вже є!");
-// 			// return null;
-// 		}
-// 	}
-
-// 	static getBankByName(name) {
-// 		return BankManager.bankObject[name];
-// 	}
-
-// 	static editBankByName(currentName, newN, newD, newCC, newCTC) {
-// 		const isBankExsist = Object.keys(BankManager.bankObject).find(
-// 			(bankName) => bankName === newN
-// 		);
-
-// 		if (!isBankExsist) {
-// 			BankManager.bankObject[currentName].editBankInformation(
-// 				newN,
-// 				newD,
-// 				newCC,
-// 				newCTC
-// 			);
-// 			BankManager.bankObject[newN] = BankManager.bankObject[currentName];
-// 			delete BankManager.bankObject[currentName];
-// 		} else {
-// 			alert("З таким іменем банк вже є! Використайте інше ім`я");
-// 		}
-// 	}
-
-// 	static deleteCardByName(currentName) {
-// 		BankManager.bankObject[currentName].deleteObject();
-// 		delete BankManager.bankObject[currentName];
-// 	}
-
-// 	static listBanks() {
-// 		return Object.keys(BankManager.bankObject);
-// 	}
-// }
-
 function switchPage(page) {
 	const sectionCreateBank = document.querySelector(".section-create-bank");
 	const sectionEditBank = document.querySelector(".section-edit-bank");
@@ -149,9 +64,24 @@ function switchPage(page) {
 	}
 }
 
-async function fetchBankData() {
+async function fetchBankData(dataType) {
 	try {
-		const response = await fetch("http://localhost:8080/bank");
+		let outputData;
+		const queryKeyword = dataType.value;
+
+		switch (dataType) {
+			case "alphabet":
+				outputData = "bank?sort=alphabet";
+				break;
+			case "keyword":
+				outputData = `bank/search?keyword=${queryKeyword}`;
+				break;
+			default:
+				outputData = "bank";
+				break;
+		}
+
+		const response = await fetch(`http://localhost:8080/${outputData}`);
 		if (!response.ok) {
 			throw new Error("Network response was not ok");
 		}
@@ -242,10 +172,10 @@ function updateDataOnPage(method) {
 			});
 			break;
 
-		case "alphabetSort":
+		case "alphabet":
 			path.innerHTML = null;
 
-			fetchBankData().then((response) => {
+			fetchBankData("alphabet").then((response) => {
 				response.forEach((element) => {
 					createCardOnPage(
 						element.id,
@@ -348,10 +278,10 @@ CreateBankEl.addEventListener("click", function () {
 
 // // FIXME: КНОПКА НЕ РОБИТЬ ТА ШО ЕДІТ, САМ ПЕРЕХІД ПРАЦЮЄ, АЛЕ ЧОМУСЬ НЕ ВІДСЛІДКОВУЄТЬСЯ ДІЯ ПО QUERYSELECTORALL
 
-// function selectedSorting() {
-// 	const selectedValue = selectSortEl.value;
-// 	return selectedValue;
-// }
+function selectedSorting() {
+	const selectedValue = selectSortEl.value;
+	return selectedValue;
+}
 
 // function useSorting(sortingType) {
 // 	const allCardNames = Object.keys(BankManager.bankObject);
@@ -491,20 +421,6 @@ function createCardOnPage(id, name, customText, clientsCount, creditsCount) {
 	path.appendChild(card);
 }
 
-// function editCard(name, description, clientCount, creditTakenCount) {
-// 	BankManager.editBankByName(
-// 		currentEditObjectName,
-// 		name,
-// 		description,
-// 		clientCount,
-// 		creditTakenCount
-// 	);
-
-// 	currentEditObjectName = null;
-// }
-
-// // function deleteObjectAndCard(objectName) {}
-
 createBankForm.addEventListener("submit", function (event) {
 	const validatedInputTitle = isValidate(inputTitleEl.value);
 	const validatedinputDescription = isValidate(inputDescriptionEl.value);
@@ -541,7 +457,9 @@ createBankForm.addEventListener("submit", function (event) {
 		inputCreditTakenCountEl.value = "";
 
 		switchPage("toMyBanks");
-		// useSorting(selectedSorting());
+
+		const currentSortingType = selectedSorting();
+		updateDataOnPage(currentSortingType);
 	}
 });
 
@@ -583,7 +501,9 @@ EditBankForm.addEventListener("submit", function (event) {
 	inputEditCreditTakenCountEl.value = "";
 
 	switchPage("toMyBanks");
-	// useSorting(selectedSorting());
+
+	const currentSortingType = selectedSorting();
+	updateDataOnPage(currentSortingType);
 });
 
 // кнопка Edit
@@ -618,14 +538,24 @@ document.addEventListener("click", function (event) {
 	}
 });
 
-// selectSortEl.addEventListener("change", function () {
-// 	useSorting(selectedSorting());
-// });
+selectSortEl.addEventListener("change", function () {
+	const currentSortingType = selectedSorting();
+	updateDataOnPage(currentSortingType);
+});
 
 // buttonSeacrhEl.addEventListener("click", () => {
 // 	const validatedValue = isValidate(inputSearchEl.value);
-// 	useFind(validatedValue);
-// 	// inputSearchEl.value = "";
+// 	fetchBankData("alphabet").then((response) => {
+// 		response.forEach((element) => {
+// 			createCardOnPage(
+// 				element.id,
+// 				element.name,
+// 				element.description,
+// 				element.client_count,
+// 				element.credit_taken_count
+// 			);
+// 		});
+// 	});
 // });
 
 // // Відстежуємо натискання клавіш на input

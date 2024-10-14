@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import {
 	getBanks,
+	getBanksByAlphabet,
+	getBanksByKeyword,
 	getBank,
 	createBank,
 	updateBank,
@@ -16,9 +18,26 @@ app.use(cors());
 
 // CRUD запити
 
-// список банків
+// отримати всі банки
 app.get("/bank", async (req, res) => {
-	const banks = await getBanks();
+	let banks;
+
+	switch (req.query.sort) {
+		case "alphabet":
+			banks = await getBanksByAlphabet();
+			break;
+		default:
+			banks = await getBanks();
+			break;
+	}
+
+	res.send(banks);
+});
+
+// отримати всі банки по ключ слову
+app.get("/bank/search", async (req, res) => {
+	const keyword = req.query.keyword;
+	const banks = await getBanksByKeyword(keyword);
 
 	res.send(banks);
 });

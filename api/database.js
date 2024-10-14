@@ -17,6 +17,19 @@ export async function getBanks() {
 	return rows;
 }
 
+export async function getBanksByAlphabet() {
+	const [rows] = await pool.query("SELECT * FROM bank ORDER BY name ASC");
+	return rows;
+}
+
+export async function getBanksByKeyword(key) {
+	const formatedKeyword = `%${key}%`;
+	const [rows] = await pool.query("SELECT * FROM bank WHERE name LIKE ?", [
+		formatedKeyword,
+	]);
+	return rows;
+}
+
 export async function getBank(id) {
 	const [rows] = await pool.query("SELECT * FROM bank WHERE id = ?", [id]);
 	return rows[0];
