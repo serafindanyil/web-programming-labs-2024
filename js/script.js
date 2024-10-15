@@ -64,17 +64,26 @@ function switchPage(page) {
 	}
 }
 
+function updateCountersOnPage(objectArray) {
+	let clientCountArray = [];
+	let creditTakenCountArray = [];
+
+	objectArray.forEach((element) => {
+		clientCountArray.push(element.client_count);
+		creditTakenCountArray.push(element.credit_taken_count);
+	});
+
+	clientTotalValueEl.textContent = reduceValues(clientCountArray);
+	creditTotalValueEl.textContent = reduceValues(creditTakenCountArray);
+}
+
 async function fetchBankData(dataType) {
 	try {
 		let outputData;
-		const queryKeyword = dataType.value;
 
 		switch (dataType) {
 			case "alphabet":
 				outputData = "bank?sort=alphabet";
-				break;
-			case "keyword":
-				outputData = `bank/search?keyword=${queryKeyword}`;
 				break;
 			default:
 				outputData = "bank";
@@ -87,6 +96,9 @@ async function fetchBankData(dataType) {
 		}
 		const data = await response.json();
 		const arrayOfObjects = Array.isArray(data) ? data : [data];
+
+		// Оновити дані на каунтерах
+		updateCountersOnPage(arrayOfObjects);
 
 		return arrayOfObjects;
 	} catch (error) {
@@ -109,6 +121,11 @@ async function fetchCreateBank(dataObject) {
 		}
 
 		const responseData = await response.json(); // Отримуємо та парсимо відповідь
+
+		// Оновлення даних на каунетар FIXME: НЕ ПРАЦЮЄ
+		const sortedIsSelected = selectedSorting();
+		await fetchBankData(sortedIsSelected);
+
 		return responseData;
 	} catch (error) {
 		console.error("Error posting data:", error);
@@ -152,6 +169,29 @@ async function fetchDeleteBank(id) {
 	}
 }
 
+async function fetchFindBankData(keyword, sort = null) {
+	try {
+		let url;
+		switch (sort) {
+			case "alphabet":
+				url = `http://localhost:8080/bank/search?keyword=${keyword}&sort=alphabet`;
+				break;
+			default:
+				url = `http://localhost:8080/bank/search?keyword=${keyword}`;
+		}
+		const response = await fetch(url);
+		if (!response.ok) {
+			throw new Error("Network response was not ok");
+		}
+		const data = await response.json();
+		const arrayOfObjects = Array.isArray(data) ? data : [data];
+
+		return arrayOfObjects;
+	} catch (error) {
+		console.error("Fetch error: ", error);
+	}
+}
+
 function updateDataOnPage(method) {
 	const path = document.querySelector(".main-environment");
 
@@ -169,6 +209,7 @@ function updateDataOnPage(method) {
 						element.credit_taken_count
 					);
 				});
+				updateCountersOnPage(response);
 			});
 			break;
 
@@ -185,6 +226,7 @@ function updateDataOnPage(method) {
 						element.credit_taken_count
 					);
 				});
+				updateCountersOnPage(response);
 			});
 			break;
 
@@ -199,6 +241,45 @@ function updateDataOnPage(method) {
 						element.credit_taken_count
 					);
 				});
+				updateCountersOnPage(response);
+			});
+			break;
+	}
+}
+
+function useFindAndUpdateOnPage(keyword) {
+	const sortedSelected = selectedSorting();
+
+	const path = document.querySelector(".main-environment");
+	path.innerHTML = null;
+
+	switch (sortedSelected) {
+		case "update":
+			fetchFindBankData(keyword).then((response) => {
+				response.forEach((element) => {
+					createCardOnPage(
+						element.id,
+						element.name,
+						element.description,
+						element.client_count,
+						element.credit_taken_count
+					);
+				});
+				updateCountersOnPage(response);
+			});
+			break;
+		case "alphabet":
+			fetchFindBankData(keyword, "alphabet").then((response) => {
+				response.forEach((element) => {
+					createCardOnPage(
+						element.id,
+						element.name,
+						element.description,
+						element.client_count,
+						element.credit_taken_count
+					);
+				});
+				updateCountersOnPage(response);
 			});
 			break;
 	}
@@ -543,20 +624,18 @@ selectSortEl.addEventListener("change", function () {
 	updateDataOnPage(currentSortingType);
 });
 
-// buttonSeacrhEl.addEventListener("click", () => {
-// 	const validatedValue = isValidate(inputSearchEl.value);
-// 	fetchBankData("alphabet").then((response) => {
-// 		response.forEach((element) => {
-// 			createCardOnPage(
-// 				element.id,
-// 				element.name,
-// 				element.description,
-// 				element.client_count,
-// 				element.credit_taken_count
-// 			);
-// 		});
-// 	});
-// });
+// FIXME: ПРИ ПОШУКУ ЕЛЕМЕНТУ ДОБАВ З СОРТУВАННЯМ ЗА ДОПОМОГОЮ НОВИХ ЕНД ПОІНТІВ З ПАРАМЕТРАМИ SEARCH і SORT
+buttonSeacrhEl.addEventListener("click", () => {
+	const validatedValue = isValidate(inputSearchEl.value);
+	useFindAndUpdateOnPage(validatedValue);
+});
+
+buttonClearEl.addEventListener("click", () => {
+	const currentSortingType = selectedSorting();
+	updateDataOnPage(currentSortingType);
+
+	inputSearchEl.value = "";
+});
 
 // // Відстежуємо натискання клавіш на input
 // inputSearchEl.addEventListener("keydown", function (event) {
@@ -569,19 +648,14 @@ selectSortEl.addEventListener("change", function () {
 // 	}
 // });
 
-// buttonClearEl.addEventListener("click", () => {
-// 	useSorting(selectedSorting());
-// 	inputSearchEl.value = "";
-// });
-
-// function reduceValues(countArray) {
-// 	const initialValue = 0;
-// 	const sumWithInitial = countArray.reduce(
-// 		(accumulator, currentValue) => accumulator + currentValue,
-// 		initialValue
-// 	);
-// 	return sumWithInitial;
-// }
+function reduceValues(countArray) {
+	const initialValue = 0;
+	const sumWithInitial = countArray.reduce(
+		(accumulator, currentValue) => accumulator + currentValue,
+		initialValue
+	);
+	return sumWithInitial;
+}
 
 // IIFE початок роботи на сторінці
 

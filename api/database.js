@@ -30,6 +30,15 @@ export async function getBanksByKeyword(key) {
 	return rows;
 }
 
+export async function getBanksByKeywordWithSortByAlphabet(key) {
+	const formatedKeyword = `%${key}%`;
+	const [rows] = await pool.query(
+		"SELECT * FROM bank WHERE name LIKE ? ORDER BY name ASC",
+		[formatedKeyword]
+	);
+	return rows;
+}
+
 export async function getBank(id) {
 	const [rows] = await pool.query("SELECT * FROM bank WHERE id = ?", [id]);
 	return rows[0];

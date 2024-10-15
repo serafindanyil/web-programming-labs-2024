@@ -4,6 +4,7 @@ import {
 	getBanks,
 	getBanksByAlphabet,
 	getBanksByKeyword,
+	getBanksByKeywordWithSortByAlphabet,
 	getBank,
 	createBank,
 	updateBank,
@@ -20,26 +21,34 @@ app.use(cors());
 
 // отримати всі банки
 app.get("/bank", async (req, res) => {
-	let banks;
+	let allSortedBanks;
 
 	switch (req.query.sort) {
 		case "alphabet":
-			banks = await getBanksByAlphabet();
+			allSortedBanks = await getBanksByAlphabet();
 			break;
 		default:
-			banks = await getBanks();
+			allSortedBanks = await getBanks();
 			break;
 	}
 
-	res.send(banks);
+	res.send(allSortedBanks);
 });
 
 // отримати всі банки по ключ слову
 app.get("/bank/search", async (req, res) => {
+	let allSortedBanksWithSearch;
 	const keyword = req.query.keyword;
-	const banks = await getBanksByKeyword(keyword);
 
-	res.send(banks);
+	if (req.query.sort) {
+		allSortedBanksWithSearch = await getBanksByKeywordWithSortByAlphabet(
+			keyword
+		);
+	} else {
+		allSortedBanksWithSearch = await getBanksByKeyword(keyword);
+	}
+
+	res.send(allSortedBanksWithSearch);
 });
 
 // отримати банк по ід
