@@ -64,19 +64,6 @@ function switchPage(page) {
 	}
 }
 
-function updateCountersOnPage(objectArray) {
-	let clientCountArray = [];
-	let creditTakenCountArray = [];
-
-	objectArray.forEach((element) => {
-		clientCountArray.push(element.client_count);
-		creditTakenCountArray.push(element.credit_taken_count);
-	});
-
-	clientTotalValueEl.textContent = reduceValues(clientCountArray);
-	creditTotalValueEl.textContent = reduceValues(creditTakenCountArray);
-}
-
 async function fetchBankData(dataType) {
 	try {
 		let outputData;
@@ -97,10 +84,22 @@ async function fetchBankData(dataType) {
 		const data = await response.json();
 		const arrayOfObjects = Array.isArray(data) ? data : [data];
 
-		// Оновити дані на каунтерах
-		updateCountersOnPage(arrayOfObjects);
-
 		return arrayOfObjects;
+	} catch (error) {
+		console.error("Fetch error: ", error);
+	}
+}
+
+async function fetchBankById(id) {
+	try {
+		const response = await fetch(`http://localhost:8080/bank/${id}`);
+
+		if (!response.ok) {
+			throw new Error("Network response was not ok");
+		}
+		const data = await response.json();
+
+		return data;
 	} catch (error) {
 		console.error("Fetch error: ", error);
 	}
@@ -121,10 +120,6 @@ async function fetchCreateBank(dataObject) {
 		}
 
 		const responseData = await response.json(); // Отримуємо та парсимо відповідь
-
-		// Оновлення даних на каунетар FIXME: НЕ ПРАЦЮЄ
-		const sortedIsSelected = selectedSorting();
-		await fetchBankData(sortedIsSelected);
 
 		return responseData;
 	} catch (error) {
@@ -157,6 +152,7 @@ async function fetchDeleteBank(id) {
 	try {
 		const response = await fetch(`http://localhost:8080/bank/${id}`, {
 			method: "DELETE",
+			cache: "no-store",
 		});
 
 		if (!response.ok) {
@@ -190,6 +186,19 @@ async function fetchFindBankData(keyword, sort = null) {
 	} catch (error) {
 		console.error("Fetch error: ", error);
 	}
+}
+
+function updateCountersOnPage(objectArray) {
+	let clientCountArray = [];
+	let creditTakenCountArray = [];
+
+	objectArray.forEach((element) => {
+		clientCountArray.push(element.client_count);
+		creditTakenCountArray.push(element.credit_taken_count);
+	});
+
+	clientTotalValueEl.textContent = reduceValues(clientCountArray);
+	creditTotalValueEl.textContent = reduceValues(creditTakenCountArray);
 }
 
 function updateDataOnPage(method) {
@@ -285,35 +294,6 @@ function useFindAndUpdateOnPage(keyword) {
 	}
 }
 
-// async function fetchData() {
-// 	try {
-// 		const response = await fetch("http://localhost:8080/bank");
-// 		if (!response.ok) {
-// 			throw new Error("Network response was not ok");
-// 		}
-// 		const data = await response.json();
-
-// 		const arrayOfObjects = Array.isArray(data) ? data : [data];
-
-// 		return arrayOfObjects;
-// 	} catch (error) {
-// 		console.error("Fetch error: ", error);
-// 	}
-// }
-
-// let currentEditObjectName;
-// function updateInfoOnEditPage(objectNameWillEdit) {
-// 	const [name, description, clientCount, ...creditTakenCount] =
-// 		BankManager.getBankByName(objectNameWillEdit).data();
-
-// 	inputEditTitleEl.placeholder = name;
-// 	inputEditDescriptionEl.placeholder = description;
-// 	inputEditCountClientsEl.placeholder = clientCount;
-// 	inputEditCreditTakenCountEl.placeholder = creditTakenCount;
-
-// 	currentEditObjectName = objectNameWillEdit;
-// }
-
 function isValidate(element) {
 	if (isNaN(element) && element.trim() !== "") {
 		return element;
@@ -363,92 +343,6 @@ function selectedSorting() {
 	const selectedValue = selectSortEl.value;
 	return selectedValue;
 }
-
-// function useSorting(sortingType) {
-// 	const allCardNames = Object.keys(BankManager.bankObject);
-// 	const clientCountValue = [];
-// 	const creditCountValue = [];
-// 	if (sortingType == "alphabet") {
-// 		removeCards();
-
-// 		const sortArrayByName = allCardNames.sort();
-// 		sortArrayByName.forEach((value) => {
-// 			const currentObject = BankManager.getBankByName(value);
-// 			createCard(
-// 				currentObject.name,
-// 				currentObject.description,
-// 				currentObject.clientCount,
-// 				currentObject.creditTakenCount
-// 			);
-// 			clientCountValue.push(currentObject.clientCount);
-// 			creditCountValue.push(currentObject.creditTakenCount);
-// 		});
-// 	} else {
-// 		removeCards();
-
-// 		allCardNames.forEach((value) => {
-// 			const currentObject = BankManager.getBankByName(value);
-// 			createCard(
-// 				currentObject.name,
-// 				currentObject.description,
-// 				currentObject.clientCount,
-// 				currentObject.creditTakenCount
-// 			);
-// 			clientCountValue.push(currentObject.clientCount);
-// 			creditCountValue.push(currentObject.creditTakenCount);
-// 		});
-// 	}
-
-// async function updateDataOnPage(array) {
-// 	array.forEach((element) => {
-// 		createCardOnPage(
-// 			element.id,
-// 			element.name,
-// 			element.description,
-// 			element.client_count,
-// 			element.credit_taken_count
-// 		);
-// 	});
-// }
-
-// fetchData().then((data) => {
-// 	updateDataOnPage(data);
-// });
-
-// 	clientTotalValueEl.textContent = reduceValues(clientCountValue);
-// 	creditTotalValueEl.textContent = reduceValues(creditCountValue);
-// }
-
-// function useFind(findingValue) {
-// 	const allCardNames = Object.keys(BankManager.bankObject);
-
-// 	const findedNames = allCardNames.filter((name) =>
-// 		name.toLowerCase().includes(findingValue.trim().toLowerCase())
-// 	);
-
-// 	removeCards();
-
-// 	const clientCountValue = [];
-// 	const creditCountValue = [];
-// 	findedNames.forEach((value) => {
-// 		const currentObject = BankManager.getBankByName(value);
-// 		createCard(
-// 			currentObject.name,
-// 			currentObject.description,
-// 			currentObject.clientCount,
-// 			currentObject.creditTakenCount
-// 		);
-// 		clientCountValue.push(currentObject.clientCount);
-// 		creditCountValue.push(currentObject.creditTakenCount);
-// 	});
-
-// 	clientTotalValueEl.textContent = reduceValues(clientCountValue);
-// 	creditTotalValueEl.textContent = reduceValues(creditCountValue);
-
-// 	if (findedNames.length == 0) {
-// 		alert("За таким запитом нікого не знайдено");
-// 	}
-// }
 
 function createCardOnPage(id, name, customText, clientsCount, creditsCount) {
 	// Створюємо елементи
@@ -523,13 +417,10 @@ createBankForm.addEventListener("submit", function (event) {
 		};
 
 		fetchCreateBank(newBankObject).then((response) => {
-			createCardOnPage(
-				response.id,
-				response.name,
-				response.description,
-				response.client_count,
-				response.credit_taken_count
-			);
+			if (response) {
+				const currentSortingType = selectedSorting();
+				updateDataOnPage(currentSortingType);
+			}
 		});
 
 		inputTitleEl.value = "";
@@ -538,9 +429,6 @@ createBankForm.addEventListener("submit", function (event) {
 		inputCreditTakenCountEl.value = "";
 
 		switchPage("toMyBanks");
-
-		const currentSortingType = selectedSorting();
-		updateDataOnPage(currentSortingType);
 	}
 });
 
@@ -555,7 +443,6 @@ EditBankForm.addEventListener("submit", function (event) {
 	);
 
 	const currentCardId = event.target.getAttribute("data-id-current-bank");
-	const currentCardEl = document.getElementById(currentCardId);
 
 	const editBankObject = {
 		id: currentCardId,
@@ -566,14 +453,11 @@ EditBankForm.addEventListener("submit", function (event) {
 	};
 
 	fetchEditBank(editBankObject).then((response) => {
-		createCardOnPage(
-			response.id,
-			response.name,
-			response.description,
-			response.client_count,
-			response.credit_taken_count
-		);
-		currentCardEl.remove();
+		if (response) {
+			const currentSortingType = selectedSorting();
+
+			updateDataOnPage(currentSortingType);
+		}
 	});
 
 	inputEditTitleEl.value = "";
@@ -582,9 +466,6 @@ EditBankForm.addEventListener("submit", function (event) {
 	inputEditCreditTakenCountEl.value = "";
 
 	switchPage("toMyBanks");
-
-	const currentSortingType = selectedSorting();
-	updateDataOnPage(currentSortingType);
 });
 
 // кнопка Edit
@@ -594,10 +475,21 @@ document.addEventListener("click", function (event) {
 
 		if (outerContainer) {
 			const id = outerContainer.id;
-			const currentCardEl = document.getElementById(id);
 			if (id) {
-				switchPage("toEditBank");
 				EditBankForm.dataset.idCurrentBank = id;
+				switchPage("toEditBank");
+
+				fetchBankById(id).then((response) => {
+					if (response) {
+						const { id, name, description, client_count, credit_taken_count } =
+							response;
+
+						inputEditTitleEl.placeholder = name;
+						inputEditDescriptionEl.placeholder = description;
+						inputEditCountClientsEl.placeholder = client_count;
+						inputEditCreditTakenCountEl.placeholder = credit_taken_count;
+					}
+				});
 			}
 		}
 	}
@@ -608,12 +500,14 @@ document.addEventListener("click", function (event) {
 	if (event.target.classList.contains("removeButton")) {
 		const outerContainer = event.target.closest(".card--bank");
 
+		const currentSortingType = selectedSorting();
+
 		if (outerContainer) {
 			const id = outerContainer.id;
-			const currentCardEl = document.getElementById(id);
 			if (id) {
-				fetchDeleteBank(id);
-				currentCardEl.remove();
+				fetchDeleteBank(id).finally(() => {
+					updateDataOnPage(currentSortingType);
+				});
 			}
 		}
 	}
@@ -627,7 +521,11 @@ selectSortEl.addEventListener("change", function () {
 // FIXME: ПРИ ПОШУКУ ЕЛЕМЕНТУ ДОБАВ З СОРТУВАННЯМ ЗА ДОПОМОГОЮ НОВИХ ЕНД ПОІНТІВ З ПАРАМЕТРАМИ SEARCH і SORT
 buttonSeacrhEl.addEventListener("click", () => {
 	const validatedValue = isValidate(inputSearchEl.value);
-	useFindAndUpdateOnPage(validatedValue);
+	if (validatedValue !== null) {
+		useFindAndUpdateOnPage(validatedValue);
+	} else {
+		alert("Шукане значення не може бути пустим");
+	}
 });
 
 buttonClearEl.addEventListener("click", () => {
