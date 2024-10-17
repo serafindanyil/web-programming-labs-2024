@@ -513,20 +513,19 @@ document.addEventListener("click", function (event) {
 	}
 });
 
-selectSortEl.addEventListener("change", function () {
-	const currentSortingType = selectedSorting();
-	updateDataOnPage(currentSortingType);
-});
-
-// FIXME: ПРИ ПОШУКУ ЕЛЕМЕНТУ ДОБАВ З СОРТУВАННЯМ ЗА ДОПОМОГОЮ НОВИХ ЕНД ПОІНТІВ З ПАРАМЕТРАМИ SEARCH і SORT
-buttonSeacrhEl.addEventListener("click", () => {
+function validateSearchWithUsingSorting() {
 	const validatedValue = isValidate(inputSearchEl.value);
 	if (validatedValue !== null) {
 		useFindAndUpdateOnPage(validatedValue);
 	} else {
 		alert("Шукане значення не може бути пустим");
 	}
-});
+}
+
+selectSortEl.addEventListener("change", validateSearchWithUsingSorting);
+
+// FIXME: ПРИ ПОШУКУ ЕЛЕМЕНТУ ДОБАВ З СОРТУВАННЯМ ЗА ДОПОМОГОЮ НОВИХ ЕНД ПОІНТІВ З ПАРАМЕТРАМИ SEARCH і SORT
+buttonSeacrhEl.addEventListener("click", validateSearchWithUsingSorting);
 
 buttonClearEl.addEventListener("click", () => {
 	const currentSortingType = selectedSorting();
