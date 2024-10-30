@@ -45,3 +45,7 @@
 .active {
 	background-color: var(--light-gray);
 }
+
+#header__img {
+	margin-right: 22.05rem;
+}

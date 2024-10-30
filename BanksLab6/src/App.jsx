@@ -2,22 +2,17 @@ import { useState } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import LinkButton from "./components/Header/LinkButton";
-import HomePage from "./components/HomePage/HomePage";
-import BarProductInfo from "./components/HomePage/BarPoductInfo";
-import CardWrapper from "./components/CardProduct/CardWrapper.jsx";
-import CardProduct from "./components/CardProduct/CardProduct";
-import ButtonSolid from "./components/Buttons/ButtonSolid.jsx";
+import Home from "./components/Home/Home";
+import Catalog from "./components/Catalog/Catalog";
 
-import PRODUCTS from "../data/data.js";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
 	const [currentPage, changePage] = useState("Home");
 
-	const randomBankObj = Math.floor(Math.random() * PRODUCTS.length);
-
 	return (
 		<>
-			<Header>
+			<Header isSearch={false}>
 				<LinkButton isActive={currentPage} onClick={() => changePage("Home")}>
 					Home
 				</LinkButton>
@@ -30,15 +25,8 @@ function App() {
 					Cart
 				</LinkButton>
 			</Header>
-			<HomePage>
-				<BarProductInfo {...PRODUCTS[randomBankObj]} />
-				<CardWrapper>
-					{PRODUCTS.map((item) => (
-						<CardProduct {...item} />
-					))}
-				</CardWrapper>
-				<ButtonSolid>View more</ButtonSolid>
-			</HomePage>
+			{/* <Home /> */}
+			<Catalog />
 			<Footer />
 		</>
 	);

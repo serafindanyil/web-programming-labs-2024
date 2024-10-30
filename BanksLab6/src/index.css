@@ -56,6 +56,14 @@ html {
 	margin-bottom: 9.6rem;
 }
 
+.margin-btm-biggest {
+	margin-bottom: 29rem;
+}
+
+.margin-right-md:not(:last-child) {
+	margin-right: 2.4rem;
+}
+
 /* --Text-- */
 
 .heading-primary {
@@ -88,4 +96,18 @@ html {
 
 .grid--3-col {
 	grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4-col {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.gap--36 {
+	gap: 3.6rem;
+	grid-template-rows: auto;
+}
+
+.gap--96 {
+	gap: 9.6rem;
+	grid-template-rows: auto;
 }
