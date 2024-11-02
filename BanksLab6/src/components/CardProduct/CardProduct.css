@@ -6,20 +6,24 @@
 
 	transition: all 0.3s;
 }
-.card-simple {
+.card_simple {
 	padding: 2.4rem 1.6rem;
 }
 
-.card-full {
+.card_full {
 	border: 1px solid var(--black);
 	overflow: hidden;
 }
 
-.card-full img {
+.card_simple .card_img {
 	max-height: 25.6rem;
 	width: auto;
 }
-.card-full .paragraph {
+.card_full .card_img {
+	max-height: 12.8rem;
+	width: auto;
+}
+.card_full .paragraph {
 	text-align: justify;
 
 	display: -webkit-box; /* Встановлює "гнучкий блок" для підтримки обрізання */
@@ -27,11 +31,6 @@
 	-webkit-box-orient: vertical; /* Вертикальна орієнтація */
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-.card_img {
-	height: 12.8rem;
-	width: auto;
 }
 
 .card__value {

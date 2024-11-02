@@ -1,20 +1,24 @@
 import React from "react";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
-export default function LinkButton(props) {
+export default function LinkButton({ children, ...props }) {
 	return (
 		<>
 			<li className="links_item">
-				<a
+				<Link
 					className={
-						props.isActive === props.children
+						props.isActive === children
 							? "links_item_button active"
 							: "links_item_button"
 					}
+					{...props}
 					onClick={props.onClick}>
-					{props.children}
-				</a>
+					{children}
+				</Link>
 			</li>
 		</>
 	);
 }
+
+console.log("Щоб розпочати привітання запусти vs code");

@@ -8,7 +8,7 @@ export default function Catalog() {
 	return (
 		<main>
 			<FilterBar className="margin-btm-md" />
-			<CardWrapper className="grid grid--3-col gap--96 margin-btm-biggest container">
+			<CardWrapper className="grid grid--3-col gap--96 margin-btm-md container">
 				{PRODUCTS.map((item) => (
 					<CardProduct {...item} type="full" />
 				))}

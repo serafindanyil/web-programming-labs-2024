@@ -6,8 +6,8 @@ export default function CardProduct({
 	title,
 	description,
 	imgSrc,
-	bond_price,
-	bond_percent,
+	bondPrice,
+	bondPercent,
 	type = "simple",
 }) {
 	let currentCard;
@@ -24,7 +24,7 @@ export default function CardProduct({
 			break;
 		case "full":
 			currentCard = (
-				<div className="card card-full">
+				<div className="card card_full">
 					<div id="card__top">
 						<p id="card__top__id">{id}</p>
 					</div>
@@ -34,11 +34,11 @@ export default function CardProduct({
 						<p className="paragraph margin-btm-sm">{description}</p>
 						<div className="card__value margin-btm-sm">
 							<h3 className="heading-tertiary">Price:</h3>
-							<span className="card__value__price">{bond_price}</span>
+							<span className="card__value__price">{bondPrice}</span>
 						</div>
 						<div className="card__value margin-btm-md">
 							<h3 className="heading-tertiary">Percent per year:</h3>
-							<span className="card__value__percent">{bond_percent}</span>
+							<span className="card__value__percent">{bondPercent}</span>
 						</div>
 						<Button isBig="true">View more</Button>
 					</div>

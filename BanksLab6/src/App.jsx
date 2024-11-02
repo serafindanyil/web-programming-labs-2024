@@ -12,22 +12,35 @@ function App() {
 
 	return (
 		<>
-			<Header isSearch={false}>
-				<LinkButton isActive={currentPage} onClick={() => changePage("Home")}>
-					Home
-				</LinkButton>
-				<LinkButton
-					isActive={currentPage}
-					onClick={() => changePage("Catalog")}>
-					Catalog
-				</LinkButton>
-				<LinkButton isActive={currentPage} onClick={() => changePage("Cart")}>
-					Cart
-				</LinkButton>
-			</Header>
-			{/* <Home /> */}
-			<Catalog />
-			<Footer />
+			<Router>
+				<Header isSearch={currentPage === "Catalog" ? true : false}>
+					<LinkButton
+						to="/"
+						isActive={currentPage}
+						onClick={() => changePage("Home")}>
+						Home
+					</LinkButton>
+					<LinkButton
+						to="/catalog"
+						isActive={currentPage}
+						onClick={() => changePage("Catalog")}>
+						Catalog
+					</LinkButton>
+					<LinkButton
+						to="*"
+						isActive={currentPage}
+						onClick={() => changePage("Cart")}>
+						Cart
+					</LinkButton>
+				</Header>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/catalog" element={<Catalog />} />
+					<Route path="*" />
+				</Routes>
+
+				<Footer />
+			</Router>
 		</>
 	);
 }
