@@ -37,7 +37,7 @@
 
 .button-outline:hover,
 .button-outline:active {
-	border: 2px solid transparent;
+	border: 1px solid transparent;
 	background-color: var(--blacky);
 	color: #fff;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);

@@ -20,5 +20,3 @@ export default function LinkButton({ children, ...props }) {
 		</>
 	);
 }
-
-console.log("Щоб розпочати привітання запусти vs code");

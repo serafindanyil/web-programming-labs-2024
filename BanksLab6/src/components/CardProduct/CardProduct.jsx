@@ -1,6 +1,8 @@
 import "./CardProduct.css";
 import Button from "../Button/Button";
 
+import toKebabCase from "../../functions/toKebabCase";
+
 export default function CardProduct({
 	id,
 	title,
@@ -40,12 +42,13 @@ export default function CardProduct({
 							<h3 className="heading-tertiary">Percent per year:</h3>
 							<span className="card__value__percent">{bondPercent}</span>
 						</div>
-						<Button isBig="true">View more</Button>
+						<Button tag="link" to={`/item/${toKebabCase(title)}`} isBig="true">
+							View more
+						</Button>
 					</div>
 				</div>
 			);
 			break;
 	}
-
-	return currentCard; // Повертаємо картку без додаткових обгорток
+	return currentCard;
 }

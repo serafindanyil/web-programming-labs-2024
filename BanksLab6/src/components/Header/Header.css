@@ -5,8 +5,9 @@
 
 .header-wrapper {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
+	height: 4rem;
 }
 
 .links {
@@ -14,7 +15,10 @@
 	gap: 1.6rem;
 	align-items: center;
 	justify-content: center;
-	flex-grow: 1;
+
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .links_item {
@@ -45,8 +49,4 @@
 
 .active {
 	background-color: var(--light-gray);
-}
-
-#header__img {
-	margin-right: 22.05rem;
 }

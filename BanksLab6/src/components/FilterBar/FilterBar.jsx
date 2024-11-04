@@ -1,32 +1,62 @@
 import Filter from "../Filter/Filter";
 import Option from "../Option/Option";
 import Button from "../Button/Button";
-import Wrapper from "../Wrapper/Wrapper";
+import { useContext, useState } from "react";
+import { SearchContext } from "../../context/Context.jsx";
 
 import "./FilterBar.css";
 
 export default function FilterBar({ ...props }) {
+	const { useFilter } = useContext(SearchContext);
+
+	const [currentTitle, setTitle] = useState(null);
+	const [currentPrice, setPrice] = useState(null);
+	const [currentPercentage, setPercentage] = useState(null);
+
+	const parseData = (item) => (item === "" ? null : item);
+
+	function handleButtonFilter() {
+		const filterParametersObj = {
+			title: parseData(currentTitle),
+			price: parseData(currentPrice),
+			percentage: parseData(currentPercentage),
+		};
+
+		useFilter(filterParametersObj);
+	}
+
 	return (
 		<section {...props} id="section">
 			<div id="section-filter" className=" container">
-				<Wrapper>
-					<Filter name="first-filter" className="margin-right-md">
-						<Option value="1">1</Option>
-						<Option value="2">2</Option>
-						<Option value="3">3</Option>
+				<div id="filter-wrapper">
+					<Filter
+						name="title"
+						className="margin-right-md"
+						onChange={(event) => setTitle(event.target.value)}>
+						<Option value="">Select sorting</Option>
+						<Option value="alphabet">Alphabet</Option>
 					</Filter>
-					<Filter name="first-second" className="margin-right-md">
-						<Option value="1">1</Option>
-						<Option value="2">2</Option>
-						<Option value="3">3</Option>
+					<Filter
+						name="price"
+						className="margin-right-md"
+						onChange={(event) => setPrice(event.target.value)}>
+						<Option value="">Select sorting</Option>
+						<Option value="lowPrice">Low price</Option>
+						<Option value="highPrice">High price</Option>
 					</Filter>
-					<Filter name="first-tertiary" className="margin-right-md">
-						<Option value="1">1</Option>
-						<Option value="2">2</Option>
-						<Option value="3">3</Option>
+					<Filter
+						name="percentage"
+						className="margin-right-md"
+						onChange={(event) => setPercentage(event.target.value)}>
+						<Option value="">Select sorting</Option>
+						<Option value="2.5">2.5%</Option>
+						<Option value="3.5">3.5%</Option>
+						<Option value="5">5%</Option>
 					</Filter>
-				</Wrapper>
-				<Button type="outline">Apply</Button>
+				</div>
+				<Button type="outline" onClick={handleButtonFilter}>
+					Apply
+				</Button>
 			</div>
 		</section>
 	);

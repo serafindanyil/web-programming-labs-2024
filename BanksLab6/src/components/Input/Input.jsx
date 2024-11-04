@@ -1,6 +1,11 @@
 import "./Input.css";
 
-export default function Input({ type = "simple", img = null, ...props }) {
+export default function Input({
+	title = null,
+	type = "simple",
+	img = null,
+	...props
+}) {
 	let style;
 
 	switch (type) {
@@ -13,8 +18,11 @@ export default function Input({ type = "simple", img = null, ...props }) {
 	}
 	return (
 		<div id="input-element">
+			{title && (
+				<h4 className="heading-quaternary margin-btm-smaller">{title}</h4>
+			)}
 			{img && <img src={img} id="input-element__img" />}
-			<input {...props} className={style} />;
+			<input {...props} className={style} />
 		</div>
 	);
 }
