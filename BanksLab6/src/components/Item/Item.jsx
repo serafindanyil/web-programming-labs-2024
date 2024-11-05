@@ -6,7 +6,6 @@ import Wrapper from "../Wrapper/Wrapper";
 import Filter from "../Filter/Filter";
 import Option from "../Option/Option";
 import Input from "../Input/Input";
-import toKebabCase from "../../functions/toKebabCase";
 import Button from "../Button/Button";
 import "./Item.css";
 
@@ -14,7 +13,7 @@ export default function Item({ ...props }) {
 	const { id } = useParams();
 	const { currentCards } = useContext(ProductContext);
 
-	const currentCard = currentCards.find((obj) => toKebabCase(obj.title) === id);
+	const currentCard = currentCards.find((obj) => id == obj.id);
 
 	return (
 		<main id="wrapper">
@@ -31,7 +30,9 @@ export default function Item({ ...props }) {
 					Price: ${currentCard.bondPrice.toLocaleString("de-DE")}
 				</span>
 				<div id="button-wrapper">
-					<Button type="outline">Go back</Button>
+					<Button tag="link" type="outline" to={`/catalog`}>
+						Go back
+					</Button>
 					<Button type="solid">Add to card</Button>
 				</div>
 			</div>
