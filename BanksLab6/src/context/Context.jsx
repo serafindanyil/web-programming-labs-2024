@@ -33,11 +33,8 @@ const Context = (props) => {
 
 const Search = (props) => {
 	const { currentCards } = useContext(ProductContext);
+	const [currentFilterCards, setFilterCards] = useState(currentCards);
 	const [currentSearchCards, setSearchCards] = useState(currentCards);
-
-	useEffect(() => {
-		setSearchCards(currentCards);
-	}, [currentCards]);
 
 	const [currentSorting, setSorting] = useState({
 		title: null,
@@ -45,21 +42,44 @@ const Search = (props) => {
 		percentage: null,
 	});
 
+	useEffect(() => {
+		setFilterCards(currentCards);
+	}, [currentCards]);
+
+	// useEffect(() => {
+	// 	// перевірка чи старе сортування не дорівнює current, шоб не перевантажувати сторінку, коли однаковий селект опшин
+	// 	setSorting((oldSortingObj) => {
+	// 		const oldSortingStr = JSON.stringify(oldSortingObj);
+	// 		const newSortingStr = JSON.stringify(sortingTypeObj);
+
+	// 		return oldSortingStr !== newSortingStr
+	// 			? { ...sortingTypeObj }
+	// 			: oldSortingObj;
+	// 	});
+	// });
+
 	// FIXME: НЕ ПРАЦЄЮ ФІЛЬТР
 	const useFilter = (sortingTypeObj) => {
 		switch (sortingTypeObj.title) {
 			case "alphabet":
-				setSearchCards((oldSearchCards) => {
+				setFilterCards((oldSearchCards) => {
 					return [...oldSearchCards].sort((a, b) =>
 						a.title.localeCompare(b.title)
 					);
 				});
+				break;
+			case null:
+				setFilterCards(currentCards);
 		}
 	};
 
+	useEffect(() => {
+		setSearchCards(currentFilterCards);
+	}, [currentFilterCards]);
+
 	const useSearch = (keyword) => {
 		// name.toLowerCase().includes(findingValue.trim().toLowerCase())
-		const findedObjects = currentCards.filter((item) =>
+		const findedObjects = currentFilterCards.filter((item) =>
 			item.title.toLowerCase().includes(keyword)
 		);
 
