@@ -32,14 +32,11 @@ export default function CardProduct({
 						<img src={imgSrc} alt={title} className="card_img margin-btm-sm" />
 						<h2 className="heading-secondary margin-btm-sm">{title}</h2>
 						<p className="paragraph margin-btm-sm">{description}</p>
-						<div className="card__value margin-btm-sm">
+						<div className="card__value margin-btm-md">
 							<h3 className="heading-tertiary">Price:</h3>
 							<span className="card__value__price">{bondPrice}</span>
 						</div>
-						<div className="card__value margin-btm-md">
-							<h3 className="heading-tertiary">Percent per year:</h3>
-							<span className="card__value__percent">{bondPercent}</span>
-						</div>
+
 						<Button tag="link" to={`/item/${id}`} isBig="true">
 							View more
 						</Button>

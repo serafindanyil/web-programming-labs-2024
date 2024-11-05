@@ -6,7 +6,7 @@ const PRODUCTS = [
 			"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laboriosam recusandae maxime assumenda ipsa deleniti necessitatibus officiis expedita dicta, voluptates dolores sint unde tenetur quidem? Excepturi cumque assumenda eius maxime!",
 		imgSrc: "/bankImg/monobank.png",
 		bondPrice: 10000,
-		bondPercent: 2.5,
+		bondPercent: [1.5, 2.5, 5],
 		charArray: ["good percentage"],
 	},
 	{
@@ -16,7 +16,7 @@ const PRODUCTS = [
 			"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laboriosam recusandae maxime assumenda ipsa deleniti necessitatibus officiis expedita dicta, voluptates dolores sint unde tenetur quidem? Excepturi cumque assumenda eius maxime!",
 		imgSrc: "/bankImg/privat.png",
 		bondPrice: 1000,
-		bondPercent: 1.5,
+		bondPercent: [2.5, 5],
 		charArray: ["good reliability", "best price"],
 	},
 	{
@@ -26,7 +26,7 @@ const PRODUCTS = [
 			"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laboriosam recusandae maxime assumenda ipsa deleniti necessitatibus officiis expedita dicta, voluptates dolores sint unde tenetur quidem? Excepturi cumque assumenda eius maxime!",
 		imgSrc: "/bankImg/oschad.png",
 		bondPrice: 5000,
-		bondPercent: 3.5,
+		bondPercent: [2.5, 5],
 		charArray: ["best percentage", "good price"],
 	},
 	{
@@ -34,9 +34,9 @@ const PRODUCTS = [
 		title: "UkrsibBank",
 		description:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex earum deserunt similique dignissimos quas doloremque dolore sint.",
-		imgSrc: "/bankImg/monobank.png",
+		imgSrc: "/haveNoBank.svg",
 		bondPrice: 7500,
-		bondPercent: 2.0,
+		bondPercent: [5],
 		charArray: ["trusted bank", "high reputation"],
 	},
 	{
@@ -44,9 +44,9 @@ const PRODUCTS = [
 		title: "AlfaBank",
 		description:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam nisi perferendis iure vero amet labore molestias!",
-		imgSrc: "/bankImg/monobank.png",
+		imgSrc: "/haveNoBank.svg",
 		bondPrice: 8500,
-		bondPercent: 1.8,
+		bondPercent: [1.5],
 		charArray: ["low fees", "reliable partner"],
 	},
 	{
@@ -54,9 +54,9 @@ const PRODUCTS = [
 		title: "RaiffeisenBank",
 		description:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quod molestiae quam id optio est necessitatibus!",
-		imgSrc: "/bankImg/monobank.png",
+		imgSrc: "/haveNoBank.svg",
 		bondPrice: 6200,
-		bondPercent: 2.9,
+		bondPercent: [2.5],
 		charArray: ["good customer service", "flexible rates"],
 	},
 	{
@@ -64,9 +64,9 @@ const PRODUCTS = [
 		title: "UniversalBank",
 		description:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo perferendis natus reprehenderit fugiat est omnis.",
-		imgSrc: "/bankImg/monobank.png",
+		imgSrc: "/haveNoBank.svg",
 		bondPrice: 5500,
-		bondPercent: 2.7,
+		bondPercent: [1.5, 2.5, 5],
 		charArray: ["high security", "stable returns"],
 	},
 	{
@@ -74,9 +74,9 @@ const PRODUCTS = [
 		title: "ConcordBank",
 		description:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita ullam animi facere amet voluptate dolore.",
-		imgSrc: "/bankImg/monobank.png",
+		imgSrc: "/haveNoBank.svg",
 		bondPrice: 4000,
-		bondPercent: 1.6,
+		bondPercent: [5],
 		charArray: ["accessible services", "good for small investors"],
 	},
 	{
@@ -84,9 +84,9 @@ const PRODUCTS = [
 		title: "PUMB",
 		description:
 			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Et minima totam aliquam inventore, quo beatae.",
-		imgSrc: "/bankImg/monobank.png",
+		imgSrc: "/haveNoBank.svg",
 		bondPrice: 9800,
-		bondPercent: 3.3,
+		bondPercent: [1.5],
 		charArray: ["best in class", "secure investment"],
 	},
 ];

@@ -1,14 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import PRODUCTS from "../../data/data";
-
-import { useEffect } from "react";
 
 const ProductContext = createContext();
 const SearchContext = createContext();
 
 const Context = (props) => {
 	const clusterSize = 3;
-	const lastObjIndex = PRODUCTS.length - 1; // ластовий індекс обєкта або в майбутньому добавити кількість записів, щоб перевірити чи можна буде в наступний раз зробити фетч даних
 
 	const [currentIndex, setIndex] = useState(clusterSize);
 	const [currentCards, setCards] = useState(() =>
@@ -35,56 +32,53 @@ const Search = (props) => {
 	const { currentCards } = useContext(ProductContext);
 	const [currentFilterCards, setFilterCards] = useState(currentCards);
 	const [currentSearchCards, setSearchCards] = useState(currentCards);
-
-	const [currentSorting, setSorting] = useState({
-		title: null,
-		price: null,
-		percentage: null,
-	});
+	const [currentKeyword, setKeyword] = useState("");
 
 	useEffect(() => {
 		setFilterCards(currentCards);
 	}, [currentCards]);
 
-	// useEffect(() => {
-	// 	// перевірка чи старе сортування не дорівнює current, шоб не перевантажувати сторінку, коли однаковий селект опшин
-	// 	setSorting((oldSortingObj) => {
-	// 		const oldSortingStr = JSON.stringify(oldSortingObj);
-	// 		const newSortingStr = JSON.stringify(sortingTypeObj);
-
-	// 		return oldSortingStr !== newSortingStr
-	// 			? { ...sortingTypeObj }
-	// 			: oldSortingObj;
-	// 	});
-	// });
-
-	// FIXME: НЕ ПРАЦЄЮ ФІЛЬТР
 	const useFilter = (sortingTypeObj) => {
-		switch (sortingTypeObj.title) {
-			case "alphabet":
-				setFilterCards((oldSearchCards) => {
-					return [...oldSearchCards].sort((a, b) =>
-						a.title.localeCompare(b.title)
-					);
-				});
-				break;
-			case null:
-				setFilterCards(currentCards);
-		}
+		setFilterCards(() => {
+			let sortedCards = [...currentCards];
+
+			if (sortingTypeObj.title === "alphabet") {
+				sortedCards = sortedCards.sort((a, b) =>
+					a.title.localeCompare(b.title)
+				);
+			}
+
+			if (sortingTypeObj.price === "lowPrice") {
+				sortedCards = sortedCards.sort((a, b) => a.bondPrice - b.bondPrice);
+			} else if (sortingTypeObj.price === "highPrice") {
+				sortedCards = sortedCards.sort((a, b) => b.bondPrice - a.bondPrice);
+			}
+
+			if (sortingTypeObj.percentage) {
+				sortedCards = sortedCards.filter((item) =>
+					item.bondPercent.includes(sortingTypeObj.percentage)
+				);
+			}
+
+			return sortedCards;
+		});
+	};
+
+	const useSearch = (keyword) => {
+		setKeyword(keyword);
+		const filteredObjects = currentFilterCards.filter((item) =>
+			item.title.toLowerCase().includes(keyword.toLowerCase())
+		);
+		setSearchCards(filteredObjects);
 	};
 
 	useEffect(() => {
-		setSearchCards(currentFilterCards);
-	}, [currentFilterCards]);
-
-	const useSearch = (keyword) => {
-		// name.toLowerCase().includes(findingValue.trim().toLowerCase())
-		const findedObjects = currentFilterCards.filter((item) =>
-			item.title.toLowerCase().includes(keyword)
-		);
-
-		setSearchCards(findedObjects);
-	};
+		if (currentKeyword) {
+			useSearch(currentKeyword);
+		} else {
+			setSearchCards(currentFilterCards);
+		}
+	}, [currentFilterCards, currentKeyword]);
 
 	return (
 		<SearchContext.Provider

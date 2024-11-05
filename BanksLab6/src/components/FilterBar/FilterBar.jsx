@@ -14,12 +14,13 @@ export default function FilterBar({ ...props }) {
 	const [currentPercentage, setPercentage] = useState(null);
 
 	const parseData = (item) => (item === "" ? null : item);
+	const parseInteger = (item) => (item === "" ? null : parseFloat(item));
 
 	function handleButtonFilter() {
 		const filterParametersObj = {
 			title: parseData(currentTitle),
 			price: parseData(currentPrice),
-			percentage: parseData(currentPercentage),
+			percentage: parseFloat(currentPercentage),
 		};
 
 		useFilter(filterParametersObj);
@@ -49,8 +50,8 @@ export default function FilterBar({ ...props }) {
 						className="margin-right-md"
 						onChange={(event) => setPercentage(event.target.value)}>
 						<Option value="">Select sorting</Option>
+						<Option value="1.5">1.5%</Option>
 						<Option value="2.5">2.5%</Option>
-						<Option value="3.5">3.5%</Option>
 						<Option value="5">5%</Option>
 					</Filter>
 				</div>
@@ -61,3 +62,12 @@ export default function FilterBar({ ...props }) {
 		</section>
 	);
 }
+
+// setFilterCards((oldSearchCards) => {
+// 	if (oldSearchCards.title !== sortingTypeObj.title) {
+// 		return [...currentCards].sort((a, b) =>
+// 			a.title.localeCompare(b.title)
+// 		);
+// 	}
+// 	return oldSearchCards;
+// });
