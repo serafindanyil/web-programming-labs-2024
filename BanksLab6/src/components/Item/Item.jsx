@@ -22,6 +22,11 @@ export default function Item({ ...props }) {
 					<Input title="Peace count" placeholder="10..."></Input>
 					<Filter title="Percent value">
 						<Option>Select percent value</Option>
+						{currentCard.bondPercent.map((item, id) => (
+							<Option key={id} value={item}>
+								{item}
+							</Option>
+						))}
 					</Filter>
 				</Wrapper>
 			</BarProduct>

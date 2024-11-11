@@ -34,14 +34,14 @@ export default function FilterBar({ ...props }) {
 						name="title"
 						className="margin-right-md"
 						onChange={(event) => setTitle(event.target.value)}>
-						<Option value="">Select sorting</Option>
+						<Option value="">Without sorting</Option>
 						<Option value="alphabet">Alphabet</Option>
 					</Filter>
 					<Filter
 						name="price"
 						className="margin-right-md"
 						onChange={(event) => setPrice(event.target.value)}>
-						<Option value="">Select sorting</Option>
+						<Option value="">All price</Option>
 						<Option value="lowPrice">Low price</Option>
 						<Option value="highPrice">High price</Option>
 					</Filter>
@@ -49,7 +49,7 @@ export default function FilterBar({ ...props }) {
 						name="percentage"
 						className="margin-right-md"
 						onChange={(event) => setPercentage(event.target.value)}>
-						<Option value="">Select sorting</Option>
+						<Option value="">All percentage</Option>
 						<Option value="1.5">1.5%</Option>
 						<Option value="2.5">2.5%</Option>
 						<Option value="5">5%</Option>
