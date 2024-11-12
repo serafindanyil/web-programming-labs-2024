@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { ProductContext } from "../../context/Context";
-import BarProduct from "../ BarProduct/BarProduct";
+import BarProduct from "../BarProduct/BarProduct";
 import Wrapper from "../Wrapper/Wrapper";
 import Filter from "../Filter/Filter";
 import Option from "../Option/Option";

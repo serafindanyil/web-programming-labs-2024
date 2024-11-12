@@ -1,28 +1,37 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import PRODUCTS from "../../data/data";
+// import PRODUCTS from "../../data/data";
+import useAxios from "../hooks/useAxious";
 
 const ProductContext = createContext();
 const SearchContext = createContext();
 
 const Context = (props) => {
+	const { getData, loading, error, data } = useAxios();
+
+	useEffect(() => {
+		getData("http://127.0.0.1:8080/bank/", 3000);
+	}, []);
+
 	const clusterSize = 3;
 
 	const [currentIndex, setIndex] = useState(clusterSize);
-	const [currentCards, setCards] = useState(() =>
-		PRODUCTS.slice(0, clusterSize)
-	);
+	const [currentCards, setCards] = useState([]);
+
+	useEffect(() => {
+		setCards(() => data.slice(0, clusterSize));
+	}, [data]);
 
 	const lazyLoading = () => {
 		const nextClusterIndex = currentIndex + clusterSize;
 		setCards((oldCards) => [
 			...oldCards,
-			...PRODUCTS.slice(currentIndex, nextClusterIndex),
+			...data.slice(currentIndex, nextClusterIndex),
 		]);
 		setIndex(nextClusterIndex);
 	};
 
 	return (
-		<ProductContext.Provider value={{ currentCards, lazyLoading }}>
+		<ProductContext.Provider value={{ currentCards, lazyLoading, loading }}>
 			{props.children}
 		</ProductContext.Provider>
 	);
