@@ -7,9 +7,9 @@ import Loading from "../Loading/Loading.jsx";
 import { SearchContext } from "../../context/Context.jsx";
 
 export default function Catalog() {
-	const { cards, loading } = useContext(SearchContext);
+	const { cards, currentLoading } = useContext(SearchContext);
 
-	if (loading) {
+	if (currentLoading) {
 		return (
 			<main>
 				<FilterBar className="margin-btm-md" />
