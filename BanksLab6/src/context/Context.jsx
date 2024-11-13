@@ -1,36 +1,57 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import useAxios from "../hooks/useAxious";
+import axios from "axios";
 
 const ProductContext = createContext();
 const SearchContext = createContext();
 
 const Context = (props) => {
-	const { getData, loading, error, data } = useAxios();
+	const getData = async (sliceCount) => {
+		try {
+			const response = await axios.get(
+				`http://127.0.0.1:8080/bank/cluster/${sliceCount}`
+			);
+			const [nextQueryObj, ...cards] = response.data;
+			const nextQuery = nextQueryObj.nextQuery;
 
-	useEffect(() => {
-		getData("http://127.0.0.1:8080/bank/", 3000);
-	}, []);
-
+			return { nextQuery, cards };
+		} catch (error) {
+			console.error(error);
+		}
+	};
 	const clusterSize = 3;
 
-	const [currentIndex, setIndex] = useState(clusterSize);
+	const [currentIndex, setIndex] = useState(0);
+	const [currentLoading, SetLoading] = useState(true);
+	const [currentNextQuery, setNextQuery] = useState(true);
 	const [currentCards, setCards] = useState([]);
 
 	useEffect(() => {
-		setCards(() => data.slice(0, clusterSize));
-	}, [data]);
+		lazyLoading();
+	}, []);
 
-	const lazyLoading = () => {
+	const lazyLoading = async () => {
 		const nextClusterIndex = currentIndex + clusterSize;
-		setCards((oldCards) => [
-			...oldCards,
-			...data.slice(currentIndex, nextClusterIndex),
-		]);
-		setIndex(nextClusterIndex);
+		try {
+			const { cards, nextQuery } = await getData(currentIndex);
+
+			// Фільтруємо нові картки, щоб уникнути дублювання
+			setCards((oldCards) => {
+				const uniqueCards = [...oldCards, ...cards];
+				return uniqueCards;
+			});
+
+			SetLoading(false);
+			setNextQuery(nextQuery);
+			setIndex(nextClusterIndex);
+		} catch (error) {
+			console.error("Error loading data:", error);
+		}
 	};
 
 	return (
-		<ProductContext.Provider value={{ currentCards, lazyLoading, loading }}>
+		<ProductContext.Provider
+			value={{ currentCards, lazyLoading, currentLoading, currentNextQuery }}>
 			{props.children}
 		</ProductContext.Provider>
 	);

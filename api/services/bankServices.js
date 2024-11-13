@@ -60,6 +60,22 @@ async function getBanks(key, type, only) {
 	return parseBank(rows);
 }
 
+async function getBankByCluster(sliceCount) {
+	const clusterLimit = 3;
+
+	const [rows] = await pool.query(
+		`${bankQuery} GROUP BY bank.id, bank.title, bank.description, bank.img_src, bank.bond_price LIMIT ? OFFSET ?;`,
+		[clusterLimit, parseInt(sliceCount)]
+	);
+	return parseBank(rows);
+}
+
+// дістати число банків
+async function getBankCount() {
+	const [rows] = await pool.query(`SELECT COUNT(*) AS count FROM bank;`);
+	return rows[0];
+}
+
 // Get a single bank by ID
 async function getBank(id) {
 	const [rows] = await pool.query(
@@ -97,7 +113,9 @@ async function deleteBank(id) {
 
 export default {
 	getBanks,
+	getBankByCluster,
 	getBank,
+	getBankCount,
 	createBank,
 	updateBank,
 	deleteBank,

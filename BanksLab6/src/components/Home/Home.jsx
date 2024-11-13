@@ -53,11 +53,12 @@ import { ProductContext } from "../../context/Context.jsx";
 import { useState } from "react";
 
 export default function Home() {
-	const { currentCards, lazyLoading, loading } = useContext(ProductContext);
+	const { currentCards, lazyLoading, currentLoading, currentNextQuery } =
+		useContext(ProductContext);
 
 	const randomBankObj = Math.floor(Math.random() * currentCards.length);
 
-	if (loading) {
+	if (currentLoading) {
 		return <Loading />;
 	}
 
@@ -70,7 +71,11 @@ export default function Home() {
 				))}
 			</CardWrapper>
 			<Wrapper style={{ textAlign: "center" }}>
-				<Button onClick={lazyLoading}>View more</Button>
+				<Button
+					style={currentNextQuery ? null : { display: "none" }}
+					onClick={lazyLoading}>
+					View more
+				</Button>
 			</Wrapper>
 		</main>
 	);

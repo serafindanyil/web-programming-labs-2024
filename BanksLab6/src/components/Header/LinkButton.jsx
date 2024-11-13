@@ -8,7 +8,7 @@ export default function LinkButton({ children, ...props }) {
 			<li className="links_item">
 				<Link
 					className={
-						props.isActive === children
+						props.isActive === children.toLowerCase()
 							? "links_item_button active"
 							: "links_item_button"
 					}

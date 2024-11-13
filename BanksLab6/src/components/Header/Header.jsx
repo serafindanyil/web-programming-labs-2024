@@ -3,8 +3,27 @@ import "./Header.css";
 import Input from "../Input/Input";
 import { SearchContext } from "../../context/Context.jsx";
 
-export default function Header({ children, isSearch = false, ...props }) {
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+
+export default function Header({ children, ...props }) {
+	const location = useLocation();
+	const currentPath = location.pathname.slice(1);
+	const [isSearch, setIsSearch] = useState(false);
+
 	const { updateKeyword } = useContext(SearchContext);
+
+	useEffect(() => {
+		setIsSearch(() => {
+			if (currentPath === "catalog") {
+				return true;
+			} else {
+				return false;
+			}
+		});
+	}, [currentPath]);
 
 	function handleSearch(event) {
 		const value = event.target.value;
