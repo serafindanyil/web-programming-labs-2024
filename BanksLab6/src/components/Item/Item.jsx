@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import { ProductContext } from "../../context/Context";
+import { SearchContext } from "../../context/Context";
 import BarProduct from "../BarProduct/BarProduct";
 import Wrapper from "../Wrapper/Wrapper";
 import Filter from "../Filter/Filter";
@@ -9,11 +9,11 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import "./Item.css";
 
-export default function Item({ ...props }) {
+export default function Item() {
 	const { id } = useParams();
-	const { currentCards } = useContext(ProductContext);
+	const { cards } = useContext(SearchContext);
 
-	const currentCard = currentCards.find((obj) => id == obj.id);
+	const currentCard = cards.find((obj) => id == obj.id);
 
 	return (
 		<main id="wrapper">

@@ -4,12 +4,12 @@ import Input from "../Input/Input";
 import { SearchContext } from "../../context/Context.jsx";
 
 export default function Header({ children, isSearch = false, ...props }) {
-	const { useSearch } = useContext(SearchContext);
+	const { updateKeyword } = useContext(SearchContext);
 
 	function handleSearch(event) {
 		const value = event.target.value;
-		const validation = value.trim().toLowerCase();
-		useSearch(validation);
+		const validation = value.trim();
+		updateKeyword(validation);
 	}
 
 	return (
@@ -28,11 +28,4 @@ export default function Header({ children, isSearch = false, ...props }) {
 			</div>
 		</header>
 	);
-}
-
-function isValidate(element) {
-	if (isNaN(element) && element.trim() !== "") {
-		return element;
-	}
-	return null;
 }

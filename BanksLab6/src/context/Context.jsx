@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-// import PRODUCTS from "../../data/data";
+import React, { createContext, useState, useEffect } from "react";
 import useAxios from "../hooks/useAxious";
 
 const ProductContext = createContext();
@@ -38,60 +37,66 @@ const Context = (props) => {
 };
 
 const Search = (props) => {
-	const { currentCards } = useContext(ProductContext);
-	const [currentFilterCards, setFilterCards] = useState(currentCards);
-	const [currentSearchCards, setSearchCards] = useState(currentCards);
+	const { getData, loading, error, data } = useAxios();
+	const [filterProperty, setFilterProperty] = useState({
+		title: "",
+		price: "",
+		percentage: "",
+	});
+	const [cards, setCards] = useState(data);
 	const [currentKeyword, setKeyword] = useState("");
 
+	// // Підтягуємо картки
+	// useEffect(() => {
+	// 	getData("http://127.0.0.1:8080/bank/", 3000);
+	// }, []);
+
+	// Оновлюємо картки при наших запитах
 	useEffect(() => {
-		setFilterCards(currentCards);
-	}, [currentCards]);
+		setCards(() => data);
+	}, [data]);
 
-	const useFilter = (sortingTypeObj) => {
-		setFilterCards(() => {
-			let sortedCards = [...currentCards];
-
-			if (sortingTypeObj.title === "alphabet") {
-				sortedCards = sortedCards.sort((a, b) =>
-					a.title.localeCompare(b.title)
-				);
+	const useFilter = (sortTypeObj = filterProperty) => {
+		setFilterProperty((oldFilterProp) => {
+			if (oldFilterProp !== sortTypeObj) {
+				return sortTypeObj;
+			} else {
+				return oldFilterProp;
 			}
-
-			if (sortingTypeObj.price === "lowPrice") {
-				sortedCards = sortedCards.sort((a, b) => a.bondPrice - b.bondPrice);
-			} else if (sortingTypeObj.price === "highPrice") {
-				sortedCards = sortedCards.sort((a, b) => b.bondPrice - a.bondPrice);
-			}
-
-			if (sortingTypeObj.percentage) {
-				sortedCards = sortedCards.filter((item) =>
-					item.bondPercent.includes(sortingTypeObj.percentage)
-				);
-			}
-
-			return sortedCards;
 		});
+		const { title, price, percentage } = sortTypeObj;
+
+		// по суті, якщо друге сортування застосовано, тобто воно true, тоді перше сортування застосоване не буде. І якщо 2 сортування застосовано, то всепівер поверне price
+		const sortingType = () => {
+			price ? price : title;
+
+			if (price) {
+				return price;
+			} else if (title) {
+				return title;
+			} else {
+				return null;
+			}
+		};
+		const queryPart = sortingType() ? `&type=${sortingType()}` : "";
+
+		getData(
+			`http://127.0.0.1:8080/bank/?key=${currentKeyword}${queryPart}&only=${percentage}`,
+			250
+		);
 	};
 
-	const useSearch = (keyword) => {
-		setKeyword(keyword);
-		const filteredObjects = currentFilterCards.filter((item) =>
-			item.title.toLowerCase().includes(keyword.toLowerCase())
-		);
-		setSearchCards(filteredObjects);
+	const updateKeyword = (keyword) => {
+		setKeyword(() => keyword);
 	};
 
 	useEffect(() => {
-		if (currentKeyword) {
-			useSearch(currentKeyword);
-		} else {
-			setSearchCards(currentFilterCards);
-		}
-	}, [currentFilterCards, currentKeyword]);
+		useFilter();
+	}, [currentKeyword]);
 
 	return (
 		<SearchContext.Provider
-			value={{ currentSearchCards, useSearch, useFilter }}>
+			value={{ cards, updateKeyword, useFilter, loading }}>
 			{props.children}
 		</SearchContext.Provider>
 	);

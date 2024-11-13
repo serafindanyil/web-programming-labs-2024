@@ -54,15 +54,10 @@ import { useState } from "react";
 
 export default function Home() {
 	const { currentCards, lazyLoading, loading } = useContext(ProductContext);
-	const [isLoad, setIsLoad] = useState(loading);
-
-	useEffect(() => {
-		setIsLoad((oldLoad) => !oldLoad);
-	}, [loading]);
 
 	const randomBankObj = Math.floor(Math.random() * currentCards.length);
 
-	if (isLoad) {
+	if (loading) {
 		return <Loading />;
 	}
 

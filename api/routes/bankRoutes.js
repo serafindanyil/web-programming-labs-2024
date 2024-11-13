@@ -7,18 +7,11 @@ const bankRouter = express.Router();
 // отримати всі банки
 bankRouter.get("/", async (req, res) => {
 	try {
-		let allSortedBanks;
+		const { key = "", type = null, only = null } = req.query;
 
-		switch (req.query.sort) {
-			case "alphabet":
-				allSortedBanks = await bankServices.getBanksByAlphabet();
-				break;
-			default:
-				allSortedBanks = await bankServices.getBanks();
-				break;
-		}
+		const result = await bankServices.getBanks(key, type, only);
 
-		res.send(allSortedBanks);
+		res.send(result);
 	} catch (error) {
 		res
 			.status(500)
@@ -26,41 +19,41 @@ bankRouter.get("/", async (req, res) => {
 	}
 });
 
-// // отримати всі банки по ключ слову
-bankRouter.get("/search", async (req, res) => {
-	try {
-		let allSortedBanksWithSearch;
-		const keyword = req.query.keyword;
+// // // отримати всі банки по ключ слову
+// bankRouter.get("/search", async (req, res) => {
+// 	try {
+// 		let allSortedBanksWithSearch;
+// 		const keyword = req.query.keyword;
 
-		if (req.query.sort) {
-			allSortedBanksWithSearch =
-				await bankServices.getBanksByKeywordWithSortByAlphabet(keyword);
-		} else {
-			allSortedBanksWithSearch = await bankServices.getBanksByKeyword(keyword);
-		}
+// 		if (req.query.sort) {
+// 			allSortedBanksWithSearch =
+// 				await bankServices.getBanksByKeywordWithSortByAlphabet(keyword);
+// 		} else {
+// 			allSortedBanksWithSearch = await bankServices.getBanksByKeyword(keyword);
+// 		}
 
-		res.send(allSortedBanksWithSearch);
-	} catch (error) {
-		res.status(500).send({
-			message: "Failed to get banks by keyword ",
-			error: error.message,
-		});
-	}
-});
+// 		res.send(allSortedBanksWithSearch);
+// 	} catch (error) {
+// 		res.status(500).send({
+// 			message: "Failed to get banks by keyword ",
+// 			error: error.message,
+// 		});
+// 	}
+// });
 
-// // отримати банк по ід
-bankRouter.get("/:id", async (req, res) => {
-	try {
-		const id = req.params.id;
+// // // отримати банк по ід
+// bankRouter.get("/:id", async (req, res) => {
+// 	try {
+// 		const id = req.params.id;
 
-		const bank = await bankServices.getBank(id);
-		res.send(bank);
-	} catch (error) {
-		res
-			.status(500)
-			.send({ message: "Failed to get bank with id", error: error.message });
-	}
-});
+// 		const bank = await bankServices.getBank(id);
+// 		res.send(bank);
+// 	} catch (error) {
+// 		res
+// 			.status(500)
+// 			.send({ message: "Failed to get bank with id", error: error.message });
+// 	}
+// });
 
 // // створити банк
 // app.post("/bank", async (req, res) => {
