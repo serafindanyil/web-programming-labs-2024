@@ -22,7 +22,7 @@ const Context = (props) => {
 		const nextClusterIndex = currentIndex + clusterSize;
 		try {
 			const { cards, nextQuery } = await getSliceData(
-				"http://127.0.0.1:8080/bank/cluster/",
+				"http://127.0.0.1:8080/bank/cluster",
 				currentIndex
 			);
 

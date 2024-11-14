@@ -82,7 +82,7 @@ async function getBank(id) {
 		`${bankQuery} WHERE bank.id = ? GROUP BY bank.id;`,
 		[id]
 	);
-	return parseBank(rows)[0];
+	return parseBank(rows);
 }
 
 // Create a new bank

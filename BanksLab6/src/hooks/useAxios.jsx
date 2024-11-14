@@ -11,9 +11,19 @@ function useAxios() {
 		}
 	};
 
+	const getDataById = async (url, id) => {
+		try {
+			const response = await axios.get(`${url}/${id}`);
+
+			return response.data[0];
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const getSliceData = async (url, sliceCount) => {
 		try {
-			const response = await axios.get(`${url}${sliceCount}`);
+			const response = await axios.get(`${url}/${sliceCount}`);
 			const [nextQueryObj, ...cards] = response.data;
 			const nextQuery = nextQueryObj.nextQuery;
 
@@ -23,7 +33,7 @@ function useAxios() {
 		}
 	};
 
-	return { getData, getSliceData };
+	return { getData, getDataById, getSliceData };
 }
 
 export default useAxios;
