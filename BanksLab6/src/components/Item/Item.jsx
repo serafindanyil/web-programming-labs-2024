@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { SearchContext } from "../../context/Context";
 import BarProduct from "../BarProduct/BarProduct";
@@ -10,12 +10,15 @@ import Button from "../Button/Button";
 import "./Item.css";
 import useAxios from "../../hooks/useAxios";
 import Loading from "../Loading/Loading";
+import {} from "react-router-dom";
 
 export default function Item() {
 	const { getDataById } = useAxios();
 	const { id } = useParams();
 	const [loading, setLoading] = useState(true);
 	const [cardData, setCardData] = useState(null); // Стан для збереження даних картки
+
+	const navigate = useNavigate();
 
 	const fetchCard = async () => {
 		try {
@@ -59,7 +62,7 @@ export default function Item() {
 					Price: ${cardData.bondPrice.toLocaleString("de-DE")}
 				</span>
 				<div id="button-wrapper">
-					<Button tag="link" type="outline" to={`/catalog`}>
+					<Button tag="link" type="outline" onClick={() => navigate(-1)}>
 						Go back
 					</Button>
 					<Button type="solid">Add to card</Button>

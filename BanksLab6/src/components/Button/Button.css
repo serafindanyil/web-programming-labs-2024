@@ -29,6 +29,14 @@
 	width: 60%;
 }
 
+.button-small {
+	padding: 0;
+
+	height: 3.2rem;
+	width: 3.2rem;
+	text-align: center;
+}
+
 .button-solid:hover,
 .button-solid:active {
 	background-color: var(--blacky);

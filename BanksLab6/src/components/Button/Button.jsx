@@ -8,6 +8,7 @@ export default function Button({
 	tag = "button",
 	type = "solid",
 	isBig = false,
+	isSmall = false,
 	...props
 }) {
 	let style;
@@ -15,10 +16,14 @@ export default function Button({
 
 	switch (type) {
 		case "solid":
-			style = `button button-solid ${isBig && "button-big"}`;
+			style = `button button-solid ${isBig && "button-big"} ${
+				isSmall && "button-small"
+			}`;
 			break;
 		case "outline":
-			style = `button button-outline ${isBig && "button-big"}`;
+			style = `button button-outline ${isBig && "button-big"} ${
+				isSmall && "button-small"
+			}`;
 			break;
 	}
 
