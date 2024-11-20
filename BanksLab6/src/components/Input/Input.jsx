@@ -1,28 +1,33 @@
+import React from "react";
 import "./Input.css";
 
-export default function Input({
-	title = null,
-	type = "simple",
-	img = null,
-	...props
-}) {
-	let style;
+const Input = React.forwardRef(
+	({ title = null, type = "simple", img = null, ...props }, ref) => {
+		let style;
 
-	switch (type) {
-		case "simple":
-			style = "input-element__input input-element__input-simple";
-			break;
-		case "image":
-			style = "input-element__input input-element__input-image";
-			break;
+		switch (type) {
+			case "simple":
+				style = "input-element__input input-element__input-simple";
+				break;
+			case "image":
+				style = "input-element__input input-element__input-image";
+				break;
+			default:
+				style = "input-element__input";
+		}
+
+		return (
+			<div id="input-element">
+				{title && (
+					<h4 className="heading-quaternary margin-btm-smaller">{title}</h4>
+				)}
+				{img && (
+					<img src={img} id="input-element__img" alt="Input illustration" />
+				)}
+				<input {...props} ref={ref} className={style} />
+			</div>
+		);
 	}
-	return (
-		<div id="input-element">
-			{title && (
-				<h4 className="heading-quaternary margin-btm-smaller">{title}</h4>
-			)}
-			{img && <img src={img} id="input-element__img" />}
-			<input {...props} className={style} />
-		</div>
-	);
-}
+);
+
+export default Input;

@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 
+import { Link } from "react-router-dom";
+
 export default function Header({ children, ...props }) {
 	const location = useLocation();
 	const currentPath = location.pathname.slice(1);
@@ -34,7 +36,9 @@ export default function Header({ children, ...props }) {
 	return (
 		<header className="header" {...props}>
 			<div className="header-wrapper container">
-				<img src="../public/bank.svg" alt="logo" width="36px" />
+				<Link to="/home">
+					<img src="../public/bank.svg" alt="logo" width="36px" />
+				</Link>
 				<ul className="links">{children}</ul>
 				{isSearch && (
 					<Input

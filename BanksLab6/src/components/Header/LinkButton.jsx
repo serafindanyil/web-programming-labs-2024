@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 
-export default function LinkButton({ children, ...props }) {
+export default function LinkButton({ children, cartCount, ...props }) {
 	return (
 		<>
 			<li className="links_item">
@@ -15,6 +15,16 @@ export default function LinkButton({ children, ...props }) {
 					{...props}
 					onClick={props.onClick}>
 					{children}
+					{cartCount && (
+						<span
+							className={
+								props.isActive === children.toLowerCase()
+									? "cart-item cart-item_active"
+									: "cart-item "
+							}>
+							{cartCount}
+						</span>
+					)}
 				</Link>
 			</li>
 		</>

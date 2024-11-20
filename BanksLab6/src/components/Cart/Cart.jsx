@@ -3,29 +3,26 @@ import ItemBar from "../ItemBar/ItemBar";
 import Button from "../Button/Button";
 import "./Cart.css";
 
+import { useNavigate } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+
 export default function Cart() {
-	const objects = [
-		{
-			id: 3242,
-			title: "MonoBank",
-			description:
-				"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laboriosam recusandae maxime assumenda ipsa deleniti necessitatibus officiis expedita dicta, voluptates dolores sint unde tenetur quidem? Excepturi cumque assumenda eius maxime!",
-			imgSrc: "/bankImg/monobank.png",
-			bondPrice: 10000,
-			bondPercent: [1.5, 2.5, 5],
-			charArray: ["good percentage"],
-		},
-		{
-			id: 1231,
-			title: "PrivatBank",
-			description:
-				"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laboriosam recusandae maxime assumenda ipsa deleniti necessitatibus officiis expedita dicta, voluptates dolores sint unde tenetur quidem? Excepturi cumque assumenda eius maxime!",
-			imgSrc: "/bankImg/privat.png",
-			bondPrice: 1000,
-			bondPercent: [2.5, 5],
-			charArray: ["good reliability", "best price"],
-		},
-	];
+	const cartItems = useSelector((state) => state.cart.items);
+	const totalAmounts = useSelector((state) => state.cart.totalPrice);
+
+	const navigate = useNavigate();
+
+	if (!totalAmounts) {
+		return (
+			<main>
+				<div className="container">
+					<span id="shoping-cart_empty">Shoping cart is empty!</span>
+				</div>
+			</main>
+		);
+	}
+
 	return (
 		<main>
 			<div className="container">
@@ -35,16 +32,20 @@ export default function Cart() {
 					Shopping Cart
 				</h2>
 				<div id="cart__item-wrapper">
-					{objects.map((item) => {
-						return <ItemBar className="margin-btm-sm" obj={item}></ItemBar>;
+					{cartItems.map((item) => {
+						return <ItemBar className="margin-btm-sm" {...item}></ItemBar>;
 					})}
 				</div>
 				<div id="cart__total-amout" className="margin-btm-bg">
 					<span id="cart__text">Total amout:</span>
-					<span id="cart__total-price">$225</span>
+					<span id="cart__total-price">
+						${totalAmounts.toLocaleString("de-DE")}
+					</span>
 				</div>
 				<div id="cart__button-wrapper" className="margin-btm-md">
-					<Button type="outline">Back to catalog</Button>
+					<Button type="outline" onClick={() => navigate(-1)}>
+						Back to catalog
+					</Button>
 					<Button type="solid">Continue</Button>
 				</div>
 			</div>

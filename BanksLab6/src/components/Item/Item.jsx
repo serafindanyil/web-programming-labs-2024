@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
-import { SearchContext } from "../../context/Context";
+import { useState, useEffect, useRef } from "react";
 import BarProduct from "../BarProduct/BarProduct";
 import Wrapper from "../Wrapper/Wrapper";
 import Filter from "../Filter/Filter";
@@ -10,13 +9,20 @@ import Button from "../Button/Button";
 import "./Item.css";
 import useAxios from "../../hooks/useAxios";
 import Loading from "../Loading/Loading";
-import {} from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../store/cartSlice";
 
 export default function Item() {
 	const { getDataById } = useAxios();
 	const { id } = useParams();
 	const [loading, setLoading] = useState(true);
 	const [cardData, setCardData] = useState(null); // Стан для збереження даних картки
+
+	const dispatch = useDispatch();
+
+	const quantityRef = useRef(null);
+	const bondPercentRef = useRef(null);
 
 	const navigate = useNavigate();
 
@@ -42,12 +48,30 @@ export default function Item() {
 		return <Loading />;
 	}
 
+	const handleClickAddItemToCart = () => {
+		const { id, title, imgSrc, bondPrice } = cardData;
+
+		dispatch(
+			cartActions.addItemToCart({
+				id,
+				title,
+				imgSrc,
+				bondPrice,
+				bondPercent: parseFloat(bondPercentRef.current.value),
+				quantity: parseInt(quantityRef.current.value),
+			})
+		);
+	};
+
 	return (
 		<main id="wrapper">
 			<BarProduct type="full" {...cardData}>
 				<Wrapper style={{ display: "flex", gap: "3.2rem" }}>
-					<Input title="Peace count" placeholder="10..."></Input>
-					<Filter title="Percent value">
+					<Input
+						title="Peace count"
+						placeholder="10..."
+						ref={quantityRef}></Input>
+					<Filter title="Percent value" ref={bondPercentRef}>
 						<Option>Select percent value</Option>
 						{cardData.bondPercent.map((item, id) => (
 							<Option key={id} value={item}>
@@ -65,7 +89,9 @@ export default function Item() {
 					<Button tag="link" type="outline" onClick={() => navigate(-1)}>
 						Go back
 					</Button>
-					<Button type="solid">Add to card</Button>
+					<Button type="solid" onClick={handleClickAddItemToCart}>
+						Add to card
+					</Button>
 				</div>
 			</div>
 		</main>

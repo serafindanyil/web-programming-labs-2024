@@ -25,3 +25,15 @@
 	align-items: center;
 	justify-content: space-between;
 }
+
+#shoping-cart_empty {
+	font-size: 1.6rem;
+	font-weight: 400;
+	color: var(--black--text);
+
+	position: absolute;
+	left: 50%;
+	top: 40%;
+
+	transform: translate(-50%, -50%);
+}

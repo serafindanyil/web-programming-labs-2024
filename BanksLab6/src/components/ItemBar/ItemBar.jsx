@@ -1,23 +1,73 @@
 import Button from "../Button/Button";
 import "./ItemBar.css";
 
-export default function ItemBar({ obj, countPeace, ...props }) {
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../store/cartSlice";
+import { addListener } from "@reduxjs/toolkit";
+
+export default function ItemBar({
+	id,
+	title,
+	imgSrc,
+	price,
+	percentage,
+	quantity,
+	totalPrice,
+	...props
+}) {
+	const dispatch = useDispatch();
+
+	const handleClickIncrease = () => {
+		dispatch(
+			cartActions.addItemToCart({
+				id,
+				title,
+				imgSrc,
+				bondPrice: price,
+				bondPercent: percentage,
+				quantity: 1,
+			})
+		);
+	};
+
+	const handleClickDecrease = () => {
+		dispatch(
+			cartActions.removeItemFromCart({
+				id,
+				bondPercent: percentage,
+			})
+		);
+	};
+
+	const handleClickRemoveCard = () => {
+		dispatch(
+			cartActions.removeCardFromCart({
+				id,
+				bondPercent: percentage,
+			})
+		);
+	};
+
 	return (
 		<div id="item-bar" {...props}>
-			<img src={obj.imgSrc} id="item-bar__img" />
+			<img src={imgSrc} id="item-bar__img" />
 			<h3 className="heading-tertiary" id="item-bar__heading">
-				{obj.title}
+				{title}
 			</h3>
 			<div id="item-bar__wrapper">
-				<Button type="outline" isSmall="true">
+				<Button type="outline" onClick={handleClickDecrease} isSmall="true">
 					-
 				</Button>
-				<span id="item-bar__count-peace">{countPeace ?? 2}</span>
-				<Button type="outline" isSmall="true">
+				<span id="item-bar__count-peace">{quantity}</span>
+				<Button type="outline" onClick={handleClickIncrease} isSmall="true">
 					+
 				</Button>
 			</div>
-			<span id="item-bar__price">{obj.bondPrice}</span>
+			<span id="item-bar__percentage">%{percentage}</span>
+			<span id="item-bar__price">${totalPrice.toLocaleString("de-DE")}</span>
+			<button id="item-bar__btn-close" onClick={handleClickRemoveCard}>
+				x
+			</button>
 		</div>
 	);
 }
