@@ -12,6 +12,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useLocation } from "react-router-dom";
 
+import Notification from "./components/Notifications/Notifications";
+
 function App() {
 	const location = useLocation();
 	const currentPath = location.pathname.slice(1);
@@ -25,6 +27,9 @@ function App() {
 
 	return (
 		<div className="wrapper">
+			{/* <Notification type="error">
+				При обробці карток виникла помилка!
+			</Notification> */}
 			<Header>
 				<LinkButton to="/home" isActive={currentPage}>
 					Home

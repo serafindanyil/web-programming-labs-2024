@@ -1,5 +1,6 @@
 import Button from "../Button/Button";
 import "./ItemBar.css";
+import { Link } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
@@ -50,7 +51,9 @@ export default function ItemBar({
 
 	return (
 		<div id="item-bar" {...props}>
-			<img src={imgSrc} id="item-bar__img" />
+			<Link to={`/item/${id}`}>
+				<img src={imgSrc} id="item-bar__img" />
+			</Link>
 			<h3 className="heading-tertiary" id="item-bar__heading">
 				{title}
 			</h3>

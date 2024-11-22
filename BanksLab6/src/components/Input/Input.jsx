@@ -2,7 +2,7 @@ import React from "react";
 import "./Input.css";
 
 const Input = React.forwardRef(
-	({ title = null, type = "simple", img = null, ...props }, ref) => {
+	({ title = null, type = "simple", img = null, typeValue, ...props }, ref) => {
 		let style;
 
 		switch (type) {
@@ -24,7 +24,7 @@ const Input = React.forwardRef(
 				{img && (
 					<img src={img} id="input-element__img" alt="Input illustration" />
 				)}
-				<input {...props} ref={ref} className={style} />
+				<input {...props} type={typeValue} ref={ref} className={style} />
 			</div>
 		);
 	}

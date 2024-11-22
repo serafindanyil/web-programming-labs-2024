@@ -48,6 +48,22 @@ export default function Item() {
 		return <Loading />;
 	}
 
+	function validationInputField(value) {
+		if (!isNaN(value)) {
+			return parseInt(value);
+		} else {
+			alert("Має бути число!");
+		}
+	}
+
+	function validationSelectField(value) {
+		if (!isNaN(value)) {
+			return parseFloat(value);
+		} else {
+			alert("Виберіть процент!");
+		}
+	}
+
 	const handleClickAddItemToCart = () => {
 		const { id, title, imgSrc, bondPrice } = cardData;
 
@@ -57,10 +73,12 @@ export default function Item() {
 				title,
 				imgSrc,
 				bondPrice,
-				bondPercent: parseFloat(bondPercentRef.current.value),
-				quantity: parseInt(quantityRef.current.value),
+				bondPercent: validationSelectField(bondPercentRef.current.value),
+				quantity: validationInputField(quantityRef.current.value),
 			})
 		);
+
+		alert(`Товари додані в корзину: ${quantityRef.current.value}`);
 	};
 
 	return (
@@ -70,6 +88,8 @@ export default function Item() {
 					<Input
 						title="Peace count"
 						placeholder="10..."
+						typeValue="number"
+						min="0"
 						ref={quantityRef}></Input>
 					<Filter title="Percent value" ref={bondPercentRef}>
 						<Option>Select percent value</Option>
