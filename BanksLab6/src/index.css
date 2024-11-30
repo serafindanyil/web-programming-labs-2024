@@ -64,6 +64,12 @@ main {
 	initial-value: rgb(192, 192, 192);
 }
 
+@property --red {
+	syntax: "<color>";
+	inherits: false;
+	initial-value: rgb(159, 42, 42);
+}
+
 @property --breeze {
 	syntax: "<color>";
 	inherits: false;

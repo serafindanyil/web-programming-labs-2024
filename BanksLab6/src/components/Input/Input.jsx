@@ -2,7 +2,17 @@ import React from "react";
 import "./Input.css";
 
 const Input = React.forwardRef(
-	({ title = null, type = "simple", img = null, typeValue, ...props }, ref) => {
+	(
+		{
+			title = null,
+			type = "simple",
+			tag = null,
+			img = null,
+			typeValue,
+			...props
+		},
+		ref
+	) => {
 		let style;
 
 		switch (type) {
@@ -14,6 +24,10 @@ const Input = React.forwardRef(
 				break;
 			default:
 				style = "input-element__input";
+		}
+
+		if (tag === "formik") {
+			return;
 		}
 
 		return (

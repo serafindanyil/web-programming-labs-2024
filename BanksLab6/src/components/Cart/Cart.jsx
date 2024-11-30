@@ -46,7 +46,9 @@ export default function Cart() {
 					<Button type="outline" onClick={() => navigate(-1)}>
 						Back to catalog
 					</Button>
-					<Button type="solid">Continue</Button>
+					<Button type="solid" tag="link" to="/cart/checkout">
+						Continue
+					</Button>
 				</div>
 			</div>
 		</main>

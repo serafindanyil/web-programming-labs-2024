@@ -9,17 +9,29 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Header({ children, ...props }) {
 	const location = useLocation();
 	const currentPath = location.pathname.slice(1);
 	const [isSearch, setIsSearch] = useState(false);
+	const [isProfile, setIsProfile] = useState(false);
+
+	const userName = useSelector((state) => state.auth.user.name);
+	const isAuth = useSelector((state) => state.isAuthorizated);
 
 	const { updateKeyword } = useContext(SearchContext);
 
 	useEffect(() => {
 		setIsSearch(() => {
 			if (currentPath === "catalog") {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		setIsProfile(() => {
+			if (currentPath === "home" || (currentPath === "" && isAuth)) {
 				return true;
 			} else {
 				return false;
@@ -47,6 +59,11 @@ export default function Header({ children, ...props }) {
 						id="search"
 						onChange={handleSearch}
 					/>
+				)}
+				{isProfile && (
+					<Link to="/profile" className="header__profile_link">
+						{userName} &#8599;
+					</Link>
 				)}
 			</div>
 		</header>

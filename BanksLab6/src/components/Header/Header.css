@@ -73,3 +73,22 @@
 	color: var(--black--text);
 	background: var(--gray);
 }
+
+.header__profile_link {
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.2rem;
+	font-weight: 500;
+	color: var(--black);
+	width: 12rem;
+	line-height: 3.2rem;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 20px;
+	transition: all 0.15s;
+}
+
+.header__profile_link:hover,
+.header__profile_link:active {
+	background-color: var(--light-gray);
+}

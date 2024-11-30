@@ -96,6 +96,15 @@ const cartSlice = createSlice({
 			);
 			state.changed = true;
 		},
+
+		resetStore(state) {
+			return {
+				items: [],
+				totalQuantity: 0,
+				totalPrice: 0,
+				changed: false,
+			};
+		},
 	},
 });
 

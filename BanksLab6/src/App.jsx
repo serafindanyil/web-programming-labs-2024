@@ -13,6 +13,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 import Notification from "./components/Notifications/Notifications";
+import Profile from "./components/Profile/Profile";
+import Checkout from "./components/Checkout/Checkout";
+import Success from "./components/Success/Success";
+import Auth from "./components/Auth/Auth";
 
 function App() {
 	const location = useLocation();
@@ -45,10 +49,14 @@ function App() {
 				</LinkButton>
 			</Header>
 			<Routes>
+				<Route path="/" element={<Auth />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/catalog" element={<Catalog />} />
 				<Route path="/item/:id" element={<Item />} />
+				<Route path="/profile" element={<Profile />} />
 				<Route path="/cart" element={<Cart />} />
+				<Route path="/cart/checkout" element={<Checkout />} />
+				<Route path="/cart/success" element={<Success />} />
 			</Routes>
 			<Footer />
 		</div>
