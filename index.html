@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Created by Serafin Danyil</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/queries.css" />
+		<script src="js/script.js" defer></script>
+	</head>
+	<body>
+		<div class="container container--one-obj">
+			<div class="card money-counter">
+				<div class="card_wrapper">
+					<p class="count-money margin--md" id="countMoney">$0</p>
+				</div>
+			</div>
+			<div class="card user-profile">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--sm" id="nameOfUser">
+						Створіть користувача
+					</h1>
+					<p class="paragraph margin--sm">
+						Кредитний ліміт:
+						<span class="counter" id="creditLimitValue"> $0</span>
+					</p>
+					<p class="paragraph margin--sm">
+						Доступні кошти:
+						<span class="counter" id="accessCreditValue"> $0</span>
+					</p>
+					<p class="paragraph margin--big">
+						Сума, яку потрібно погасити:
+						<span class="counter" id="countUserPayToCredit"> $0</span>
+					</p>
+					<select class="select-field" name="" id="selectUser"></select>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--sm">Відсортований список</h1>
+					<ul class="paragraph profile-list margin--sm" id="listOfUsers"></ul>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--sm">Взяти кредит</h1>
+					<p class="paragraph margin--md">
+						Кількість виданих кредитів:
+						<span class="counter" id="countUserTakeCredit"> 0</span>
+					</p>
+					<input class="input-field margin--sm" id="creditValue" type="text" />
+					<button class="btn" id="takeCredit">Взяти кредит</button>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--fix">Погасити кредит</h1>
+					<input
+						class="input-field margin--sm"
+						id="payToCreditValue"
+						type="text" />
+					<button class="btn" id="payToCredit">Взяти кредит</button>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card_wrapper">
+					<h1 class="primary-text margin--sm">Створити профіль</h1>
+					<p class="paragraph margin--md">
+						Кількість профілів:
+						<span class="counter" id="countUsers"> 0</span>
+					</p>
+					<input class="input-field margin--sm" id="userName" type="text" />
+					<button class="btn" id="createUser">Створити</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
