@@ -1,0 +1,51 @@
+#notification_container {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	gap: 1.2rem;
+
+	position: absolute;
+	top: 1.6rem;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1000;
+
+	padding: 1.6rem 3.6rem;
+	width: 35%;
+
+	border: 1px solid #b71c1c;
+	border-radius: 15px;
+	box-shadow: 2px 2px 15px #ef9a9a89;
+	background-color: rgb(255, 184, 184);
+
+	animation: slideDown 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+}
+
+#notification_icon {
+	fill: #b71c1c;
+}
+#notification_text {
+	font-size: 1.6rem;
+	font-weight: 500;
+	color: #b71c1c;
+}
+
+@keyframes slideDown {
+	from {
+		transform: translateX(-50%) translateY(-100%);
+	}
+	to {
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(-50%) translateY(-100%);
+	}
+}
