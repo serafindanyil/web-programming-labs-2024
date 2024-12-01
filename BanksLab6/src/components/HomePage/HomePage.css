@@ -1,0 +1,9 @@
+.bar-product-info {
+	display: flex;
+	gap: 6.4rem;
+}
+
+.bar-product-info_image img {
+	display: inline-block;
+	max-width: 25.6rem;
+}
