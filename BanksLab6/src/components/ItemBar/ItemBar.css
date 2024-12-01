@@ -1,0 +1,39 @@
+#item-bar {
+	display: grid;
+	grid-template-columns: 1fr 5fr 2fr 1fr;
+	align-items: center;
+
+	border-radius: 10px;
+	border: 1px solid var(--black);
+	padding: 0.4rem;
+}
+
+#item-bar__wrapper {
+	display: flex;
+	align-items: center;
+	gap: 1.6rem;
+}
+
+#item-bar__count-peace {
+	font-size: 1.6rem;
+	color: var(--black--text);
+}
+
+#item-bar__img {
+	height: 11.2rem;
+}
+
+#item-bar__heading,
+#item-bar__count-peace {
+	text-align: center;
+}
+
+#item-bar__price {
+	font-size: 2rem;
+	font-weight: 500;
+	color: var(--black--text);
+}
+
+#item-bar__price::before {
+	content: "$";
+}
