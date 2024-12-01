@@ -1,3 +1,5 @@
+// Cart.jsx
+
 import PRODUCTS from "../../../data/data";
 import ItemBar from "../ItemBar/ItemBar";
 import Button from "../Button/Button";
@@ -11,7 +13,22 @@ export default function Cart() {
 	const cartItems = useSelector((state) => state.cart.items);
 	const totalAmounts = useSelector((state) => state.cart.totalPrice);
 
+	const isAuthorizated = useNavigate((state) => state.auth.isAuthorizated);
+
 	const navigate = useNavigate();
+
+	if (isAuthorizated) {
+		return (
+			<main className="container">
+				<div style={{ textAlign: "center" }}>
+					<h2 className="heading-secondary margin-top-md margin-btm-md">
+						Please login to account
+					</h2>
+					<Button type="solid">Back to login page</Button>
+				</div>
+			</main>
+		);
+	}
 
 	if (!totalAmounts) {
 		return (

@@ -6,8 +6,13 @@ import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { loginAction } from "../../store/authActions";
+import { useDispatch } from "react-redux";
+
 export default function SingIn({ singInOnClick }) {
 	const [hidePassword, setHidePassword] = useState(true);
+
+	const dispatch = useDispatch();
 
 	const regEx = {
 		email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
@@ -27,10 +32,10 @@ export default function SingIn({ singInOnClick }) {
 		setHidePassword((oldState) => !oldState);
 	};
 
-	const handleSubmit = () => {
-		// dispatch(cartActions.resetStore());
-		// navigate("/cart/success");
-		alert("success");
+	const handleSubmit = (value) => {
+		dispatch(loginAction({ email: value.email, password: value.password }));
+
+		alert("success" + value.email);
 	};
 
 	return (

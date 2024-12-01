@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bankRouter from "./routes/bankRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -8,6 +9,7 @@ app.use(express.json());
 // без корса не буде працювати бек з ріними доменами
 app.use(cors());
 app.use("/bank", bankRouter);
+app.use("/auth", authRouter);
 
 // CRUD запити
 

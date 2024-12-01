@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import useAxios from "../hooks/useAxios";
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState: {
-		isAuthorizated: true,
+		isAuthorizated: false,
 		user: {
 			name: "test username",
 			email: "",
@@ -13,8 +14,20 @@ const authSlice = createSlice({
 	},
 	reducers: {
 		// тестовий редюсер
-		setUserName(state, action) {
-			state.user.name = action.payload;
+		loginUser(state, action) {
+			const { token, userName, email } = action.payload;
+
+			if (!state.isAuthorizated) {
+				state.token = token;
+				state.user.name = userName;
+				state.user.email = email;
+			} else {
+				state.error = "User already loggined. Please log out!";
+			}
+		},
+
+		setError(state, action) {
+			state.error = action.payload.error;
 		},
 	},
 });

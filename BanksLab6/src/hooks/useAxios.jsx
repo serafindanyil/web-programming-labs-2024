@@ -11,6 +11,15 @@ function useAxios() {
 		}
 	};
 
+	const postData = async (url, data) => {
+		try {
+			const response = await axios.post(url, data);
+			return response.data;
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const getDataById = async (url, id) => {
 		try {
 			const response = await axios.get(`${url}/${id}`);
@@ -33,7 +42,7 @@ function useAxios() {
 		}
 	};
 
-	return { getData, getDataById, getSliceData };
+	return { getData, postData, getDataById, getSliceData };
 }
 
 export default useAxios;

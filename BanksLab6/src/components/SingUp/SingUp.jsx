@@ -6,8 +6,13 @@ import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { registrationAction } from "../../store/authActions";
+import { useDispatch } from "react-redux";
+
 export default function SingUp({ singUpOnClick }) {
 	const [hidePassword, setHidePassword] = useState(true);
+
+	const dispatch = useDispatch();
 
 	const regEx = {
 		name: /^[a-zA-Zа-яА-Я]{2,20}$/,
@@ -36,10 +41,16 @@ export default function SingUp({ singUpOnClick }) {
 		setHidePassword((oldState) => !oldState);
 	};
 
-	const handleSubmit = () => {
-		// dispatch(cartActions.resetStore());
-		// navigate("/cart/success");
-		alert("success");
+	const handleSubmit = (value) => {
+		dispatch(
+			registrationAction({
+				userName: value.name,
+				email: value.email,
+				password: value.password,
+			})
+		);
+
+		alert("success" + value.email);
 	};
 
 	return (
