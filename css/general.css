@@ -1,0 +1,12 @@
+.section-my-banks,
+.section-create-bank {
+	display: none;
+}
+
+.open {
+	display: block;
+}
+
+.selected-page {
+	color: var(--black) !important;
+}
