@@ -1,3 +1,5 @@
+// Singup.jsx
+
 import "./SingUp.css";
 import { Formik, Form } from "formik";
 import FormikInput from "../FormikInput/FormikInput";

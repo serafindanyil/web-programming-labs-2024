@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0f14f997-f283-4534-99bb-895fca21d00a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/Checkout/Checkout.css" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/Checkout/Checkout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/Checkout/Checkout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/Checkout/Checkout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/FormikInput/FormikInput.css" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/FormikInput/FormikInput.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/FormikInput/FormikInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/FormikInput/FormikInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/SingIn/SingIn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/SingIn/SingIn.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/SingUp/SIngUp.css" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/SingUp/SIngUp.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/SingUp/SingUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/SingUp/SingUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/Success/Success.css" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/Success/Success.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BanksLab6/src/components/Success/Success.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/BanksLab6/src/components/Success/Success.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2pfhC7YN0rr33uBnpX8XFFApX4i" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "lab-11"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f14f997-f283-4534-99bb-895fca21d00a" name="Changes" comment="" />
+      <created>1733162908769</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733162908769</updated>
+    </task>
+    <servers />
+  </component>
+</project>
