@@ -10,9 +10,18 @@ import * as Yup from "yup";
 import { cartActions } from "../../store/cartSlice";
 import { useDispatch } from "react-redux";
 
+import { useSelector } from "react-redux";
+import { errorActions } from "../../store/errorSlice";
+import Notifications from "../Notifications/Notifications";
+import { resetStoreAction } from "../../store/cartActions";
+
 export default function Checkout() {
 	const navigate = useNavigate();
+
 	const dispatch = useDispatch();
+
+	const { status } = useSelector((state) => state.error);
+	const { totalQuantity } = useSelector((state) => state.cart);
 
 	const regEx = {
 		name: /^[a-zA-Zа-яА-Я]{2,20}$/,
@@ -45,12 +54,17 @@ export default function Checkout() {
 	});
 
 	const handleSubmit = () => {
-		dispatch(cartActions.resetStore());
-		navigate("/cart/success");
+		dispatch(resetStoreAction());
+		if (totalQuantity !== 0) navigate("/cart/success");
 	};
 
 	return (
 		<main className="container margin-top-md">
+			<Notifications
+				type={status?.type}
+				action={status?.text}
+				handleCloseAction={() => dispatch(errorActions.clearStatus())} // Виправлено на clearStatus
+			/>
 			<h2
 				className="heading-secondary margin-btm-md"
 				style={{ textAlign: "center" }}>
