@@ -31,7 +31,7 @@ export default function Header({ children, ...props }) {
 			}
 		});
 		setIsProfile(() => {
-			if (currentPath === "home" || (currentPath === "" && isAuth)) {
+			if (currentPath === "home") {
 				return true;
 			} else {
 				return false;
@@ -62,7 +62,7 @@ export default function Header({ children, ...props }) {
 				)}
 				{isProfile && (
 					<Link to="/profile" className="header__profile_link">
-						{userName} &#8599;
+						{userName || "Login or Register"} &#8599;
 					</Link>
 				)}
 			</div>

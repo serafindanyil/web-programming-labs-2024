@@ -8,23 +8,26 @@ import "./Cart.css";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function Cart() {
 	const cartItems = useSelector((state) => state.cart.items);
 	const totalAmounts = useSelector((state) => state.cart.totalPrice);
 
-	const isAuthorizated = useNavigate((state) => state.auth.isAuthorizated);
+	const isAuthorizated = useSelector((state) => state.auth.isAuthorizated);
 
 	const navigate = useNavigate();
 
-	if (isAuthorizated) {
+	if (!isAuthorizated) {
 		return (
 			<main className="container">
 				<div style={{ textAlign: "center" }}>
 					<h2 className="heading-secondary margin-top-md margin-btm-md">
 						Please login to account
 					</h2>
-					<Button type="solid">Back to login page</Button>
+					<Button type="solid" onClick={() => navigate("/")}>
+						Back to login page
+					</Button>
 				</div>
 			</main>
 		);

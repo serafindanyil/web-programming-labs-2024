@@ -1,41 +1,90 @@
-// actions.js
-import useAxios from "../hooks/useAxios";
+import axios from "axios";
 import { authActions } from "./authSlice";
+import { errorActions } from "./errorSlice";
 
 export const loginAction = (data) => {
-	const { postData } = useAxios();
-
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
 		try {
-			const { token, userName, email } = await postData(
-				"http://127.0.0.1:8080/auth/login",
-				data
-			);
+			const { isAuthorizated } = getState().auth;
+			if (!isAuthorizated) {
+				const response = await axios.post(
+					"http://127.0.0.1:8080/auth/login",
+					data
+				);
 
-			dispatch(authActions.loginUser({ token, userName, email }));
+				const { token, userName, email } = response.data;
+
+				dispatch(authActions.loginUser({ token, userName, email }));
+				dispatch(
+					errorActions.setStatus({
+						type: "success",
+						text: "Authorization successful",
+					})
+				);
+			} else {
+				throw new Error("You are already logged in.");
+			}
 		} catch (error) {
 			dispatch(
-				authActions.setError({ error: error.message || "Something broke!" })
+				errorActions.setStatus({
+					type: "error",
+					text: error.response?.data?.error || error.message,
+				})
 			);
 		}
 	};
 };
 
 export const registrationAction = (data) => {
-	const { postData } = useAxios();
-
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
 		try {
-			const { token, userName, email } = await postData(
-				"http://127.0.0.1:8080/auth/register",
-				data
-			);
+			const { isAuthorizated } = getState().auth;
+			if (!isAuthorizated) {
+				const response = await axios.post(
+					"http://127.0.0.1:8080/auth/register",
+					data
+				);
 
-			dispatch(authActions.loginUser({ token, userName, email }));
+				const { token, userName, email } = response.data;
+
+				dispatch(authActions.loginUser({ token, userName, email }));
+				dispatch(
+					errorActions.setStatus({
+						type: "success",
+						text: "Registration successful",
+					})
+				);
+			} else {
+				throw new Error("You are already logged in.");
+			}
 		} catch (error) {
 			dispatch(
-				authActions.setError({ error: error.message || "Something broke!" })
+				errorActions.setStatus({
+					type: "error",
+					text: error.response?.data?.error || error.message,
+				})
 			);
 		}
 	};
+};
+
+export const logoutAction = () => (dispatch, getState) => {
+	const { isAuthorizated } = getState().auth;
+
+	if (isAuthorizated) {
+		dispatch(authActions.logoutUser());
+		dispatch(
+			errorActions.setStatus({
+				type: "success",
+				text: "Log out successful",
+			})
+		);
+	} else {
+		dispatch(
+			errorActions.setStatus({
+				type: "error",
+				text: "User is not loggined. Please log in first.",
+			})
+		);
+	}
 };

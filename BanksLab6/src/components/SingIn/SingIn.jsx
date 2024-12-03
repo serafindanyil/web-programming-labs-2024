@@ -1,5 +1,3 @@
-// SingIn.css
-
 import "./SingIn.css";
 import { Formik, Form } from "formik";
 import FormikInput from "../FormikInput/FormikInput";
@@ -10,11 +8,21 @@ import { useState } from "react";
 
 import { loginAction } from "../../store/authActions";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { errorActions } from "../../store/errorSlice";
+
+import Notifications from "../Notifications/Notifications";
+
+import { useNavigate } from "react-router-dom";
 
 export default function SingIn({ singInOnClick }) {
 	const [hidePassword, setHidePassword] = useState(true);
 
 	const dispatch = useDispatch();
+
+	const { status } = useSelector((state) => state.error);
+
+	const navigate = useNavigate();
 
 	const regEx = {
 		email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
@@ -36,15 +44,18 @@ export default function SingIn({ singInOnClick }) {
 
 	const handleSubmit = (value) => {
 		dispatch(loginAction({ email: value.email, password: value.password }));
-
-		alert("success" + value.email);
+		navigate("/catalog");
 	};
 
 	return (
 		<div className="signup__container">
+			<Notifications
+				type={status?.type}
+				action={status?.text}
+				handleCloseAction={() => dispatch(errorActions.clearStatus())} // Виправлено на clearStatus
+			/>
 			<Formik
 				initialValues={{
-					userName: "",
 					email: "",
 					password: "",
 				}}
@@ -69,6 +80,7 @@ export default function SingIn({ singInOnClick }) {
 						label="Password"
 						name="password"
 						id="password"
+						autocomplete="off"
 						placeholder="Some password"
 					/>
 

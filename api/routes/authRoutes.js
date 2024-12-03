@@ -45,7 +45,7 @@ authRouter.post("/login", async (req, res) => {
 		const user = await authServices.isUserExist(email);
 
 		if (!user) {
-			throw new Error("Invalid email");
+			throw new Error("Invalid email or password");
 		}
 
 		// Отримуємо хеш пароля для цього користувача

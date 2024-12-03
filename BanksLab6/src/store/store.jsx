@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import cartSlice from "./cartSlice";
 import authSlice from "./authSlice";
+import errorSlice from "./errorSlice";
 
 const cartPersistConfig = {
 	key: "cart",
@@ -29,6 +30,7 @@ const store = configureStore({
 	reducer: {
 		cart: persistedCartReducer,
 		auth: persistedAuthReducer,
+		error: errorSlice.reducer,
 	},
 });
 

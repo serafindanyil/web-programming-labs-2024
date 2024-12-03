@@ -10,7 +10,6 @@ const authSlice = createSlice({
 			email: "",
 		},
 		token: null,
-		error: null,
 	},
 	reducers: {
 		// тестовий редюсер
@@ -18,16 +17,18 @@ const authSlice = createSlice({
 			const { token, userName, email } = action.payload;
 
 			if (!state.isAuthorizated) {
+				state.isAuthorizated = true;
 				state.token = token;
 				state.user.name = userName;
 				state.user.email = email;
-			} else {
-				state.error = "User already loggined. Please log out!";
 			}
 		},
-
-		setError(state, action) {
-			state.error = action.payload.error;
+		logoutUser(state) {
+			if (state.isAuthorizated) {
+				state.isAuthorizated = false;
+				state.user = { name: "", email: "" };
+				state.token = null;
+			}
 		},
 	},
 });

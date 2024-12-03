@@ -10,11 +10,21 @@ import { useState } from "react";
 
 import { registrationAction } from "../../store/authActions";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { errorActions } from "../../store/errorSlice";
+
+import { useNavigate } from "react-router-dom";
+
+import Notifications from "../Notifications/Notifications";
 
 export default function SingUp({ singUpOnClick }) {
 	const [hidePassword, setHidePassword] = useState(true);
 
 	const dispatch = useDispatch();
+
+	const { status } = useSelector((state) => state.error);
+
+	const navigate = useNavigate();
 
 	const regEx = {
 		name: /^[a-zA-Zа-яА-Я]{2,20}$/,
@@ -51,12 +61,16 @@ export default function SingUp({ singUpOnClick }) {
 				password: value.password,
 			})
 		);
-
-		alert("success" + value.email);
+		navigate("/catalog");
 	};
 
 	return (
 		<div className="signup__container">
+			<Notifications
+				type={status?.type}
+				action={status?.text}
+				handleCloseAction={() => dispatch(errorActions.clearStatus())} // Виправлено на clearStatus
+			/>
 			<Formik
 				initialValues={{
 					userName: "",
@@ -90,6 +104,7 @@ export default function SingUp({ singUpOnClick }) {
 						label="Password"
 						name="password"
 						id="password"
+						autocomplete="off"
 						placeholder="Some password"
 					/>
 					<FormikInput
@@ -100,6 +115,7 @@ export default function SingUp({ singUpOnClick }) {
 						label="Retype password"
 						name="retypePassword"
 						id="retypePassword"
+						autocomplete="off"
 						placeholder="Some password"
 					/>
 

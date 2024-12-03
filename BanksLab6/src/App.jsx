@@ -17,6 +17,7 @@ import Profile from "./components/Profile/Profile";
 import Checkout from "./components/Checkout/Checkout";
 import Success from "./components/Success/Success";
 import Auth from "./components/Auth/Auth";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
 	const location = useLocation();
@@ -31,9 +32,6 @@ function App() {
 
 	return (
 		<div className="wrapper">
-			{/* <Notification type="error">
-				При обробці карток виникла помилка!
-			</Notification> */}
 			<Header>
 				<LinkButton to="/home" isActive={currentPage}>
 					Home
@@ -52,11 +50,46 @@ function App() {
 				<Route path="/" element={<Auth />} />
 				<Route path="/home" element={<Home />} />
 				<Route path="/catalog" element={<Catalog />} />
-				<Route path="/item/:id" element={<Item />} />
-				<Route path="/profile" element={<Profile />} />
-				<Route path="/cart" element={<Cart />} />
-				<Route path="/cart/checkout" element={<Checkout />} />
-				<Route path="/cart/success" element={<Success />} />
+				<Route
+					path="/item/:id"
+					element={
+						<ProtectedRoute>
+							<Item />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/profile"
+					element={
+						<ProtectedRoute>
+							<Profile />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/cart"
+					element={
+						<ProtectedRoute>
+							<Cart />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/cart/checkout"
+					element={
+						<ProtectedRoute>
+							<Checkout />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/cart/success"
+					element={
+						<ProtectedRoute>
+							<Success />
+						</ProtectedRoute>
+					}
+				/>
 			</Routes>
 			<Footer />
 		</div>
