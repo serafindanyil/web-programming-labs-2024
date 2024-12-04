@@ -10,8 +10,12 @@ import "./Item.css";
 import useAxios from "../../hooks/useAxios";
 import Loading from "../Loading/Loading";
 
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
+import { addItemToCartAction } from "../../store/cartActions";
+import Notifications from "../Notifications/Notifications";
+import { errorActions } from "../../store/errorSlice";
 
 export default function Item() {
 	const { getDataById } = useAxios();
@@ -20,6 +24,8 @@ export default function Item() {
 	const [cardData, setCardData] = useState(null); // Стан для збереження даних картки
 
 	const dispatch = useDispatch();
+
+	const { status } = useSelector((state) => state.error);
 
 	const quantityRef = useRef(null);
 	const bondPercentRef = useRef(null);
@@ -49,10 +55,22 @@ export default function Item() {
 	}
 
 	function validationInputField(value) {
-		if (!isNaN(value)) {
+		if (!value) {
+			dispatch(
+				errorActions.setStatus({
+					type: "error",
+					text: "Type peace count!",
+				})
+			);
+		} else if (!isNaN(value)) {
 			return parseInt(value);
 		} else {
-			alert("Має бути число!");
+			dispatch(
+				errorActions.setStatus({
+					type: "error",
+					text: "Only number!",
+				})
+			);
 		}
 	}
 
@@ -60,7 +78,12 @@ export default function Item() {
 		if (!isNaN(value)) {
 			return parseFloat(value);
 		} else {
-			alert("Виберіть процент!");
+			dispatch(
+				errorActions.setStatus({
+					type: "error",
+					text: "Change percentage!",
+				})
+			);
 		}
 	}
 
@@ -68,7 +91,7 @@ export default function Item() {
 		const { id, title, imgSrc, bondPrice } = cardData;
 
 		dispatch(
-			cartActions.addItemToCart({
+			addItemToCartAction({
 				id,
 				title,
 				imgSrc,
@@ -77,12 +100,15 @@ export default function Item() {
 				quantity: validationInputField(quantityRef.current.value),
 			})
 		);
-
-		alert(`Товари додані в корзину: ${quantityRef.current.value}`);
 	};
 
 	return (
 		<main id="wrapper">
+			<Notifications
+				type={status?.type}
+				action={status?.text}
+				handleCloseAction={() => dispatch(errorActions.clearStatus())} // Виправлено на clearStatus
+			/>
 			<BarProduct type="full" {...cardData}>
 				<Wrapper style={{ display: "flex", gap: "3.2rem" }}>
 					<Input

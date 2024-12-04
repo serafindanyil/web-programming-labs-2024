@@ -1,23 +1,32 @@
-// Cart.jsx
-
 import PRODUCTS from "../../../data/data";
 import ItemBar from "../ItemBar/ItemBar";
 import Button from "../Button/Button";
 import "./Cart.css";
 
 import { useNavigate } from "react-router-dom";
-
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 export default function Cart() {
-	const cartItems = useSelector((state) => state.cart.items);
-	const totalAmounts = useSelector((state) => state.cart.totalPrice);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	// Отримуємо userId з Redux
+	const userId = useSelector((state) => state.auth.user.id);
+
+	// Отримуємо items і totalPrice для цього користувача з cart
+	const items = useSelector((state) => state.cart[userId]?.items);
+	const totalAmounts = useSelector((state) => state.cart[userId]?.totalPrice);
 
 	const isAuthorizated = useSelector((state) => state.auth.isAuthorizated);
 
-	const navigate = useNavigate();
+	useEffect(() => {
+		setCartItems(items);
+	}, [items]);
 
+	const [cartItems, setCartItems] = useState([]);
+
+	// Якщо користувач не авторизований, відображаємо сторінку з повідомленням
 	if (!isAuthorizated) {
 		return (
 			<main className="container">
@@ -33,11 +42,12 @@ export default function Cart() {
 		);
 	}
 
-	if (!totalAmounts) {
+	// Якщо в кошику немає елементів
+	if (!cartItems || cartItems.length === 0) {
 		return (
 			<main>
 				<div className="container">
-					<span id="shoping-cart_empty">Shoping cart is empty!</span>
+					<span id="shoping-cart_empty">Shopping cart is empty!</span>
 				</div>
 			</main>
 		);
@@ -52,12 +62,16 @@ export default function Cart() {
 					Shopping Cart
 				</h2>
 				<div id="cart__item-wrapper">
-					{cartItems.map((item) => {
-						return <ItemBar className="margin-btm-sm" {...item}></ItemBar>;
-					})}
+					{cartItems.length > 0 ? (
+						cartItems.map((item) => (
+							<ItemBar key={item.id} className="margin-btm-sm" {...item} />
+						))
+					) : (
+						<span>No items in cart</span>
+					)}
 				</div>
 				<div id="cart__total-amout" className="margin-btm-bg">
-					<span id="cart__text">Total amout:</span>
+					<span id="cart__text">Total amount:</span>
 					<span id="cart__total-price">
 						${totalAmounts.toLocaleString("de-DE")}
 					</span>

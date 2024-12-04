@@ -29,3 +29,77 @@ export const resetStoreAction = (data) => {
 		}
 	};
 };
+
+export const addItemToCartAction = (item) => {
+	return async (dispatch, getState) => {
+		try {
+			const { id } = getState().auth.user;
+			const { title, quantity, bondPercent } = item;
+
+			if (!id) {
+				throw new Error("User not authenticated");
+			}
+
+			if (quantity && bondPercent) {
+				dispatch(cartActions.addItemToCart({ userId: id, item }));
+				dispatch(
+					errorActions.setStatus({
+						type: "success",
+						text: `Added to cart ${title} ${quantity} peace`,
+					})
+				);
+			}
+		} catch (error) {
+			// Обробка помилок
+			dispatch(
+				errorActions.setStatus({
+					type: "error",
+					text: error.message || "An error occurred.",
+				})
+			);
+		}
+	};
+};
+
+export const removeItemFromCartAction = (item) => {
+	return async (dispatch, getState) => {
+		try {
+			const { id } = getState().auth.user;
+
+			if (!id) {
+				throw new Error("User not authenticated");
+			}
+
+			dispatch(cartActions.removeItemFromCart({ userId: id, item }));
+		} catch (error) {
+			// Обробка помилок
+			dispatch(
+				errorActions.setStatus({
+					type: "error",
+					text: error.message || "An error occurred.",
+				})
+			);
+		}
+	};
+};
+export const removeCardFromCartAction = (item) => {
+	return async (dispatch, getState) => {
+		try {
+			const { id } = getState().auth.user;
+
+			if (!id) {
+				throw new Error("User not authenticated");
+			}
+
+			dispatch(cartActions.removeCardFromCart({ userId: id, item }));
+		} catch (error) {
+			// Обробка помилок
+			dispatch(
+				errorActions.setStatus({
+					type: "error",
+					text: error.message || "An error occurred.",
+				})
+			);
+		}
+	};
+};

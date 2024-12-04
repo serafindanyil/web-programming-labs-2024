@@ -1,6 +1,7 @@
 import axios from "axios";
 import { authActions } from "./authSlice";
 import { errorActions } from "./errorSlice";
+import { jwtDecode } from "jwt-decode";
 
 export const loginAction = (data) => {
 	return async (dispatch, getState) => {

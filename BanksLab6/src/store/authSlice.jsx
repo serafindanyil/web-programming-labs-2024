@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import useAxios from "../hooks/useAxios";
+import { jwtDecode } from "jwt-decode";
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState: {
 		isAuthorizated: false,
 		user: {
-			name: "test username",
+			id: null,
+			name: "",
 			email: "",
 		},
 		token: null,
@@ -19,6 +21,7 @@ const authSlice = createSlice({
 			if (!state.isAuthorizated) {
 				state.isAuthorizated = true;
 				state.token = token;
+				state.user.id = jwtDecode(token).userId;
 				state.user.name = userName;
 				state.user.email = email;
 			}

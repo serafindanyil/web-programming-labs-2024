@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cartSlice";
 import { addListener } from "@reduxjs/toolkit";
+import { addItemToCartAction } from "../../store/cartActions";
+import { removeItemFromCartAction } from "../../store/cartActions";
+import { removeCardFromCartAction } from "../../store/cartActions";
 
 export default function ItemBar({
 	id,
@@ -22,7 +25,7 @@ export default function ItemBar({
 
 	const handleClickIncrease = () => {
 		dispatch(
-			cartActions.addItemToCart({
+			addItemToCartAction({
 				id,
 				title,
 				imgSrc,
@@ -35,7 +38,7 @@ export default function ItemBar({
 
 	const handleClickDecrease = () => {
 		dispatch(
-			cartActions.removeItemFromCart({
+			removeItemFromCartAction({
 				id,
 				bondPercent: percentage,
 			})
@@ -44,7 +47,7 @@ export default function ItemBar({
 
 	const handleClickRemoveCard = () => {
 		dispatch(
-			cartActions.removeCardFromCart({
+			removeCardFromCartAction({
 				id,
 				bondPercent: percentage,
 			})

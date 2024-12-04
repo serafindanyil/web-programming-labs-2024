@@ -4,108 +4,132 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
 	name: "cart",
-	initialState: {
-		items: [],
-		totalQuantity: 0,
-		totalPrice: 0,
-		changed: false,
-	},
+	initialState: {}, // Кожен ключ буде userId з відповідним кошиком
 	reducers: {
 		replaceCart(state, action) {
-			state.totalQuantity = action.payload.totalQuantity;
-			state.totalPrice = action.payload.totalPrice;
-			state.items = action.payload.items;
+			const { userId, cart } = action.payload;
+			state[userId] = {
+				items: cart.items || [],
+				totalQuantity: cart.totalQuantity || 0,
+				totalPrice: cart.totalPrice || 0,
+				changed: cart.changed || false,
+			};
 		},
 		addItemToCart(state, action) {
-			const newItem = action.payload;
-			const itemExsist = state.items.find(
-				(item) =>
-					item.id === newItem.id && item.percentage === newItem.bondPercent
-			);
-			const reduceTotalAmount = newItem.bondPrice * newItem.quantity;
+			const { userId, item } = action.payload;
+			const { id, title, imgSrc, bondPrice, bondPercent, quantity } = item;
 
-			state.totalPrice += reduceTotalAmount;
-			state.changed = true;
-
-			if (!itemExsist) {
-				state.items.push({
-					id: newItem.id,
-					title: newItem.title,
-					imgSrc: newItem.imgSrc,
-					price: newItem.bondPrice,
-					percentage: newItem.bondPercent,
-					quantity: newItem.quantity,
-					totalPrice: reduceTotalAmount,
-				});
-			} else {
-				itemExsist.quantity += newItem.quantity;
-				itemExsist.totalPrice = itemExsist.price * itemExsist.quantity;
+			if (!state[userId]) {
+				// Якщо кошик для користувача ще не створено
+				state[userId] = {
+					items: [],
+					totalQuantity: 0,
+					totalPrice: 0,
+					changed: false,
+				};
 			}
 
-			state.totalQuantity = state.items.reduce(
-				(sum, item) => sum + item.quantity,
+			const userCart = state[userId];
+			const existingItem = userCart.items.find(
+				(cartItem) => cartItem.id === id && cartItem.percentage === bondPercent
+			);
+
+			const itemTotalPrice = bondPrice * quantity;
+			userCart.totalPrice += itemTotalPrice;
+			userCart.changed = true;
+
+			if (!existingItem) {
+				// Якщо такого товару в кошику немає, додаємо новий
+				userCart.items.push({
+					id,
+					title,
+					imgSrc,
+					price: bondPrice,
+					percentage: bondPercent,
+					quantity,
+					totalPrice: itemTotalPrice,
+				});
+			} else {
+				// Якщо товар вже є в кошику, збільшуємо його кількість
+				existingItem.quantity += quantity;
+				existingItem.totalPrice = existingItem.price * existingItem.quantity;
+			}
+
+			userCart.totalQuantity = userCart.items.reduce(
+				(sum, cartItem) => sum + cartItem.quantity,
 				0
 			);
 		},
 		removeItemFromCart(state, action) {
-			const id = action.payload.id;
-			const percentage = action.payload.bondPercent;
+			const { userId, item } = action.payload;
+			const { id, bondPercent } = item;
 
-			const itemExsist = state.items.find(
-				(item) => item.id === id && item.percentage === percentage
+			if (!state[userId]) return; // Якщо кошик для користувача не існує
+
+			const userCart = state[userId];
+			const existingItem = userCart.items.find(
+				(cartItem) => cartItem.id === id && cartItem.percentage === bondPercent
 			);
 
-			if (!itemExsist) return;
-			const reduceTotalAmount = itemExsist.price;
-			state.totalPrice -= reduceTotalAmount;
+			if (!existingItem) return;
 
-			if (itemExsist.quantity === 1) {
-				state.items = state.items.filter(
-					(item) => !(item.id === id && item.percentage === percentage)
+			userCart.totalPrice -= existingItem.price;
+			userCart.changed = true;
+
+			if (existingItem.quantity === 1) {
+				// Якщо кількість товару одна, видаляємо його
+				userCart.items = userCart.items.filter(
+					(cartItem) =>
+						!(cartItem.id === id && cartItem.percentage === bondPercent)
 				);
 			} else {
-				itemExsist.quantity--;
-				itemExsist.totalPrice -= reduceTotalAmount;
+				// Якщо більше одного, зменшуємо кількість
+				existingItem.quantity -= 1;
+				existingItem.totalPrice = existingItem.price * existingItem.quantity;
 			}
 
-			state.totalQuantity = state.items.reduce(
-				(sum, item) => sum + item.quantity,
+			userCart.totalQuantity = userCart.items.reduce(
+				(sum, cartItem) => sum + cartItem.quantity,
 				0
 			);
-			state.changed = true;
 		},
 		removeCardFromCart(state, action) {
-			const id = action.payload.id;
-			const percentage = action.payload.bondPercent;
+			const { userId, item } = action.payload;
+			const { id, bondPercent } = item;
 
-			const itemExsist = state.items.find(
-				(item) => item.id === id && item.percentage === percentage
+			if (!state[userId]) return; // Якщо кошик для користувача не існує
+
+			const userCart = state[userId];
+			const existingItem = userCart.items.find(
+				(cartItem) => cartItem.id === id && cartItem.percentage === bondPercent
 			);
 
-			if (!itemExsist) return;
-			const reduceTotalAmount = itemExsist.price * itemExsist.quantity;
-			state.totalPrice -= reduceTotalAmount;
+			if (!existingItem) return;
 
-			if (itemExsist) {
-				state.items = state.items.filter(
-					(item) => !(item.id === id && item.percentage === percentage)
-				);
-			}
+			userCart.totalPrice -= existingItem.price * existingItem.quantity;
+			userCart.changed = true;
 
-			state.totalQuantity = state.items.reduce(
-				(sum, item) => sum + item.quantity,
+			// Видаляємо товар з кошика
+			userCart.items = userCart.items.filter(
+				(cartItem) =>
+					!(cartItem.id === id && cartItem.percentage === bondPercent)
+			);
+
+			userCart.totalQuantity = userCart.items.reduce(
+				(sum, cartItem) => sum + cartItem.quantity,
 				0
 			);
-			state.changed = true;
 		},
-
-		resetStore(state) {
-			return {
-				items: [],
-				totalQuantity: 0,
-				totalPrice: 0,
-				changed: false,
-			};
+		resetStore(state, action) {
+			const { userId } = action.payload;
+			if (state[userId]) {
+				state[userId] = {
+					items: [],
+					totalQuantity: 0,
+					totalPrice: 0,
+					changed: false,
+				};
+			}
 		},
 	},
 });
